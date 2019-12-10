@@ -1,2 +1,2 @@
 # fiat-currency-token
-Fiatech fiat currency token on ethereum blockchain
+Fiatech fiat currency token on ethereum blockchain.
