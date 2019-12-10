@@ -1,0 +1,15 @@
+pragma solidity ^0.5.0;
+
+library ExtendedMath {
+
+    /**
+	 * @dev Return the smaller of the two inputs (a or b)
+	 * @param a Number 1
+	 * @param b Number 2
+	 * @return uint
+	 */
+    function limitLessThan(uint a, uint b) internal pure returns (uint c) {
+        if(a > b) return b;
+        return a;
+    }
+}

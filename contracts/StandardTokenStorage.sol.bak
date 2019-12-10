@@ -1,0 +1,20 @@
+pragma solidity ^0.5.0;
+
+import "./interfaces/IERC20.sol";
+import "./Owned.sol";
+
+
+
+// ----------------------------------------------------------------------------
+// Standard ERC20 Token data, with symbol, name, version, decimals, balances and ther data.
+// Token units in this contract mean cents or pennies of the fiat currency it represents.
+// ----------------------------------------------------------------------------
+contract StandardTokenStorage is IERC20, Owned {
+
+    // total supply here actually means circulating supply because we create and destroy based on users deposits and withdrawals
+    uint internal _totalSupply;
+	
+    mapping(address => uint) _balances;
+	
+    mapping(address => mapping(address => uint)) _allowed;
+}

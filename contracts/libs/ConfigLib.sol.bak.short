@@ -1,0 +1,303 @@
+pragma solidity ^0.4.24;
+
+//import "./SafeMathLib.sol";
+//import "./interfaces/IERC20.sol";
+//import "./interfaces/IBlockchainBridge.sol";
+//import "./interfaces/ITokensRecovery.sol";
+//import "./interfaces/IEtherReclaimer.sol";
+//import "./Owned.sol";
+//import "./Mortal.sol";
+//import "./lifecycle/Pausable.sol";
+//import "../access/roles/Admin.sol";
+//import "../access/roles/NoFeeAddress.sol";
+//import "./BlockchainBridge.sol";
+//import "./TransfersController.sol";
+//import "../fees/FeesController.sol";
+//import "./StandardTokenStorage.sol";
+//import "../kyc/KYCController.sol";
+//import "../kyc/BlacklistController.sol";
+
+//import "./IAttributesLib.sol";
+
+
+
+
+/**
+ * @dev Attributes library to handle address flags management and access.
+ */
+library AttributesLib
+{
+    struct AttributesStorage {
+		mapping (address => bool) admins; //admins addresses
+		mapping (address => bool) noFeeAddress; //no fee addresses
+		
+		bool transfersEnabled; //transfers enabled/disabled
+		
+		bool kycEnabled; //know your costumer enabled/disabled
+		mapping (address => bool) kycApproved; //know your costumer approved addresses
+		mapping (address => bool) blacklisted; //blacklisted addresses, disabled from performing any transfers or operations
+		
+		//wallet address where the fees are collected
+		address feesCollectorWallet;
+		
+		//if enabled, transfer to your same address is considered funds withdrawal
+		bool transferToYourselfIsWidrawal;
+	
+		address owner; // owner of contract/library scope
+	}
+	
+	
+	
+	function init(AttributesStorage storage self, bool _kycEnabled) public {
+		self.admins[msg.sender] = true;
+		self.noFeeAddress[msg.sender] = true;
+		
+		self.kycEnabled = _kycEnabled;
+		self.feesCollectorWallet = msg.sender;
+		self.transferToYourselfIsWidrawal = true;
+		
+		self.owner = msg.sender;
+	}
+	
+	
+	
+	/**
+	 * @dev Change transfer fees collector wallet, only owner can do it
+	 * @param newWallet Set address to collect fees into
+	 * @return bool
+	 */
+	function setFeesCollectorWallet(AttributesStorage storage self, address newWallet) public /*whenNotPaused*/ returns (bool) {
+		require(isOwner(self, msg.sender), "setFeesCollectorWallet: Owner required");
+		if (newWallet != self.feesCollectorWallet) {
+			self.feesCollectorWallet = newWallet;
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * @dev Set transfer to yourself is widrawal toggle enabled/disabled.
+	 * @return bool
+	 */
+	function setTransferToYourselfIsWidrawal(AttributesStorage storage self, bool enabled) public returns (bool) {
+		require(isAdmin(self, msg.sender), "setTransferToYourselfIsWidrawal: Admin required");
+		if (enabled != self.transferToYourselfIsWidrawal) {
+			self.transferToYourselfIsWidrawal = enabled;
+			return true;
+		}
+		return false;
+	}
+	
+	///*** TransfersController contract functions
+	
+	/**
+	 * @dev Enable transfers if they are disabled, executed only by admin.
+	 * @return bool
+	 */
+	function enableTransfers(AttributesStorage storage self, bool enable) public /*whenNotPaused*/ returns (bool) {
+		require(isAdmin(self, msg.sender), "enableTransfers: Admin required");
+		if (self.transfersEnabled != enable) {
+			self.transfersEnabled = enable;
+			//if (enable)
+			//	emit TransfersEnabled(msg.sender);
+			//else emit TransfersDisabled(msg.sender);
+		}
+		return false;
+	}
+	
+	///*** TransfersController contract functions
+	
+	
+	
+	function isOwner(AttributesStorage storage self, address account) public view returns (bool) {
+        return (self.owner == account);
+    }
+	
+    function isAdmin(AttributesStorage storage self, address account) public view returns (bool) {
+        return (self.admins[account] == true);
+    }
+
+    function addAdmin(AttributesStorage storage self, address account) public {
+		require(isAdmin(self, account), "addAdmin: Admin required");
+        self.admins[account] = true;
+    }
+	
+	//---
+	// custom function added
+	function removeAdmin(AttributesStorage storage self, address account) public {
+		require(isOwner(self, msg.sender), "removeAdmin: Owner required");
+		require(account != self.owner, "Owner can not remove his admin role");
+        self.admins[account] = false;
+        //emit AdminRemoved(msg.sender, account);
+    }
+	//---
+	
+    function renounceAdmin(AttributesStorage storage self) public {
+		require(!isOwner(self, msg.sender), "Owner can not renounce to his admin role");
+        self.admins[msg.sender] = false;
+		//emit AdminRenounced(msg.sender);
+    }
+	
+	/*function _addAdmin(address account) internal {
+        _admins.add(account);
+		//emit AdminAdded(msg.sender, account);
+    }*/
+	
+	
+	
+	function isNoFeeAddress(AttributesStorage storage self, address account) public view returns (bool) {
+        return (self.noFeeAddress[account] == true);
+    }
+
+    function addNoFeeAddress(AttributesStorage storage self, address account) public {
+		require(isOwner(self, msg.sender), "addNoFeeAddress: Owner required");
+        self.noFeeAddress[account] = true;
+    }
+	
+	function removeNoFeeAddress(AttributesStorage storage self, address account) public {
+		require(isOwner(self, msg.sender), "removeNoFeeAddress: Owner required");
+		self.noFeeAddress[account] = false;
+		//emit NoFeeAddressRemoved(msg.sender, account);
+    }
+	
+    function renounceNoFeeAddress(AttributesStorage storage self) public {
+		self.noFeeAddress[msg.sender] = false;
+		//emit NoFeeAddressRenounced(msg.sender);
+    }
+	/*
+	function _addNoFeeAddress(address account) internal {
+        _noFeeAddresses.add(account);
+		//emit NoFeeAddressAdded(msg.sender, account);
+    }*/
+	
+	
+	
+	/**
+	 * @dev Check if user address is KYC approved.
+	 * @param _account User address
+	 * @return bool
+	 */
+	function isKYCApproved(AttributesStorage storage self, address _account) public view returns (bool) {
+        return (self.kycApproved[_account] == true);
+    }
+	
+	/**
+	 * @dev Approve KYC user address, only admin can do it.
+	 * @param _account User address
+	 */
+	function approveKYCUserAddress(AttributesStorage storage self, address _account) public {
+		require(isAdmin(self, msg.sender), "approveKYCUserAddress: Admin required");
+        self.kycApproved[_account] = true;
+    }
+	
+	/**
+	 * @dev Disapprove KYC user address, only admin can do it.
+	 * @param _account User address
+	 */
+	function disapproveKYCUserAddress(AttributesStorage storage self, address _account) public {
+		require(isAdmin(self, msg.sender), "disapproveKYCUserAddress: Admin required");
+		require(!isOwner(self, _account), "disapproveKYCUserAddress: Owner can not remove his KYC approved status");
+        self.kycApproved[_account] = false;
+    }
+	
+	///**
+	// * @dev Approve KYC user address
+	// * @param _account User address
+	// */
+    /*function _approveKYCUserAddress(address _account) internal {
+		require(!_users.has(_account), "KYC: User address already approved");
+        _users.add(_account);
+        emit KYCAddressApproved(msg.sender, _account);
+    }*/
+	
+	///**
+	// * @dev Disapprove KYC user address
+	// * @param _account User address
+	// */
+    /*function _disapproveKYCUserAddress(address _account) internal {
+		require(_users.has(_account), "KYC: User address already disapproved");
+        _users.remove(_account);
+        emit KYCAddressDisapproved(msg.sender, _account);
+    }*/
+	
+	
+	
+	function isKYCDisabledOrApprovedAddress(AttributesStorage storage self, address _address) public view returns (bool) {
+		// if KYC is enabled, sender address must be approved
+		return (!self.kycEnabled || isKYCApproved(self, _address));
+	}
+	
+	/**
+	 * @dev Enable/Disable KYC required.
+	 * @param enable True to enable, false to disable.
+	 * @return bool.
+	 */
+	function enableKYC(AttributesStorage storage self, bool enable) public returns (bool success) {
+		require(isAdmin(self, msg.sender), "enableKYC: Admin required");
+		if (self.kycEnabled != enable) {
+			self.kycEnabled = enable;
+			//if (enable)
+			//	emit KYCEnabled(msg.sender);
+			//else emit KYCDisabled(msg.sender);
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
+	function isNOTBlacklistedAddress(AttributesStorage storage self, address _address) public view returns (bool success) {
+		// only allowed to continue if 'to' address is not blacklisted
+		return (!isBlacklisted(self, _address));
+	}
+	
+	
+	
+	/**
+	 * @dev Check if user address is blacklisted.
+	 * @param _account User address
+	 * @return bool
+	 */
+	function isBlacklisted(AttributesStorage storage self, address _account) public view returns (bool) {
+        return (self.blacklisted[_account] == true);
+    }
+	
+	/**
+	 * @dev Blacklist user address, only admin can do it.
+	 * @param _account User address
+	 */
+	function blacklistUserAddress(AttributesStorage storage self, address _account) public {
+		require(isAdmin(self, msg.sender), "blacklistUserAddress: Admin required");
+		require(!isOwner(self, _account), "Owner can not be blacklisted");
+		_blacklistUserAddress(self, _account);
+    }
+	
+	/**
+	 * @dev Allow user address back to normal, only admin can do it.
+	 * @param _account User address
+	 */
+	function allowBlacklistedUserAddress(AttributesStorage storage self, address _account) public {
+		require(isAdmin(self, msg.sender), "allowBlacklistedUserAddress: Admin required");
+		_allowBlacklistedUserAddress(self, _account);
+    }
+	
+	/**
+	 * @dev Blacklist user address
+	 * @param _account User address
+	 */
+    function _blacklistUserAddress(AttributesStorage storage self, address _account) public {
+		require(!isBlacklisted(self, _account), "User address already blacklisted");
+        self.blacklisted[_account] = true;
+        //emit BlacklistedAddress(msg.sender, _account);
+    }
+	
+	/**
+	 * @dev Allow blacklisted user address back to normal operations
+	 * @param _account User address
+	 */
+    function _allowBlacklistedUserAddress(AttributesStorage storage self, address _account) public {
+		require(isBlacklisted(self, _account), "User address already allowed");
+        self.blacklisted[_account] = false;
+        //emit AllowedBlacklistedAddress(msg.sender, _account);
+    }
+}

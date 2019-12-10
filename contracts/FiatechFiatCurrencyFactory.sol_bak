@@ -1,0 +1,83 @@
+pragma solidity ^0.5.0;
+
+import "./SafeMath.sol";
+import "./interfaces/ERC20Interface.sol";
+import "./Owned.sol";
+import "./lifecycle/Pausable.sol";
+import "./FiatechFiatCurrency.sol";
+
+
+
+/**
+ * @dev This contract is used to generate clone contracts from a contract.
+ * In solidity this is the way to create a contract from a contract of the
+ * same class
+ */
+contract FiatechFiatCurrencyFactory is
+	ERC20Interface
+	, Owned
+	, Pausable
+{
+	mapping(string => bool) public contractExists;
+	mapping(string => uint) public contractPos;
+	
+	uint public nContracts = 0;
+	mapping(uint => address) public contracts;
+	
+	event ContractRemoved(address indexed admin, address indexed contractAddressRemoved);
+	
+	
+	
+    /**
+	 * @notice Update the DApp by creating a new token with new functionalities
+	 * the msg.sender becomes the controller/owner of this clone token
+	 * @param _name Name of the new token
+	 * @param _symbol Token Symbol for the new token
+	 * @return The address of the new token contract
+	 */
+    function createCurrencyToken(string memory _symbol, string memory _name) public onlyOwner returns (FiatechFiatCurrency) {
+		// symbols are unique, filter new ones
+		require(!contractExists[_symbol]);
+		
+        FiatechFiatCurrency newToken = new FiatechFiatCurrency(_symbol, _name);
+		
+		// transfer contract ownership from "FiatechFiatCurrency" contract to owner of "FiatechFiatCurrency" contract
+        newToken.transferOwnership(msg.sender);
+		
+		// store created contract
+		contracts[nContracts] = address(newToken); //store contract address by next avail position.
+		contractExists[_symbol] = true; //store contract exists condition by symbol to easily know if contract exists.
+		contractPos[_symbol] = nContracts; //store contract position in array like map to easily find it later when needed.
+		nContracts++; //increment contract position slot to next available
+		
+		// ??? owner still has to access to created contract via abi interface and execute "acceptOwnership()" function as owner ???
+		//newToken.acceptOwnership();
+		
+        return newToken;
+    }
+	
+	/**
+	 * @dev Free contract slot given its symbol
+	 * @param _symbol, Contract symbol we want to remove.
+	 * return bool
+	 */
+	function removeContract(string memory _symbol) public onlyOwner returns (bool success) {
+		require(contractExists[_symbol]);
+		
+		contractExists[_symbol] = false;
+		emit ContractRemoved(msg.sender, contracts[contractPos[_symbol]]);
+		
+		return true;
+	}
+	
+	/**
+	 * @dev Return contract address given its symbol
+	 * @param _symbol, Contract symbol we lookup.
+	 * @return contract address if exists
+	 */
+	function getContractAddressBySymbol(string memory _symbol) public returns (address contractAddress) {
+		require(contractExists[_symbol]);
+		
+		return contracts[contractPos[_symbol]];
+	}
+}

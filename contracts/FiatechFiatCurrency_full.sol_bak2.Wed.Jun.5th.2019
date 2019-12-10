@@ -1,0 +1,425 @@
+pragma solidity ^0.5.0;
+
+import "./SafeMath.sol";
+import "./ERC20Interface.sol";
+import "./Owned.sol";
+import "./lifecycle/Pausable.sol";
+import "./BlockchainBridge.sol";
+import "./TransfersController.sol";
+
+
+
+// ----------------------------------------------------------------------------
+// ERC20 Token, with symbol, name and decimals
+// Token units in this contract mean cents or pennies of the fiat currency it represents.
+// ----------------------------------------------------------------------------
+
+contract FiatechFiatCurrency is ERC20Interface, Owned, Pausable, BlockchainBridge, TransfersController {
+
+    using SafeMath for uint;
+    //using ExtendedMath for uint;
+	
+	
+	
+	string public symbol;
+    string public name;
+	string public standard;
+	
+    uint8 public decimals;
+	
+	// total supply here actually means circulating supply because we create and destroy based on users deposits and withdrawals
+    uint public _totalSupply;
+	
+    mapping(address => uint) balances;
+	
+    mapping(address => mapping(address => uint)) allowed;
+	
+	
+	
+	
+	// transfer fee as parts per X units, e.g. 2 per 1000 = 0.2%
+	uint public parts_transferFee; //e.g. 0.1% => [1] per 1000, this is 1
+	uint public perX_transferFee; //e.g. 0.1% => 1 per [1000], this is 1000
+	event TransferFeesChanged(uint parts_Fee, uint perX_Fee);
+	
+	uint public min_transferFee_tokens; //minimum transfer fee in tokens that are cents/pennies
+	event MinimumTransferFeeTokensChanged(address indexed admin, string symbol, uint newTransferFeeTokens);
+	
+	bool public transferFeesEnabled; //transfer fees enabled/disabled
+	
+	event TransferFeesEnabled(address indexed admin, string symbol);
+	event TransferFeesDisabled(address indexed admin, string symbol);
+	
+	//wallet address where the fees are collected
+	address private feesCollectorWallet;
+	
+	event CurrencyAdded(address indexed issuer, string symbol, string name);
+	
+	
+	
+    // ------------------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------------------
+    constructor(string _symbol, string _name)
+		Owned() BlockchainBridge(_symbol) TransfersController(_symbol)
+		public onlyOwner
+	{
+
+        // symbol = "USDF";
+		symbol = _symbol;
+
+        // name = "USD Fiat token";
+		name = _name;
+		
+		standard = "F1.0"; //Fiatech standard 1.0
+
+        decimals = 2;
+
+        parts_transferFee = 1; // 1 per 1000 as 0.1%
+		perX_transferFee = 1000; // 1 per 1000 as 0.1%
+		min_transferFee_tokens = 5; //5 cent(s) as minimum transfer fee
+
+		feesCollectorWallet = msg.sender;
+		transferFeesEnabled = true;
+		
+        emit CurrencyAdded(msg.sender, symbol, name);
+    }
+	
+	
+	
+	// ------------------------------------------------------------------------
+    // calculateTransferFeeTokens, given token amount, calculate transfer fee in units/tokens that are cents or pennies
+    // ------------------------------------------------------------------------
+	function calculateTransferFeeTokens(uint tokens) internal view returns (uint transferFeeTokens) {
+	
+		if (!transferFeesEnabled)
+			return 0;
+		
+		transferFeeTokens = tokens.mul(parts_transferFee).div(perX_transferFee);
+		
+		//filter transfer fee to minimum amount of tokens/pennies allowed
+		if (transferFeesEnabled && transferFeeTokens < min_transferFee_tokens) {
+			transferFeeTokens = min_transferFee_tokens;
+		}
+		
+		return transferFeeTokens;
+	}
+	
+	
+	
+	// ------------------------------------------------------------------------
+    // Change minimum transfer fee tokens/pennies/cents, only owner can do it
+    // ------------------------------------------------------------------------
+	function setMinimumTransferFeeTokens(uint newMinTransferFeeTokens) public onlyPauser returns (bool success) {
+		require(min_transferFee_tokens != newMinTransferFeeTokens);
+		
+		min_transferFee_tokens = newTransferFeeTokens;
+		emit MinimumTransferFeeTokensChanged(msg.sender, symbol, newMinTransferFeeTokens);
+		return true;
+	}
+	
+	
+	
+	// ------------------------------------------------------------------------
+    // Enable transfer fees, only owner can do it
+    // ------------------------------------------------------------------------
+	function enableTransferFees() public onlyPauser returns (bool success) {
+		require(!transferFeesEnabled);
+		
+		transferFeesEnabled = true;
+		emit TransferFeesEnabled(msg.sender, symbol);
+		return true;
+	}
+	
+	
+	
+	// ------------------------------------------------------------------------
+    // Disable transfer fees, only owner can do it
+    // ------------------------------------------------------------------------
+	function disableTransferFees() public onlyPauser returns (bool success) {
+		require(transferFeesEnabled);
+		
+		transferFeesEnabled = false;
+		emit TransferFeesDisabled(msg.sender, symbol);
+		return true;
+	}
+	
+	
+	
+	// ------------------------------------------------------------------------
+    // Set transfer fees as parts per X units, only owner can do it
+    // ------------------------------------------------------------------------
+	function setTransferFees(uint _parts_transferFee, uint _perX_transferFee) public onlyPauser returns (bool success) {
+		// at least one factor has to be different for change to be allowed, what's the point of setting the same values anyway?
+		require(_parts_transferFee != parts_transferFee || _perX_transferFee != perX_transferFee);
+		require(_parts_transferFee < _perX_transferFee);
+		require(_perX_transferFee > 0);
+		
+		parts_transferFee = _parts_transferFee;
+		perX_transferFee = _perX_transferFee;
+		emit TransferFeesChanged(_parts_transferFee, _perX_transferFee);
+		
+		return true;
+	}
+	
+	
+	
+	
+	// ------------------------------------------------------------------------
+    // Change transfer fees collector wallet, only owner can do it
+    // ------------------------------------------------------------------------
+	function setFeesCollectorWallet(address newWallet) public onlyPauser returns (bool success) {
+		
+		feesCollectorWallet = newWallet;
+		return true;
+	}
+	
+	
+	
+    // ------------------------------------------------------------------------
+    // Total supply
+    // ------------------------------------------------------------------------
+    function totalSupply() public view returns (uint) {
+		return _totalSupply.sub(balances[address(0)]);
+    }
+
+
+
+    // ------------------------------------------------------------------------
+    // Get the token balance for account `tokenOwner`
+    // ------------------------------------------------------------------------
+    function balanceOf(address tokenOwner) public view returns (uint balance) {
+        return balances[tokenOwner];
+    }
+	
+	
+	
+    // ------------------------------------------------------------------------
+    // Transfer the balance from token owner's account to `to` account
+    // - Owner's account must have sufficient balance to transfer
+    // - 0 value transfers are allowed
+    // ------------------------------------------------------------------------
+    function transfer(address to, uint tokens) public whenTransfersEnabled whenNotPaused returns (bool success) {
+		require(to != address(0)); //transfers to zero address are forbidden
+		require(balances[msg.sender] >= tokens);
+		
+		//calculate transfer fees amount
+		uint transfer_fee_amount = calculateTransferFeeTokens(tokens);
+		
+		//if (transfer_fee_amount < 0) {
+		//	revert();
+		//}
+		
+		
+		
+        balances[msg.sender] = balances[msg.sender].sub(tokens).sub(transfer_fee_amount);
+
+        balances[to] = balances[to].add(tokens);
+		
+		//collect the transfer fees in contract address
+		//balances[address(this)] = balances[address(this)].add(transfer_fee_amount);
+		
+		//collect the transfer fees, if wallet is zero/invalid, contract owner gets the transfer fees
+		if (feesCollectorWallet == address(0))
+			balances[owner] = balances[owner].add(transfer_fee_amount);
+		else balances[feesCollectorWallet] = balances[feesCollectorWallet].add(transfer_fee_amount);
+
+        emit Transfer(msg.sender, to, tokens);
+
+        return true;
+    }
+	
+	
+	
+    // ------------------------------------------------------------------------
+    // Token owner can approve for `spender` to transferFrom(...) `tokens`
+    // from the token owner's account
+    //
+    // https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md
+    // recommends that there are no checks for the approval double-spend attack
+    // as this should be implemented in user interfaces
+    // ------------------------------------------------------------------------
+    function approve(address spender, uint tokens) public whenNotPaused returns (bool success) {
+
+        allowed[msg.sender][spender] = tokens;
+
+        emit Approval(msg.sender, spender, tokens);
+
+        return true;
+    }
+
+
+
+    // ------------------------------------------------------------------------
+    // Transfer `tokens` from the `from` account to the `to` account
+    //
+    // The calling account must already have sufficient tokens approve(...)-d
+    // for spending from the `from` account and
+    // - From account must have sufficient balance to transfer
+    // - Spender must have sufficient allowance to transfer
+    // - 0 value transfers are allowed
+	///*** The user executing the function pays the transfer fees, not the funds owner
+    // ------------------------------------------------------------------------
+    function transferFrom(address from, address to, uint tokens) public whenTransfersEnabled whenNotPaused returns (bool success) {
+		require(to != address(0)); //transfers to zero address are forbidden
+		require(balances[from] >= tokens);
+		
+		//calculate transfer fees amount
+		uint transfer_fee_amount = calculateTransferFeeTokens(tokens);
+		
+		//if (transfer_fee_amount < 0) {
+		//	revert();
+		//}
+		
+		
+		
+		balances[from] = balances[from].sub(tokens);
+
+        allowed[from][msg.sender] = allowed[from][msg.sender].sub(tokens);
+
+        balances[to] = balances[to].add(tokens);
+		
+		//the sender/"function execution user" pays the transfer fees on behalf of the funds owner
+		balances[msg.sender] = balances[msg.sender].sub(transfer_fee_amount);
+		
+		
+		//collect the transfer fees in contract address
+		//balances[address(this)] = balances[address(this)].add(transfer_fee_amount);
+		
+		//collect the transfer fees, if wallet is zero/invalid, contract owner gets the transfer fees
+		if (feesCollectorWallet == address(0))
+			balances[owner] = balances[owner].add(transfer_fee_amount);
+		else balances[feesCollectorWallet] = balances[feesCollectorWallet].add(transfer_fee_amount);
+		
+        emit Transfer(from, to, tokens);
+
+        return true;
+
+    }
+
+
+
+    // ------------------------------------------------------------------------
+    // Returns the amount of tokens approved by the owner that can be
+    // transferred to the spender's account
+    // ------------------------------------------------------------------------
+    function allowance(address tokenOwner, address spender) public view returns (uint remaining) {
+        return allowed[tokenOwner][spender];
+    }
+
+
+
+    // ------------------------------------------------------------------------
+    // Token owner can approve for `spender` to transferFrom(...) `tokens`
+    // from the token owner's account. The `spender` contract function
+    // `receiveApproval(...)` is then executed
+    // ------------------------------------------------------------------------
+    function approveAndCall(address spender, uint tokens, bytes data) public whenNotPaused returns (bool success) {
+
+        allowed[msg.sender][spender] = tokens;
+
+        emit Approval(msg.sender, spender, tokens);
+
+        ApproveAndCallFallBack(spender).receiveApproval(msg.sender, tokens, this, data);
+
+        return true;
+    }
+	
+	
+	
+	///*** BlockchainBridge contract functions
+	//---
+	// function executed by admin to credit user wallet with fiat currency he deposited via bank wire or any other method.
+	//---
+	function depositAccept(address indexed _to, uint _amount) public onlyPauser whenDepositsEnabled returns (bool success) {
+		
+		// create tokens as they were deposited as reserves
+		balances[_to] = balances[_to].add(_amount);
+		
+		// add amount to total supply
+		_totalSupply = _totalSupply.add(_amount);
+		
+		// no need for add safe check because with time an overflow is likely to happen as this is only a reference for user's total deposits
+		deposits[_to] = deposits[_to] + _amount;
+		
+		//emit DepositAccepted event
+		emit DepositAccepted(msg.sender, _to, _amount, _symbol);
+		
+		return true;
+    }
+	
+	
+	
+	//---
+	// function executed by user asking for a withdrawal
+	//---
+	function withdrawRequest(uint _amount) public whenWithdrawalsEnabled returns (bool success) {
+		// only withdraw what's available in user balance
+		require(_amount > 0 && _amount <= balanceOf[msg.sender]);
+		
+		// destroy tokens as they were withdrawn
+		balances[msg.sender] = balances[msg.sender].sub(_amount);
+		
+		// substract amount from total supply
+		_totalSupply = _totalSupply.sub(_amount);
+		
+		// no need for add safe check because with time an overflow is likely to happen as this is only a reference for user's total withdrawals
+		withdrawals[msg.sender] = withdrawals[msg.sender] + _amount;
+		
+		emit WithdrawalRequested(msg.sender, _amount, _symbol);
+		return true;
+	}
+	///*** BlockchainBridge contract functions
+	
+	
+	
+	///*** TransfersController contract functions
+	//---
+	// Enable transfers if they are disabled, executed only by admin.
+	//---
+	function enableTransfers() public onlyPauser returns (bool success) {
+		return super.enableTransfers();
+	}
+	
+	//---
+	// Disable transfers if they are enabled, executed only by admin.
+	//---
+	function disableTransfers() public onlyPauser returns (bool success) {
+		return super.disableTransfers();
+	}
+	///***
+	
+	
+	
+	// ------------------------------------------------------------------------
+    // Owner can destroy tokens collected from withdrawals as they were withdrawn by users.
+	// Withdrawn tokens are no longer in use, as tokens on the blockchain have to match currency amount in our bank accounts reserves.
+	//(user send their tokens to zero address for withdrawal)
+    // ------------------------------------------------------------------------
+    function clearWithdrawnTokens(uint tokens) public onlyOwner returns (bool success) {
+	
+        balances[address(0)] = balances[address(0)].sub(tokens);
+		return true;
+    }
+	
+	
+	
+    // ------------------------------------------------------------------------
+    // Don't accept ETH
+    // ------------------------------------------------------------------------
+    function () public payable {
+        revert();
+    }
+
+
+
+    // ------------------------------------------------------------------------
+    // Owner can transfer out any accidentally sent ERC20 tokens
+    // ------------------------------------------------------------------------
+    function recoverAnyERC20Token(address tokenAddress, uint tokens) public onlyOwner returns (bool success) {
+
+        return ERC20Interface(tokenAddress).transfer(owner, tokens);
+
+    }
+
+}

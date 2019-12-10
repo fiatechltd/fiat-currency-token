@@ -1,0 +1,22 @@
+pragma solidity ^0.4.24;
+
+import "./ERC20Token.sol";
+
+
+
+/**
+ * @dev Mintable token contract.
+ */
+contract MintableToken is ERC20Token
+{
+	event Mint(address indexed _admin, address indexed _to, uint _value);
+	
+	function mint(address _to, uint _value) internal returns (bool success) {
+		token.balances[_to] = token.balances[_to].add(_value);
+		// add amount to total supply
+		token.totalSupply = token.totalSupply.add(_value);
+		emit Transfer(address(0), _to, _value);
+		emit Mint(msg.sender, _to, _value);
+		return true;
+	}
+}

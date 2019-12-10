@@ -1,0 +1,226 @@
+const FiatToken = artifacts.require("./FiatToken.sol");
+const USDF = artifacts.require("./USDf.sol");
+const assert = require("chai").assert;
+const truffleAssert = require('truffle-assertions');
+
+const common = require("./common.js");
+const TEST_TAG = 'Fees-Controller--withdrawals - ';
+
+
+
+contract(common.TEST_CONTRACT_NAME, async accounts => {
+	var tokenInstance;
+	let contractOwner = accounts[0];
+	let admin1 = accounts[1];
+	let admin2 = accounts[2];
+	let user1 = accounts[3];
+	let user2 = accounts[4];
+	let ffc;
+	let dffc;
+	
+	
+	
+	// 'beforeEach' function will run before each test creating a new instance of the contract each time
+	beforeEach('setup contract for each test', async () => {
+		//let ffc = await FiatToken.deployed();
+        //ffc = await FiatToken.new(common.tokenSymbolUSD, common.tokenNameUSD, common.tokenVersion, common.tokenDecimals, {from: contractOwner});
+		//dffc = await FiatToken.new(common.tokenSymbolUSD, common.tokenNameUSD, common.tokenVersion, common.tokenDecimals, {from: contractOwner});
+		ffc = await common.createNewUSDContract(contractOwner);
+		dffc = await common.createNewUSDContract(contractOwner);
+		
+		// add a system admin to perform admin operations
+		await ffc.addAdmin(admin1, {from: contractOwner});
+		assert.equal(await ffc.isAdmin(admin1), true, 'admin1 should have admin role by now');
+		await ffc.addAdmin(admin2, {from: contractOwner});
+		assert.equal(await ffc.isAdmin(admin2), true, 'admin2 should have admin role by now');
+		await ffc.enableWithdrawalFees({from: contractOwner});
+		
+		//await dffc.disableWithdrawalFees({from: contractOwner});
+		await dffc.addAdmin(admin1, {from: contractOwner});
+		assert.equal(await dffc.isAdmin(admin1), true, 'admin1 should have admin role by now');
+		await dffc.addAdmin(admin2, {from: contractOwner});
+		assert.equal(await dffc.isAdmin(admin2), true, 'admin2 should have admin role by now');
+    });
+	
+	
+	
+	it(TEST_TAG + 'withdrawal fees are disabled upon contract initialization', async () => {
+		assert.equal(await ffc.checkWithdrawalFeesEnabled(), true, 'contract should have withdrawal fees enabled upon deployment');
+		assert.equal(await dffc.checkWithdrawalFeesEnabled(), false, 'contract should have withdrawal fees disabled upon deployment');
+	});
+	
+	it(TEST_TAG + 'withdrawal fees match expected values upon deployment', async () => {
+		let parts_Fee = 0;
+		let perX_Fee = 0;
+		//(parts_Fee, perX_Fee) = await ffc.getWithdrawalFees();
+		let minFeeTokens = await ffc.getMinimumWithdrawalFeeTokens();
+		let feesEnabled = await ffc.checkWithdrawalFeesEnabled();
+		//assert.equal(parts_Fee, 1, 'parts_Fee should be ' + 1);
+		//assert.equal(perX_Fee, 1000, 'perX_Fee should be ' + 1000);
+		assert.equal(minFeeTokens, 10, 'minFeeTokens should be ' + 10);
+		assert.equal(feesEnabled, true, 'feesEnabled should be true');
+	});
+	
+	it(TEST_TAG + 'admin can initWithdrawalFees and must return true', async () => {
+		let res = await ffc.initWithdrawalFees.call(2, 1000, 10, false, {from: admin1});
+		assert.equal(res, true, 'contract initWithdrawalFees should return true');
+		
+		await ffc.initWithdrawalFees(2, 1000, 10, false, {from: admin1});
+		let parts_Fee = 0;
+		let perX_Fee = 0;
+		//(parts_Fee, perX_Fee) = await ffc.getWithdrawalFees();
+		let minFeeTokens = await ffc.getMinimumWithdrawalFeeTokens();
+		let feesEnabled = await ffc.checkWithdrawalFeesEnabled();
+		//assert.equal(parts_Fee, 2, 'parts_Fee should be ' + 2);
+		//assert.equal(perX_Fee, 1000, 'perX_Fee should be ' + 1000);
+		assert.equal(minFeeTokens, 10, 'minFeeTokens should be ' + 10);
+		assert.equal(feesEnabled, false, 'feesEnabled should be true');
+	});
+	
+	it(TEST_TAG + 'user can NOT initWithdrawalFees', async () => {
+		//let res = await ffc.initWithdrawalFees.call(2, 1000, 10, false, {from: user1});
+		//assert.equal(res, false, 'contract initWithdrawalFees should return true');
+		
+		await truffleAssert.reverts(
+			ffc.initWithdrawalFees(2, 1000, 10, false, {from: user1}), "AdminRole: caller does not have the Admin role"
+		);
+	});
+	
+	it(TEST_TAG + 'user can calculate withdrawal fees tokens', async () => {
+		let tokensFee = await ffc.calculateWithdrawalFeeTokens(100000, {from: user1});
+		assert.equal(tokensFee.toNumber(), 100, 'tokens fee should match expected value ' + 100);
+		
+		// check for minimum fee
+		tokensFee = await ffc.calculateWithdrawalFeeTokens(1000, {from: user1});
+		assert.equal(tokensFee.toNumber(), 5, 'tokens fee should match expected value ' + 5);
+	});
+	
+	it(TEST_TAG + 'user can check minimum withdrawal fees tokens', async () => {
+		let tokensFee = await ffc.getMinimumWithdrawalFeeTokens({from: user1});
+		assert.equal(tokensFee.toNumber(), 5, 'tokens fee should match expected value ' + 5);
+	});
+	
+	it(TEST_TAG + 'user can check if withdrawal fees are enabled', async () => {
+		let enabled = await ffc.checkWithdrawalFeesEnabled({from: user1});
+		assert.equal(enabled, true, 'tokens fee enabled should match expected value true');
+	});
+	
+	it(TEST_TAG + 'user can check withdrawal fees', async () => {
+		//let fees = await ffc.getWithdrawalFees({from: user1});
+		//assert.equal(fees, ..., 'tokens fee should match expected value true');
+	});
+	
+	
+	
+	it(TEST_TAG + 'user can NOT enable/disable or set/change withdrawal fees parameters', async () => {
+		// user1 trying to set/change minimum withdrawal fee tokens should fail
+		await truffleAssert.reverts(
+			ffc.setMinimumWithdrawalFeeTokens(2, {from: user1}), "AdminRole: caller does not have the Admin role"
+		);
+		
+		// user1 trying to set withdrawal fees should fail
+		await truffleAssert.reverts(
+			ffc.setWithdrawalFees(2, 1000, {from: user1}), "AdminRole: caller does not have the Admin role"
+		);
+		
+		// user1 trying to enable withdrawal fees should fail
+		await truffleAssert.reverts(
+			dffc.enableWithdrawalFees({from: user1}), "AdminRole: caller does not have the Admin role"
+		);
+		
+		// user1 trying to disable withdrawal fees should fail
+		await truffleAssert.reverts(
+			ffc.disableWithdrawalFees({from: user1}), "AdminRole: caller does not have the Admin role"
+		);
+	});
+	
+	
+	
+	it(TEST_TAG + 'admin can NOT enable/disable or set/change withdrawal fees, IF they already have that value', async () => {
+		// admin1 trying to set the same minimum withdrawal fee tokens should fail
+		await truffleAssert.reverts(
+			ffc.setMinimumWithdrawalFeeTokens(5, {from: admin1}), "FeesLib._setMinimumFeeTokens: required (self.min_Fee_tokens != newMinFeeTokens)"
+		);
+		
+		// admin1 trying to set the same withdrawal fees should fail
+		await truffleAssert.reverts(
+			ffc.setWithdrawalFees(1, 1000, {from: admin1}), "FeesLib._setFees: required _parts_Fee != self.parts_Fee || _perX_Fee != self.perX_Fee"
+		);
+		
+		// admin1 trying to set _perX_Fee = 0 should fail
+		await truffleAssert.reverts(
+			ffc.setWithdrawalFees(10, 0, {from: admin1}), "FeesLib._setFees: required _perX_Fee > 0"
+		);
+		
+		// admin1 trying to set _parts_Fee >= _perX_Fee should fail
+		await truffleAssert.reverts(
+			ffc.setWithdrawalFees(100, 10, {from: admin1}), "FeesLib._setFees: required _parts_Fee < _perX_Fee"
+		);
+		
+		// admin1 trying to enable withdrawal fees when they already are enabled should fail
+		await truffleAssert.reverts(
+			ffc.enableWithdrawalFees({from: admin1}), "FeesLib._enableFees: Fees are already enabled!"
+		);
+		
+		// admin1 trying to disable withdrawal fees when they already are disabled should fail
+		await truffleAssert.reverts(
+			dffc.disableWithdrawalFees({from: admin1}), "FeesLib._disableFees: Fees are already disabled!"
+		);
+	});
+	
+	
+	
+	it(TEST_TAG + 'admin can enable/disable and set/change withdrawal fees parameters, triggering events', async () => {
+		// check the event is emitted:
+		// WithdrawalFeesEnabled(address indexed admin, string symbol)
+		// WithdrawalFeesDisabled(address indexed admin, string symbol)
+		// WithdrawalFeesChanged(address indexed admin, string symbol, uint parts_Fee, uint perX_Fee)
+		// MinimumWithdrawalFeeTokensChanged(address indexed admin, string symbol, uint newWithdrawalFeeTokens)
+		
+		let sym = await ffc.symbol();
+		
+		// admin1 trying to set/change minimum withdrawal fee tokens
+		let tx = await ffc.setMinimumWithdrawalFeeTokens(2, {from: admin1});
+		/*truffleAssert.eventEmitted(tx, 'MinimumWithdrawalFeeTokensChanged', (ev) => {
+			return ev.admin === admin1 && ev.symbol === sym && ev.newWithdrawalFeeTokens === 2;
+        });*/
+		assert.equal(tx.logs.length, 1, 'triggers one event');
+		assert.equal(tx.logs[0].event, 'MinimumWithdrawalFeeTokensChanged', 'should be the "MinimumWithdrawalFeeTokensChanged" event');
+		assert.equal(tx.logs[0].args.admin, admin1, 'logs the admin address');
+		assert.equal(tx.logs[0].args.symbol, sym, 'logs the token symbol');
+		assert.equal(tx.logs[0].args.newWithdrawalFeeTokens.toNumber(), 2, 'logs the token fees minimum');
+		assert.equal((await ffc.getMinimumWithdrawalFeeTokens()).toNumber(), 2, 'tokens fee minimum should match expected value ' + 2);
+		
+		// admin1 trying to set withdrawal fees
+		tx = await ffc.setWithdrawalFees(2, 1000, {from: admin1});
+		/*truffleAssert.eventEmitted(tx, 'WithdrawalFeesChanged', (ev) => {
+			return ev.admin === admin1 && ev.symbol === sym && ev.parts_Fee === 2 && ev.perX_Fee === 1000;
+        });*/
+		assert.equal(tx.logs.length, 1, 'triggers one event');
+		assert.equal(tx.logs[0].event, 'WithdrawalFeesChanged', 'should be the "WithdrawalFeesChanged" event');
+		assert.equal(tx.logs[0].args.admin, admin1, 'logs the admin address');
+		assert.equal(tx.logs[0].args.symbol, sym, 'logs the token symbol');
+		assert.equal(tx.logs[0].args.parts_Fee.toNumber(), 2, 'logs the parts fee');
+		assert.equal(tx.logs[0].args.perX_Fee.toNumber(), 1000, 'logs the parts per X fee');
+		
+		// admin1 trying to enable withdrawal fees
+		tx = await dffc.enableWithdrawalFees({from: admin1});
+		/*truffleAssert.eventEmitted(tx, 'WithdrawalFeesEnabled', (ev) => {
+			return ev.admin === admin1 && ev.symbol === sym;
+        });*/
+		assert.equal(tx.logs.length, 1, 'triggers one event');
+		assert.equal(tx.logs[0].event, 'WithdrawalFeesEnabled', 'should be the "WithdrawalFeesEnabled" event');
+		assert.equal(tx.logs[0].args.admin, admin1, 'logs the admin address');
+		assert.equal(tx.logs[0].args.symbol, sym, 'logs the token symbol');
+		
+		// admin1 trying to disable withdrawal fees
+		tx = await dffc.disableWithdrawalFees({from: admin1});
+		/*truffleAssert.eventEmitted(tx, 'WithdrawalFeesDisabled', (ev) => {
+			return ev.admin === admin1 && ev.symbol === sym;
+        });*/
+		assert.equal(tx.logs.length, 1, 'triggers one event');
+		assert.equal(tx.logs[0].event, 'WithdrawalFeesDisabled', 'should be the "WithdrawalFeesDisabled" event');
+		assert.equal(tx.logs[0].args.admin, admin1, 'logs the admin address');
+		assert.equal(tx.logs[0].args.symbol, sym, 'logs the token symbol');
+	});
+})

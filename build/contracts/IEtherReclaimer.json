@@ -1,0 +1,299 @@
+{
+  "contractName": "IEtherReclaimer",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_to",
+          "type": "address"
+        }
+      ],
+      "name": "reclaimEther",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.24;\r\n\r\n\r\n\r\n/**\r\n * @dev IEtherReclaimer interface protocol used by owner to reclaim other amount sent to contract address.\r\n */\r\ninterface IEtherReclaimer {\r\n\t\r\n\t/**\r\n\t * @dev Send all eth balance in the contract to another address\r\n\t * @param _to Address to send contract ether balance to\r\n\t * @return bool.\r\n\t */\r\n    function reclaimEther(address _to) external returns (bool success);\r\n}",
+  "sourcePath": "C:\\Users\\Homeuser\\Desktop\\FiatechFiatCurrencyToken\\contracts\\interfaces\\IEtherReclaimer.sol",
+  "ast": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IEtherReclaimer.sol",
+    "exportedSymbols": {
+      "IEtherReclaimer": [
+        3806
+      ]
+    },
+    "id": 3807,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3798,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:26"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": "@dev IEtherReclaimer interface protocol used by owner to reclaim other amount sent to contract address.\r",
+        "fullyImplemented": false,
+        "id": 3806,
+        "linearizedBaseContracts": [
+          3806
+        ],
+        "name": "IEtherReclaimer",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": "@dev Send all eth balance in the contract to another address\r\n@param _to Address to send contract ether balance to\r\n@return bool.\r",
+            "id": 3805,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "reclaimEther",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3801,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3800,
+                  "name": "_to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3805,
+                  "src": "363:11:26",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3799,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "363:7:26",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "362:13:26"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3804,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3803,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3805,
+                  "src": "394:12:26",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3802,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "394:4:26",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "393:14:26"
+            },
+            "scope": 3806,
+            "src": "341:67:26",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3807,
+        "src": "150:261:26"
+      }
+    ],
+    "src": "0:411:26"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IEtherReclaimer.sol",
+    "exportedSymbols": {
+      "IEtherReclaimer": [
+        3806
+      ]
+    },
+    "id": 3807,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3798,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:26"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": "@dev IEtherReclaimer interface protocol used by owner to reclaim other amount sent to contract address.\r",
+        "fullyImplemented": false,
+        "id": 3806,
+        "linearizedBaseContracts": [
+          3806
+        ],
+        "name": "IEtherReclaimer",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": "@dev Send all eth balance in the contract to another address\r\n@param _to Address to send contract ether balance to\r\n@return bool.\r",
+            "id": 3805,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "reclaimEther",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3801,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3800,
+                  "name": "_to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3805,
+                  "src": "363:11:26",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3799,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "363:7:26",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "362:13:26"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3804,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3803,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3805,
+                  "src": "394:12:26",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3802,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "394:4:26",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "393:14:26"
+            },
+            "scope": 3806,
+            "src": "341:67:26",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3807,
+        "src": "150:261:26"
+      }
+    ],
+    "src": "0:411:26"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.5",
+  "updatedAt": "2019-11-28T22:36:38.792Z",
+  "devdoc": {
+    "methods": {
+      "reclaimEther(address)": {
+        "details": "Send all eth balance in the contract to another address\r",
+        "params": {
+          "_to": "Address to send contract ether balance to\r"
+        },
+        "return": "bool.\r"
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

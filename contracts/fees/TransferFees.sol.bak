@@ -1,0 +1,202 @@
+pragma solidity ^0.4.24;
+
+import "../access/roles/Admin.sol";
+import "../libs/FeesLib.sol";
+
+// ----------------------------------------------------------------------------
+// Transfer fees controller
+// ----------------------------------------------------------------------------
+contract TransferFees is Admin
+{
+    using FeesLib for FeesLib.Fee;
+	
+	// persistent data
+    FeesLib.Fee private _transferFee;
+	
+	event TransferFeesEnabled(address indexed admin);
+	event TransferFeesDisabled(address indexed admin);
+	
+	//event TransferFeesInit(address indexed admin, uint parts_Fee, uint perX_Fee, uint minFeeTokens, uint maxFeeTokens, bool feesEnabled);
+	event TransferFeesChanged(address indexed admin, uint parts_Fee, uint perX_Fee);
+	//event MinTransferFeesChanged(address indexed admin, uint minTransferFee);
+	//event MaxTransferFeesChanged(address indexed admin, uint maxTransferFee);
+	
+	event TransferFeesCollected(address indexed from, address indexed to, uint transferTokens, address indexed feesCollector, uint transferTokensFee);
+	
+	
+	
+	/**
+	 * @dev Constructor
+	 */
+    constructor()
+		internal
+	{
+		_transferFee = FeesLib.Fee({parts_Fee: 0, perX_Fee: 1, min_Fee: 0, max_Fee: 0, feesEnabled: false});
+    }
+	
+	
+	
+	/**
+	 * @dev initTransferFees, given all required parameters in the same order as they are declared in the Fee struct.
+	 * @param _parts_Fee Parts component of the fee percentage
+	 * @param _perX_Fee Per X component of the fee percentage
+	 * @param _min_Fee Mininmum amount of tokens for the fee
+	 * @param _max_Fee Maximum amount of tokens for the fee, zero means no maximum
+	 * @param _feesEnabled Are fees enables?
+	 * @return bool
+	 */
+	function initTransferFees(uint _parts_Fee, uint _perX_Fee, uint _min_Fee, uint _max_Fee, bool _feesEnabled) public onlyAdmin returns (bool)
+	{
+		if (_transferFee.parts_Fee != _parts_Fee)
+			_transferFee.parts_Fee = _parts_Fee;
+		if (_transferFee.perX_Fee != _perX_Fee)
+			_transferFee.perX_Fee = _perX_Fee;
+		if (_transferFee.min_Fee != _min_Fee)
+			_transferFee.min_Fee = _min_Fee;
+		if (_transferFee.max_Fee != _max_Fee)
+			_transferFee.max_Fee = _max_Fee;
+		if (_transferFee.feesEnabled != _feesEnabled)
+			_transferFee.feesEnabled = _feesEnabled;
+		
+		//emit TransferFeesInit(msg.sender, _parts_Fee, _perX_Fee, _min_Fee, _max_Fee, _feesEnabled);
+		return true;
+	}
+	
+	
+	
+	/**
+	 * @dev calculateTransferFee, given token amount, calculate transfer fee in units/tokens that are cents or pennies
+	 * @param tokens Tokens amount to calculate fees for
+	 * @return uint
+	 */
+	function calculateTransferFee(uint tokens) public view returns (uint) {
+		return _transferFee.calculateFee(tokens);
+	}
+	
+	
+	
+	/**
+	 * @dev Get minimum transfer fee tokens/pennies/cents
+	 * @return uint
+	 */
+	function getMinTransferFee() public view returns (uint) {
+		
+		return _transferFee.getMinFee();
+	}
+	
+	
+	
+	/**
+	 * @dev Get maximum transfer fee tokens/pennies/cents
+	 * @return uint
+	 */
+	function getMaxTransferFee() public view returns (uint) {
+		
+		return _transferFee.getMaxFee();
+	}
+	
+	
+	
+	/**
+	 * @dev Set/change minimum transfer fee tokens/pennies/cents, only admin can do it
+	 * @param newMinTransferFee Minimum amount of tokens
+	 * @return bool
+	 */
+	function setMinTransferFee(uint newMinTransferFee) public onlyAdmin returns (bool ok) {
+		ok = _transferFee.setMinFee(newMinTransferFee);
+		/*if (ok) {
+			emit MinTransferFeesChanged(msg.sender, newMinTransferFee);
+		}*/
+	}
+	
+	
+	
+	/**
+	 * @dev Set/change maximum transfer fee tokens/pennies/cents, only admin can do it
+	 * @param newMaxTransferFee Maximum amount of tokens
+	 * @return bool
+	 */
+	function setMaxTransferFee(uint newMaxTransferFee) public onlyAdmin returns (bool ok) {
+		ok = _transferFee.setMaxFee(newMaxTransferFee);
+		/*if (ok) {
+			emit MaxTransferFeesChanged(msg.sender, newMaxTransferFee);
+		}*/
+	}
+	
+	
+	
+	/**
+	 * @dev Check transfer fees enabled/disabled fees
+	 * @return bool
+	 */
+	function transferFeesEnabled() public view returns (bool) {
+		return _transferFee.feesEnabled;
+	}
+	
+	
+	
+	/**
+	 * @dev Enable transfer fees, only admin can do it
+	 * @return bool
+	 */
+	function enableTransferFees() public onlyAdmin returns (bool ok) {
+		ok = _transferFee.enableFees();
+		if (ok) {
+			emit TransferFeesEnabled(msg.sender);
+		}
+	}
+	
+	
+	
+	/**
+	 * @dev Disable transfer fees, only admin can do it
+	 * @return bool
+	 */
+	function disableTransferFees() public onlyAdmin returns (bool ok) {
+		ok = _transferFee.disableFees();
+		if (ok) {
+			emit TransferFeesDisabled(msg.sender);
+		}
+	}
+	
+	
+	
+	/**
+	 * @dev Get transfer fees as parts per X units
+	 * @return (uint, uint)
+	 */
+	function getTransferFees() public view returns (uint _parts_Fee, uint _perX_Fee) {
+		return _transferFee.getFees();
+	}
+	
+	/**
+	 * @dev Get transfer fees numerator part
+	 * @return uint
+	 */
+	function getTransferFeesNumerator() public view returns (uint _parts_Fee) {
+		(_parts_Fee, ) = _transferFee.getFees();
+	}
+	
+	/**
+	 * @dev Get transfer fees denominator part
+	 * @return uint
+	 */
+	function getTransferFeesDenominator() public view returns (uint _perX_Fee) {
+		(, _perX_Fee) = _transferFee.getFees();
+	}
+	
+	
+	
+	/**
+	 * @dev Set transfer fees as parts per X units, only admin can do it
+	 * @param _parts_Fee Parts component of the fee percentage
+	 * @param _perX_Fee Per X component of the fee percentage
+	 * @return bool
+	 */
+	function setTransferFees(uint _parts_Fee, uint _perX_Fee) public onlyAdmin returns (bool ok) {
+		ok = _transferFee.setFees(_parts_Fee, _perX_Fee);
+		if (ok) {
+			emit TransferFeesChanged(msg.sender, _parts_Fee, _perX_Fee);
+		}
+	}
+}

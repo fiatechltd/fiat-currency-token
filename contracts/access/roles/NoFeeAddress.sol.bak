@@ -1,0 +1,51 @@
+pragma solidity ^0.4.24;
+
+// ----------------------------------------------------------------------------
+// based on:
+// https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/access/roles/PauserRole.sol
+// ----------------------------------------------------------------------------
+
+import "../Roles.sol";
+import "../../Owned.sol";
+
+contract NoFeeAddress is Owned {
+
+    using Roles for Roles.Role;
+	
+    event NoFeeAddressAdded(address indexed admin, address indexed account);
+    event NoFeeAddressRemoved(address indexed admin, address indexed account);
+	event NoFeeAddressRenounced(address indexed account);
+	
+    Roles.Role private _noFeeAddresses;
+	
+	
+	
+    constructor()
+		internal
+	{
+        _addNoFeeAddress(msg.sender);
+    }
+	
+    function isNoFeeAddress(address account) public view returns (bool) {
+        return _noFeeAddresses.has(account);
+    }
+
+    function addNoFeeAddress(address account) public onlyOwner {
+        _addNoFeeAddress(account);
+    }
+	
+	function removeNoFeeAddress(address account) public onlyOwner {
+		_noFeeAddresses.remove(account);
+		emit NoFeeAddressRemoved(msg.sender, account);
+    }
+	
+    function renounceNoFeeAddress() public {
+		_noFeeAddresses.remove(msg.sender);
+		emit NoFeeAddressRenounced(msg.sender);
+    }
+	
+	function _addNoFeeAddress(address account) internal {
+        _noFeeAddresses.add(account);
+		emit NoFeeAddressAdded(msg.sender, account);
+    }
+}

@@ -1,0 +1,81 @@
+pragma solidity ^0.4.24;
+
+import "./KYC.sol";
+
+
+
+/**
+ * @dev Know Your Costumer controller contract used to control users access to fiat token functionality.
+ */
+contract KYCController is KYC
+{
+	// toggle to control KYC check and access filters for users when they are interacting with contract
+	bool public kycEnabled;
+	
+	/**
+	 * @dev Event is raised when admin enables KYC filters.
+	 * @param _admin Admin address performing the operation.
+	 */
+	event KYCEnabled(address indexed _admin);
+	
+	/**
+	 * @dev Event is raised when admin disables KYC filters.
+	 * @param _admin Admin address performing the operation.
+	 */
+	event KYCDisabled(address indexed _admin);
+	
+	
+	
+	/**
+	 * @dev Constructor
+	 */
+	constructor()
+		internal
+	{
+		kycEnabled = false;
+    }
+	
+	modifier whenKYCEnabled {
+		require(kycEnabled == true, "KYC must be enabled!");
+		_;
+	}
+	
+	modifier whenKYCDisabledOrApprovedAddress {
+		// if KYC is enabled, sender address must be approved
+		require(!kycEnabled || isKYCApproved(msg.sender), "KYC: sender address must be approved!");
+		_;
+	}
+	
+	function whenKYCDisabledOrApprovedAddressTo (address _address) public view returns (bool success) {
+		// if KYC is enabled, 'to' address must be approved
+		return (!kycEnabled || isKYCApproved(_address));
+	}
+	
+	
+	
+	/**
+	 * @dev Enable KYC filters if they are disabled.
+	 * @return bool.
+	 */
+	function enableKYC() public onlyAdmin returns (bool success) {
+		if (!kycEnabled) {
+			kycEnabled = true;
+			emit KYCEnabled(msg.sender);
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * @dev Disable KYC filters if they are enabled.
+	 * @return bool.
+	 */
+	function disableKYC() public onlyAdmin returns (bool success) {
+		if (kycEnabled) {
+			kycEnabled = false;
+			emit KYCDisabled(msg.sender);
+			return true;
+		}
+		return false;
+	}
+}

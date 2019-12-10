@@ -1,0 +1,450 @@
+pragma solidity ^0.5.0;
+
+import "./SafeMath.sol";
+import "./interfaces/IERC20.sol";
+import "./interfaces/IBlockchainBridge.sol";
+import "./interfaces/ITokensRecovery.sol";
+import "./interfaces/IEtherReclaimer.sol";
+import "./Owned.sol";
+import "./Mortal.sol";
+import "./lifecycle/Pausable.sol";
+import "./access/roles/Admin.sol";
+import "./access/roles/NoFeeAddress.sol";
+import "./BlockchainBridge.sol";
+import "./TransfersController.sol";
+import "./fees/FeesController.sol";
+import "./StandardTokenStorage.sol";
+//import "./kyc/KYCController.sol";
+//import "./kyc/BlacklistController.sol";
+
+
+
+/**
+ * @dev ERC20 Token, with symbol, name, standard and decimals among others.
+ * Token units in this contract mean cents or pennies of the fiat currency it represents.
+ */
+contract FiatToken is IERC20
+		, Owned
+		, Admin
+		, Mortal
+		, StandardTokenStorage
+		, Pausable
+		, BlockchainBridge
+		, TransfersController
+		, FeesController
+		, NoFeeAddress //special privileges wallets for exchange wallets and admins
+		//, KYCController //Know Your Costumer controller
+		//, BlacklistController
+		, ITokensRecovery
+		, IEtherReclaimer
+{
+    using SafeMath for uint;
+    
+	
+	
+	//wallet address where the fees are collected
+	address public feesCollectorWallet;
+	
+	//if enabled, transfer to your same address is considered funds withdrawal
+	bool public transferToYourselfIsWidrawal;
+	
+	
+	
+    /**
+	 * @dev Constructor
+	 */
+    constructor()
+		Owned()
+		Admin()
+		Pausable()
+		NoFeeAddress()
+		//KYCController()
+		//BlacklistController()
+		public
+		onlyOwner
+	{
+		//--- transfer fees are disabled
+		//--- withdrawal fees are disabled
+		
+		uint parts_transferFee = 1; // 1 per 1000 as 0.1%
+		uint perX_transferFee = 1000; // 1 per 1000 as 0.1%
+		uint min_transferFee_tokens = 10; //10 cent(s) as fixed minimum fee
+		uint max_transferFee_tokens = 0; //0 means disabled fixed maximum fee
+		bool transferFee_Enabled = false;
+		// init transfer fees: 1 per 1000 (0.1%), 10 cents minimum fee, transfer fee disabled
+		initTransferFees(parts_transferFee, perX_transferFee, min_transferFee_tokens, max_transferFee_tokens, transferFee_Enabled);
+		
+		//--- transfers are initialized as disabled
+		
+		feesCollectorWallet = msg.sender;
+		transferToYourselfIsWidrawal = true;
+    }
+	
+	
+	
+	/**
+	 * @dev Change transfer fees collector wallet, only owner can do it
+	 * @param newWallet Set address to collect fees into
+	 * @return bool
+	 */
+	function setFeesCollectorWallet(address newWallet) public onlyOwner whenNotPaused returns (bool) {
+		if (newWallet != feesCollectorWallet) {
+			feesCollectorWallet = newWallet;
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * @dev Get transfer fees collector wallet, only admin can do it
+	 * @return address
+	 */
+	/*function getFeesCollectorWallet() public view onlyAdmin returns (address) {
+		return feesCollectorWallet;
+	}*/
+	
+	/**
+	 * @dev Set transfer to yourself is widrawal toggle enabled/disabled.
+	 * @return bool
+	 */
+	function setTransferToYourselfIsWidrawal(bool enabled) external onlyAdmin returns (bool) {
+		if (enabled != transferToYourselfIsWidrawal) {
+			transferToYourselfIsWidrawal = enabled;
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
+    /**
+	 * @dev Total supply, actually it is the circulating supply of tokens available.
+	 * @return bool
+	 */
+    function totalSupply() public view returns (uint) {
+		return _totalSupply.sub(_balances[address(0)]);
+    }
+
+
+
+    /**
+	 * @dev Get the token balance for account `tokenOwner`
+	 * @param tokenOwner User address to check his tokens balance
+	 * @return uint
+	 */
+    function balanceOf(address tokenOwner) public view returns (uint balance) {
+        return _balances[tokenOwner];
+    }
+	
+	
+	
+    /**
+	 * @dev Transfer the balance from token owner's account to `to` account
+	 * - Owner's account must have sufficient balance to transfer
+	 * - 0 value transfers are allowed
+	 * @param to Address to transfer tokens to
+	 * @param tokens Amount of tokens to tranfer
+	 * @return bool
+	 */
+    function transfer(address to, uint tokens) public
+		whenNotPaused
+		whenTransfersEnabled
+		//whenKYCDisabledOrApprovedAddress
+		//whenNOTBlacklistedAddress
+		returns (bool)
+	{
+		//require(whenKYCDisabledOrApprovedAddressTo(to)); //, "transfer: <to> KYC is not approved!");
+		//require(whenNOTBlacklistedAddressTo(to)); //, "transfer: <to> is blacklisted!");
+		
+		// transfers to your own address are considered withdrawals (so they are allowed) ???
+		if (to == msg.sender && transferToYourselfIsWidrawal) {
+			return withdrawRequest(tokens);
+		}
+		
+		//calculate transfer fees amount
+		uint transfer_fee_amount = calculateTransferFee(tokens);
+		
+		//transfers involving admin wallets carry zero fees
+		if (isNoFeeAddress(to) || isNoFeeAddress(msg.sender))
+			transfer_fee_amount = 0;
+		
+		require(_balances[msg.sender] >= (tokens.add(transfer_fee_amount)), "Not enough tokens in sender's balance!");
+		
+		
+		
+        _balances[msg.sender] = _balances[msg.sender].sub(tokens).sub(transfer_fee_amount);
+		
+		//collect the transfer fees, if wallet is zero/invalid, contract owner gets the transfer fees
+		address feesCollector = (feesCollectorWallet == address(0)) ? owner : feesCollectorWallet;
+		_balances[feesCollector] = _balances[feesCollector].add(transfer_fee_amount);
+		
+        _balances[to] = _balances[to].add(tokens);
+        
+		emit Transfer(msg.sender, to, tokens);
+		
+		// emit event for transfer fees collected, giving sender address, receiver address, amount sent, fee amount collected and current symbol.
+		emit TransferFeesCollected(msg.sender, to, tokens, feesCollector, transfer_fee_amount);
+		
+        return true;
+    }
+	
+	
+	
+    /**
+	 * @dev Token owner can approve for `spender` to transferFrom(...) `tokens`
+	 * from the token owner's account
+	 *
+	 * https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md
+	 * https://eips.ethereum.org/EIPS/eip-20
+	 * recommends that there are no checks for the approval double-spend attack
+	 * as this should be implemented in user interfaces
+	 * NOTE: We use a modified version of the ERC20 approve function to be a little bit safer
+	 * based on: https://github.com/Giveth/minime/blob/master/contracts/MiniMeToken.sol#L263
+	 * @param spender Spender address user approves to spend tokens on his behalf
+	 * @param tokens Amount of tokens spender is approved to spend/transfer
+	 * @return bool
+	 */
+    function approve(address spender, uint tokens) public
+		whenNotPaused
+		whenTransfersEnabled
+		//whenKYCDisabledOrApprovedAddress
+		//whenNOTBlacklistedAddress
+		returns (bool)
+	{
+		//require(whenKYCDisabledOrApprovedAddressTo(spender), "approve: <spender> KYC is not approved!");
+		//require(whenNOTBlacklistedAddressTo(spender), "aprove: <spender> is blacklisted!");
+		
+		// To change the approve amount you first have to reduce the addresses`
+        //  allowance to zero by calling `approve(_spender,0)` if it is not
+        //  already 0 to mitigate the race condition described here:
+        //  https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+        
+        _allowed[msg.sender][spender] = tokens;
+		
+        emit Approval(msg.sender, spender, tokens);
+		
+        return true;
+    }
+
+
+
+    /**
+	 * @dev Transfer `tokens` from the `from` account to the `to` account
+	 *
+	 * The calling account must already have sufficient tokens approve(...)-d
+	 * for spending from the `from` account and
+	 * - From account must have sufficient balance to transfer
+	 * - Spender must have sufficient allowance to transfer
+	 * - 0 value transfers are allowed
+	 * *** The user executing the function pays the transfer fees, not the funds owner
+	 * @param from Address approved spender tranfers tokens from
+	 * @param to Address approved spender tranfers to
+	 * @param tokens Amount of tokens approved to transfer
+	 * @return bool
+	 */
+    function transferFrom(address from, address to, uint tokens) public
+		whenNotPaused
+		whenTransfersEnabled
+		//whenKYCDisabledOrApprovedAddress
+		//whenNOTBlacklistedAddress
+		returns (bool)
+	{
+		require(to != address(0)); //transfers to zero address using "transferFrom" function are forbidden
+		//require(whenKYCDisabledOrApprovedAddressTo(from), "KYC: <from> KYC is not approved!");
+		//require(whenKYCDisabledOrApprovedAddressTo(to), "KYC: <to> KYC is not approved!");
+		//require(whenNOTBlacklistedAddressTo(from), "BlacklistController: <from> is blacklisted!");
+		//require(whenNOTBlacklistedAddressTo(to), "BlacklistController: <to> is blacklisted!");
+		
+		//calculate transfer fees amount
+		uint transfer_fee_amount = calculateTransferFee(tokens);
+		
+		//transfers involving admin wallets carry zero fees
+		if (isNoFeeAddress(from) || isNoFeeAddress(to) || isNoFeeAddress(msg.sender))
+			transfer_fee_amount = 0;
+		
+		require(_balances[from] >= (tokens.add(transfer_fee_amount)), "Not enough tokens in <from> balance!");
+		require(_allowed[from][msg.sender] >= (tokens.add(transfer_fee_amount)), "Not enough tokens allowed by <from>!");
+		
+		
+		
+        _allowed[from][msg.sender] = _allowed[from][msg.sender].sub(tokens).sub(transfer_fee_amount);
+		
+		_balances[from] = _balances[from].sub(tokens).sub(transfer_fee_amount);
+		
+		//collect the transfer fees, if wallet is zero/invalid, contract owner gets the transfer fees
+		address feesCollector = (feesCollectorWallet == address(0)) ? owner : feesCollectorWallet;
+		_balances[feesCollector] = _balances[feesCollector].add(transfer_fee_amount);
+		
+		_balances[to] = _balances[to].add(tokens);
+		
+        emit Transfer(from, to, tokens);
+		
+		// emit event for transfer fees collected, giving sender address, receiver address, amount sent, fee amount collected and current symbol.
+		emit TransferFeesCollected(from, to, tokens, feesCollector, transfer_fee_amount);
+		
+		return true;
+    }
+
+
+
+    /**
+	 * @dev Returns the amount of tokens approved by the owner that can be
+	 * transferred to the spender's account
+	 * @param tokenOwner Address of token owner we check for allowance on
+	 * @param spender Address of spender that token owner approved to spend on his behalf
+	 * @return uint
+	 */
+    function allowance(address tokenOwner, address spender) public view returns (uint remaining) {
+        return _allowed[tokenOwner][spender];
+    }
+	
+	
+	
+	///*** BlockchainBridge contract functions
+	
+	/**
+	 * @dev Function executed by admin, after funds were received by bank wire or any other accepted method, admin deposits equal tokens to user address.
+	 * @param _to User address to deposit tokens to
+	 * @param _amount Amount of tokens to deposit to user address
+	 * @return bool
+	 */
+	function depositAccept(address _to, uint _amount) public
+		onlyAdmin
+		whenNotPaused
+		whenDepositsEnabled
+		returns (bool)
+	{
+		//require(whenKYCDisabledOrApprovedAddressTo(_to)); //, "depositAccept: <to> KYC is not approved!");
+		//require(whenNOTBlacklistedAddressTo(_to)); //, "depositAccept: <_to> is blacklisted!");
+		
+		// create tokens as they were deposited as reserves
+		_balances[_to] = _balances[_to].add(_amount);
+		
+		// add amount to total supply
+		_totalSupply = _totalSupply.add(_amount);
+		
+		//emit DepositAccepted event
+		emit DepositAccepted(msg.sender, _to, _amount);
+		
+		//emit Tranfer event to comply with ERC20 standard token specs https://eips.ethereum.org/EIPS/eip-20
+		emit Transfer(address(0), _to, _amount);
+		
+		return true;
+    }
+	
+	
+	
+	/**
+	 * @dev Function executed by user asking for a withdrawal, withdrawal fee (if any) is substracted from withdrawal amount
+	 * e.g. if user withdraws $1000 he pays $1 from that amount as fee (for withdrawal fee = 0.1%)
+	 * @param _amount Amount of tokens to withdraw
+	 * @return bool
+	 */
+	function withdrawRequest(uint _amount) public
+		whenNotPaused
+		whenWithdrawalsEnabled
+		//whenKYCDisabledOrApprovedAddress
+		//whenNOTBlacklistedAddress
+		returns (bool)
+	{
+		// only withdraw what's available in user balance
+		require(_amount > 0 && _amount <= _balances[msg.sender], "withdrawRequest: tokens must be valid and greater than zero");
+		require(_amount >= minWithdrawalAmount, "withdrawRequest: tokens must be greater than or equal to minimum limit");
+		require(maxWithdrawalAmount == 0 || _amount <= maxWithdrawalAmount, "withdrawRequest: tokens must be less than or equal to maximum limit");
+		
+		// destroy tokens as they were withdrawn
+		_balances[msg.sender] = _balances[msg.sender].sub(_amount);
+		
+		// substract amount from total supply
+		_totalSupply = _totalSupply.sub(_amount);
+		
+		// emit event for withdrawal.
+		emit WithdrawalRequested(msg.sender, _amount, 0 /*zero withdrawal fee*/);
+		
+		return true;
+	}
+	
+	///*** BlockchainBridge contract functions
+	
+	
+	
+	///*** TransfersController contract functions
+	
+	/**
+	 * @dev Enable transfers if they are disabled, executed only by admin.
+	 * @return bool
+	 */
+	function enableTransfers(bool enable) public onlyAdmin whenNotPaused returns (bool) {
+		return super.enableTransfers(enable);
+	}
+	/*function enableTransfers() public onlyAdmin whenNotPaused returns (bool) {
+		return super.enableTransfers();
+	}*/
+	
+	/**
+	 * @dev Disable transfers if they are enabled, executed only by admin.
+	 * @return bool
+	 */
+	/*function disableTransfers() public onlyAdmin whenNotPaused returns (bool) {
+		return super.disableTransfers();
+	}*/
+	
+	///*** TransfersController contract functions
+	
+	
+	
+	///*** BlacklistOperations contract functions
+	
+	function wipeoutAddressBalance(address _account) public
+		onlyAdmin
+		whenNotPaused
+		returns (bool)
+	{
+		require(_account != owner, "Owner address balance can not be wiped out!");
+		//require(isBlacklisted(_account), "Address must be blacklisted first!");
+		require(_balances[_account] > 0, "Balance must be greater than zero!");
+		
+		uint _amount = _balances[_account];
+		_balances[_account] = 0;
+		//emit BlacklistedAddressWipedout(msg.sender, _account, _amount);
+		
+		return true;
+	}
+	
+	///*** BlacklistOperations contract functions
+	
+	
+	
+    /**
+	 * Accept ETH donations
+	 */
+    function () external payable {
+    }
+	
+	
+	
+	/**
+	 * @dev Send all eth balance in the contract to another address
+	 * @param _to Address to send contract ether balance to
+	 * @return bool
+	 */
+    function reclaimEther(address payable _to) external onlyOwner returns (bool) {
+        _to.transfer(address(this).balance);
+		return true;
+    }
+	
+	
+	
+    /**
+	 * @dev Owner can transfer out any accidentally sent ERC20 tokens
+	 * @param tokenAddress Token contract address we want to recover lost tokens from.
+	 * @param tokens Amount of tokens to be recovered, usually the same as the balance of this contract.
+	 * @return bool
+	 */
+    function recoverAnyERC20Token(address tokenAddress, uint tokens) external onlyOwner returns (bool ok) {
+		
+		ok = IERC20(tokenAddress).transfer(owner, tokens);
+		emit ERC20TokenRecovered(tokenAddress, address(this), owner, tokens);
+    }
+
+}

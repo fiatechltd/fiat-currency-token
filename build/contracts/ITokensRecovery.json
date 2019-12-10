@@ -1,0 +1,356 @@
+{
+  "contractName": "ITokensRecovery",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "tokenAddress",
+          "type": "address"
+        },
+        {
+          "name": "tokens",
+          "type": "uint256"
+        }
+      ],
+      "name": "recoverAnyERC20Token",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.24;\r\n\r\n\r\n\r\n/**\r\n * @dev ITokensRecovery interface protocol used by admin to recover other tokens mistakenly deposited to the contract implementing this interface.\r\n */\r\ninterface ITokensRecovery {\r\n\t\r\n\t///**\r\n\t// * @dev Event raised when foreign tokens were claimed/recovered from mistakenly transfer operation to contract address implementing this interface.\r\n\t// * @param tokenAddress Lost foreign tokens contract address\r\n\t// * @param fromContractAddress Contract address that was mistakenly sent tokens and is about to recover them\r\n\t// * @param to Address we send lost tokens to\r\n\t// * @param tokens Amount of tokens to recover\r\n\t// */\r\n\t//event ERC20TokenRecovered(address indexed tokenAddress, address indexed fromContractAddress, address indexed to, uint tokens);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Recover mistakenly sent other contract tokens to this contract address by executing foreign contract transfer function from this contract.\r\n\t * @param tokenAddress Foreign token contract address to recover tokens of.\r\n\t * @param tokens Tokens to recover.\r\n\t * @return bool.\r\n\t */\r\n\tfunction recoverAnyERC20Token(address tokenAddress, uint tokens) external returns (bool success);\r\n}",
+  "sourcePath": "C:\\Users\\Homeuser\\Desktop\\FiatechFiatCurrencyToken\\contracts\\interfaces\\ITokensRecovery.sol",
+  "ast": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/ITokensRecovery.sol",
+    "exportedSymbols": {
+      "ITokensRecovery": [
+        3997
+      ]
+    },
+    "id": 3998,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3987,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:30"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": "@dev ITokensRecovery interface protocol used by admin to recover other tokens mistakenly deposited to the contract implementing this interface.\r",
+        "fullyImplemented": false,
+        "id": 3997,
+        "linearizedBaseContracts": [
+          3997
+        ],
+        "name": "ITokensRecovery",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": "@dev Recover mistakenly sent other contract tokens to this contract address by executing foreign contract transfer function from this contract.\r\n@param tokenAddress Foreign token contract address to recover tokens of.\r\n@param tokens Tokens to recover.\r\n@return bool.\r",
+            "id": 3996,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "recoverAnyERC20Token",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3992,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3989,
+                  "name": "tokenAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3996,
+                  "src": "1130:20:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3988,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1130:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3991,
+                  "name": "tokens",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3996,
+                  "src": "1152:11:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3990,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1152:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1129:35:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3995,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3994,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3996,
+                  "src": "1183:12:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3993,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1183:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1182:14:30"
+            },
+            "scope": 3997,
+            "src": "1100:97:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3998,
+        "src": "190:1010:30"
+      }
+    ],
+    "src": "0:1200:30"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/ITokensRecovery.sol",
+    "exportedSymbols": {
+      "ITokensRecovery": [
+        3997
+      ]
+    },
+    "id": 3998,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3987,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:30"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": "@dev ITokensRecovery interface protocol used by admin to recover other tokens mistakenly deposited to the contract implementing this interface.\r",
+        "fullyImplemented": false,
+        "id": 3997,
+        "linearizedBaseContracts": [
+          3997
+        ],
+        "name": "ITokensRecovery",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": "@dev Recover mistakenly sent other contract tokens to this contract address by executing foreign contract transfer function from this contract.\r\n@param tokenAddress Foreign token contract address to recover tokens of.\r\n@param tokens Tokens to recover.\r\n@return bool.\r",
+            "id": 3996,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "recoverAnyERC20Token",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3992,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3989,
+                  "name": "tokenAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3996,
+                  "src": "1130:20:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3988,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1130:7:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3991,
+                  "name": "tokens",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3996,
+                  "src": "1152:11:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3990,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1152:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1129:35:30"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3995,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3994,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3996,
+                  "src": "1183:12:30",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3993,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1183:4:30",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1182:14:30"
+            },
+            "scope": 3997,
+            "src": "1100:97:30",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3998,
+        "src": "190:1010:30"
+      }
+    ],
+    "src": "0:1200:30"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.5",
+  "updatedAt": "2019-11-28T22:36:38.800Z",
+  "devdoc": {
+    "methods": {
+      "recoverAnyERC20Token(address,uint256)": {
+        "details": "Recover mistakenly sent other contract tokens to this contract address by executing foreign contract transfer function from this contract.\r",
+        "params": {
+          "tokenAddress": "Foreign token contract address to recover tokens of.\r",
+          "tokens": "Tokens to recover.\r"
+        },
+        "return": "bool.\r"
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

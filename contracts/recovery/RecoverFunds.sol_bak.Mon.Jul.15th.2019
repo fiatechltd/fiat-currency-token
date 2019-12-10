@@ -1,0 +1,68 @@
+pragma solidity ^0.5.0;
+
+import "../StandardTokenData.sol";
+import "../interfaces/RecoverableFundsInterface.sol";
+import "../access/roles/AdminRole.sol";
+
+/**
+ * @dev RecoverFunds abstract contract used to control wallet reset rights to admin, implementing RecoverableFundsInterface
+ */
+contract RecoverFunds is StandardTokenData, RecoverableFundsInterface, AdminRole {
+	
+	// registered wallets for later option to recover locked funds by reset balance and credit a new user wallet with old balance.
+	mapping(address => bool) recoverableWallets;
+	
+	
+	
+	/**
+	 * @dev Constructor
+	 * @param _symbol Token symbol
+	 */
+    constructor(string memory _symbol)
+		internal
+	{
+        symbol = _symbol;
+    }
+	
+	
+	
+	/**
+	 * @dev Make wallet address recoverable or remove recoverable feature from it if it already has it.
+	 * @param _recoverable Toggle to make wallet recoverable or not.
+	 * return bool.
+	 */
+	function makeWalletRecoverable(bool _recoverable) public returns (bool success) {
+		// requires wallet recoverable state to be different than the new state.
+		require(_recoverable != recoverableWallets[msg.sender], "RecoverFunds: New wallet state has to be different than current recoverable state!");
+		
+		recoverableWallets[msg.sender] = _recoverable;
+		
+		emit WalletRecoverable(msg.sender, _recoverable);
+		return true;
+	}
+	
+	/**
+	 * @dev Check if given wallet address is recoverable.
+	 * @param _wallet Check if given wallet address is recoverable.
+	 * @return bool.
+	 */
+	function isWalletRecoverable(address _wallet) public view returns (bool recoverable) {
+		return recoverableWallets[_wallet];
+	}
+	
+	/**
+	 * @dev Reset user balance to zero to credit the same balance to a new wallet of his choice.
+	 * NOTE: User previously authorized admin to reset this wallet in case he looses access to it.
+	 * @param _wallet Wallet address which balance is about to be reset.
+	 * @return bool.
+	 */
+	function resetWalletBalance(address _wallet) public onlyAdmin returns (bool success) {
+		// only allow wallet reset if user previously granted access to admin to do so.
+		require(recoverableWallets[_wallet], "RecoverFunds: Wallet has to be recoverable to reset its balance to zero!");
+		
+		balances[_wallet] = 0;
+		
+		emit WalletBalanceReset(msg.sender, _wallet);
+		return true;
+	}
+}

@@ -1,0 +1,371 @@
+pragma solidity ^0.4.24;
+
+//import "./SafeMathLib.sol";
+//import "./interfaces/IERC20.sol";
+//import "./interfaces/IBlockchainBridge.sol";
+//import "./interfaces/ITokensRecovery.sol";
+//import "./interfaces/IEtherReclaimer.sol";
+import "./Owned.sol";
+import "./Mortal.sol";
+//import "./lifecycle/Pausable.sol";
+//import "../access/roles/Admin.sol";
+//import "../access/roles/NoFeeAddress.sol";
+//import "./BlockchainBridge.sol";
+//import "./TransfersController.sol";
+//import "../fees/FeesController.sol";
+//import "./StandardTokenStorage.sol";
+//import "../kyc/KYCController.sol";
+//import "../kyc/BlacklistController.sol";
+
+
+import "./libs/ConfigLib.sol";
+import "./libs/IConfigLibEvents.sol";
+import "./libs/IConfig.sol";
+
+
+
+/**
+ * @dev Contract implementing System Config library to handle system management.
+ */
+contract Config is IConfigLibEvents
+	, ConfigLib
+	, IConfig
+	, Owned
+	, Mortal
+{
+	ConfigLib.ConfigStorage config;
+	using ConfigLib for ConfigLib.ConfigStorage;
+	
+	
+	
+	
+	constructor() public {
+		bool _kycEnabled = false;
+		config.init(_kycEnabled);
+	}
+	
+	modifier onlyAdmin {
+		require(config.admins[msg.sender] == true, "Admin required");
+		_;
+	}
+	
+	modifier whenNotPaused {
+		require(!config.paused, "Paused");
+		_;
+	}
+	
+	function canTransfer(address sender, address to) public view returns (bool) {
+		return (!isPaused() && transfersEnabled()
+				&& isKYCDisabledOrApprovedAddress(sender) && isNotBlacklisted(sender)
+				&& isKYCDisabledOrApprovedAddress(to) && isNotBlacklisted(to));
+		//require(!isPaused(), "Paused");
+		//require(transfersEnabled(), "Transfers disabled");
+		//require(isKYCDisabledOrApprovedAddress(sender), "KYC not approved");
+		//require(isKYCDisabledOrApprovedAddress(to), "KYC not approved");
+		//require(isNotBlacklisted(sender), "Blacklisted");
+		//require(isNotBlacklisted(to), "Blacklisted");
+		//return true;
+	}
+	
+	function canApprove(address sender, address spender) public view returns (bool) {
+		return (!isPaused() && transfersEnabled()
+				&& isKYCDisabledOrApprovedAddress(sender) && isNotBlacklisted(sender)
+				&& isKYCDisabledOrApprovedAddress(spender) && isNotBlacklisted(spender));
+	}
+	
+	function canTransferFrom(address sender, address from, address to) public view returns (bool) {
+		return (!isPaused() && transfersEnabled()
+				&& isKYCDisabledOrApprovedAddress(sender) && isNotBlacklisted(sender)
+				&& isKYCDisabledOrApprovedAddress(from) && isKYCDisabledOrApprovedAddress(to)
+				&& isNotBlacklisted(from) && isNotBlacklisted(to));
+	}
+	
+	function canDeposit(address sender, address to) public view returns (bool) {
+		return (isAdmin(sender) && !isPaused() && depositsEnabled() 
+				&& isKYCDisabledOrApprovedAddress(to) && isNotBlacklisted(to));
+				
+		//require(isAdmin(sender), "Admin required");
+		//require(!isPaused(), "Paused");
+		//require(depositsEnabled(), "Deposits disabled");
+		//require(isKYCDisabledOrApprovedAddress(to), "KYC not approved");
+		//require(isNotBlacklisted(to), "Blacklisted");
+		//return true;
+	}
+	
+	function canWithdraw(address sender) public view returns (bool) {
+		return (!isPaused() && withdrawalsEnabled() && isKYCDisabledOrApprovedAddress(sender) && isNotBlacklisted(sender));
+	}
+	
+	function canWipeoutAddressBalance(address sender, address to) public view returns (bool) {
+		return (isAdmin(sender) && !isPaused() && isBlacklisted(to));
+	}
+	
+	
+	
+	function feesCollectorWallet() public view returns (address) {
+		return config.feesCollectorWallet;
+	}
+	
+	/**
+	 * @dev Change transfer fees collector wallet, only owner can do it
+	 * @param newWallet Set address to collect fees into
+	 * @return bool
+	 */
+	function setFeesCollectorWallet(address newWallet) public onlyOwner returns (bool) {
+		return config.setFeesCollectorWallet(newWallet);
+	}
+	
+	function transferToYourselfIsWidrawal() public view returns (bool) {
+		return config.transferToYourselfIsWidrawal;
+	}
+	
+	/**
+	 * @dev Set transfer to yourself is widrawal toggle enabled/disabled.
+	 * @return bool
+	 */
+	function setTransferToYourselfIsWidrawal(bool enabled) public whenNotPaused onlyAdmin returns (bool) {
+		return config.setTransferToYourselfIsWidrawal(enabled);
+	}
+	
+	///*** TransfersController contract functions
+	
+	function transfersEnabled() public view returns (bool) {
+		return config.transfersEnabled;
+	}
+	
+	/**
+	 * @dev Enable transfers if they are disabled, executed only by admin.
+	 * @return bool
+	 */
+	function enableTransfers(bool enable) public whenNotPaused onlyAdmin returns (bool) {
+		return config.enableTransfers(enable);
+	}
+	
+	///*** TransfersController contract functions
+	
+	
+	
+	function depositsEnabled() public view returns (bool) {
+		return config.depositsEnabled;
+	}
+	
+	function withdrawalsEnabled() public view returns (bool) {
+		return config.withdrawalsEnabled;
+	}
+	
+	function minWithdrawalAmount() public view returns (uint) {
+		return config.minWithdrawalAmount;
+	}
+	
+	function maxWithdrawalAmount() public view returns (uint) {
+		return config.maxWithdrawalAmount;
+	}
+	
+	/**
+	 * @dev Enable deposits if they are disabled, executed only by admin.
+	 * @return bool
+	 */
+	function enableDeposits(bool enable) public onlyAdmin returns (bool) {
+		return config.enableDeposits(enable);
+	}
+	
+	/**
+	 * @dev Enable withdrawals if they are disabled, executed only by admin.
+	 * @return bool
+	 */
+	function enableWithdrawals(bool enable) public onlyAdmin returns (bool) {
+		return config.enableWithdrawals(enable);
+	}
+	
+	/**
+	 * @dev Set/change minimum withdrawal amount, only admin can do it.
+	 * @return bool
+	 */
+	function setMinWithdrawalAmount(uint _minAmount) public onlyAdmin returns (bool) {
+		return config.setMinWithdrawalAmount(_minAmount);
+	}
+	
+	/**
+	 * @dev Set/change maximum withdrawal amount, only admin can do it.
+	 * @return bool
+	 */
+	function setMaxWithdrawalAmount(uint _maxAmount) public onlyAdmin returns (bool) {
+		return config.setMaxWithdrawalAmount(_maxAmount);
+	}
+	
+	
+	
+	function pause(bool _pause) public onlyAdmin returns (bool) {
+		return config.pause(_pause);
+	}
+	
+	function isPaused() public view returns (bool) {
+        return config.paused;
+    }
+	
+	
+	
+	function isAdmin(address _account) public view returns (bool) {
+		return config.isAdmin(_account);
+	}
+	
+	function addAdmin(address _account) public onlyAdmin {
+		config.addAdmin(_account);
+		emit AdminAdded(msg.sender, _account);
+    }
+	
+	//---
+	// custom function added
+	function removeAdmin(address _account) public onlyOwner {
+		require(_account != owner, "Owner can not remove his admin role");
+        config.removeAdmin(_account);
+        emit AdminRemoved(msg.sender, _account);
+    }
+	//---
+	
+    function renounceAdmin() public {
+		require(msg.sender != owner, "Owner can not renounce to his admin role");
+		config.renounceAdmin();
+		emit AdminRenounced(msg.sender);
+    }
+	
+	
+	
+	function isNoFeeAddress(address _account) public view returns (bool) {
+        return (config.noFeeAddress[_account] == true);
+    }
+
+    function addNoFeeAddress(address _account) public onlyOwner {
+		config.addNoFeeAddress(_account);
+		emit NoFeeAddressAdded(msg.sender, _account);
+    }
+	
+	function removeNoFeeAddress(address _account) public onlyOwner {
+		config.removeNoFeeAddress(_account);
+		emit NoFeeAddressRemoved(msg.sender, _account);
+    }
+	
+    function renounceNoFeeAddress() public {
+		config.renounceNoFeeAddress();
+		emit NoFeeAddressRenounced(msg.sender);
+    }
+	
+	
+	
+	/**
+	 * @dev Check if user address is KYC approved.
+	 * @param _account User address
+	 * @return bool
+	 */
+	function isKYCApproved(address _account) public view returns (bool) {
+        return (config.kycApproved[_account] == true);
+    }
+	
+	/**
+	 * @dev Approve KYC user address, only admin can do it.
+	 * @param _account User address
+	 */
+	function approveKYCUserAddress(address _account) public onlyAdmin {
+		_approveKYCUserAddress(_account);
+    }
+	
+	/**
+	 * @dev Disapprove KYC user address, only admin can do it.
+	 * @param _account User address
+	 */
+	function disapproveKYCUserAddress(address _account) public onlyAdmin {
+		require(_account != owner, "Owner can not have his KYC status disapproved");
+        _disapproveKYCUserAddress(_account);
+    }
+	
+	/**
+	 * @dev Approve KYC user address
+	 * @param _account User address
+	 */
+    function _approveKYCUserAddress(address _account) internal {
+		require(!config.kycApproved[_account], "KYC: Already approved");
+        config.kycApproved[_account] = true;
+        emit KYCAddressApproved(msg.sender, _account);
+    }
+	
+	/**
+	 * @dev Disapprove KYC user address
+	 * @param _account User address
+	 */
+    function _disapproveKYCUserAddress(address _account) internal {
+		require(config.kycApproved[_account], "KYC: Already disapproved");
+        config.kycApproved[_account] = false;
+        emit KYCAddressDisapproved(msg.sender, _account);
+    }
+	
+	
+	
+	function isKYCDisabledOrApprovedAddress(address _address) public view returns (bool) {
+		// if KYC is enabled, sender address must be approved
+		return (!config.kycEnabled || config.isKYCApproved(_address));
+	}
+	
+	/**
+	 * @dev Enable/Disable KYC required.
+	 * @param enable True to enable, false to disable.
+	 * @return bool.
+	 */
+	function enableKYC(bool enable) public onlyAdmin returns (bool success) {
+		return config.enableKYC(enable);
+	}
+	
+	
+	
+	function isNotBlacklisted(address _address) public view returns (bool success) {
+		// only allowed to continue if 'to' address is not blacklisted
+		return (!isBlacklisted(_address));
+	}
+	
+	
+	
+	/**
+	 * @dev Check if user address is blacklisted.
+	 * @param _account User address
+	 * @return bool
+	 */
+	function isBlacklisted(address _account) public view returns (bool) {
+        return (config.isBlacklisted(_account));
+    }
+	
+	/**
+	 * @dev Blacklist user address, only admin can do it.
+	 * @param _account User address
+	 */
+	function blacklistUserAddress(address _account) public onlyAdmin {
+		require(_account != owner, "Owner can not be blacklisted");
+		_blacklistUserAddress(_account);
+    }
+	
+	/**
+	 * @dev Allow user address back to normal, only admin can do it.
+	 * @param _account User address
+	 */
+	function allowBlacklistedUserAddress(address _account) public onlyAdmin {
+		_allowBlacklistedUserAddress(_account);
+    }
+	
+	/**
+	 * @dev Blacklist user address
+	 * @param _account User address
+	 */
+    function _blacklistUserAddress(address _account) internal {
+		require(!config.isBlacklisted(_account), "Already blacklisted");
+        config.blacklisted[_account] = true;
+        emit BlacklistedAddress(msg.sender, _account);
+    }
+	
+	/**
+	 * @dev Allow blacklisted user address back to normal operations
+	 * @param _account User address
+	 */
+    function _allowBlacklistedUserAddress(address _account) internal {
+		require(config.isBlacklisted(_account), "Already allowed");
+        config.blacklisted[_account] = false;
+        emit AllowedBlacklistedAddress(msg.sender, _account);
+    }
+}

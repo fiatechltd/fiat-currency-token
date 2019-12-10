@@ -1,0 +1,927 @@
+{
+  "contractName": "HasFees",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "transferFees",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "newOwner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_fees",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_to",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_fees",
+          "type": "address"
+        }
+      ],
+      "name": "setIFees",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.24;\r\n\r\nimport \"./Owned.sol\";\r\nimport \"./interfaces/IFees.sol\";\r\n\r\n\r\n\r\n/**\r\n * @dev Base contract for config contract as external contract usage.\r\n */\r\ncontract HasFees is Owned\r\n{\r\n\tIFees public transferFees;\r\n\t\r\n\t/**\r\n\t * @dev Constructor\r\n\t */\r\n    constructor(address _fees) internal {\r\n\t\tsetIFees(_fees);\r\n    }\r\n\t\r\n\tfunction setIFees(address _fees) public onlyOwner {\r\n\t\ttransferFees = IFees(_fees);\r\n\t}\r\n}",
+  "sourcePath": "C:\\Users\\Homeuser\\Desktop\\FiatechFiatCurrencyToken\\contracts\\HasFees.sol",
+  "ast": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/HasFees.sol",
+    "exportedSymbols": {
+      "HasFees": [
+        2856
+      ]
+    },
+    "id": 2857,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2825,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:10"
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/Owned.sol",
+        "file": "./Owned.sol",
+        "id": 2826,
+        "nodeType": "ImportDirective",
+        "scope": 2857,
+        "sourceUnit": 3109,
+        "src": "28:21:10",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IFees.sol",
+        "file": "./interfaces/IFees.sol",
+        "id": 2827,
+        "nodeType": "ImportDirective",
+        "scope": 2857,
+        "sourceUnit": 3890,
+        "src": "51:32:10",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 2828,
+              "name": "Owned",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3108,
+              "src": "192:5:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Owned_$3108",
+                "typeString": "contract Owned"
+              }
+            },
+            "id": 2829,
+            "nodeType": "InheritanceSpecifier",
+            "src": "192:5:10"
+          }
+        ],
+        "contractDependencies": [
+          3108
+        ],
+        "contractKind": "contract",
+        "documentation": "@dev Base contract for config contract as external contract usage.\r",
+        "fullyImplemented": true,
+        "id": 2856,
+        "linearizedBaseContracts": [
+          2856,
+          3108
+        ],
+        "name": "HasFees",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 2831,
+            "name": "transferFees",
+            "nodeType": "VariableDeclaration",
+            "scope": 2856,
+            "src": "203:25:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_IFees_$3889",
+              "typeString": "contract IFees"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 2830,
+              "name": "IFees",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3889,
+              "src": "203:5:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IFees_$3889",
+                "typeString": "contract IFees"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 2840,
+              "nodeType": "Block",
+              "src": "308:28:10",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 2837,
+                        "name": "_fees",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 2833,
+                        "src": "322:5:10",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 2836,
+                      "name": "setIFees",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2855,
+                      "src": "313:8:10",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address)"
+                      }
+                    },
+                    "id": 2838,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "313:15:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 2839,
+                  "nodeType": "ExpressionStatement",
+                  "src": "313:15:10"
+                }
+              ]
+            },
+            "documentation": "@dev Constructor\r",
+            "id": 2841,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2834,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2833,
+                  "name": "_fees",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2841,
+                  "src": "284:13:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2832,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "284:7:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "283:15:10"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 2835,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "308:0:10"
+            },
+            "scope": 2856,
+            "src": "272:64:10",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 2854,
+              "nodeType": "Block",
+              "src": "392:37:10",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 2852,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 2848,
+                      "name": "transferFees",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2831,
+                      "src": "397:12:10",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_IFees_$3889",
+                        "typeString": "contract IFees"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 2850,
+                          "name": "_fees",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 2843,
+                          "src": "418:5:10",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        ],
+                        "id": 2849,
+                        "name": "IFees",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3889,
+                        "src": "412:5:10",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_IFees_$3889_$",
+                          "typeString": "type(contract IFees)"
+                        }
+                      },
+                      "id": 2851,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "412:12:10",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_IFees_$3889",
+                        "typeString": "contract IFees"
+                      }
+                    },
+                    "src": "397:27:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IFees_$3889",
+                      "typeString": "contract IFees"
+                    }
+                  },
+                  "id": 2853,
+                  "nodeType": "ExpressionStatement",
+                  "src": "397:27:10"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 2855,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 2846,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 2845,
+                  "name": "onlyOwner",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 3068,
+                  "src": "382:9:10",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "382:9:10"
+              }
+            ],
+            "name": "setIFees",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2844,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2843,
+                  "name": "_fees",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2855,
+                  "src": "360:13:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2842,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "360:7:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "359:15:10"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 2847,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "392:0:10"
+            },
+            "scope": 2856,
+            "src": "342:87:10",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 2857,
+        "src": "172:260:10"
+      }
+    ],
+    "src": "0:432:10"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/HasFees.sol",
+    "exportedSymbols": {
+      "HasFees": [
+        2856
+      ]
+    },
+    "id": 2857,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2825,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:10"
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/Owned.sol",
+        "file": "./Owned.sol",
+        "id": 2826,
+        "nodeType": "ImportDirective",
+        "scope": 2857,
+        "sourceUnit": 3109,
+        "src": "28:21:10",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IFees.sol",
+        "file": "./interfaces/IFees.sol",
+        "id": 2827,
+        "nodeType": "ImportDirective",
+        "scope": 2857,
+        "sourceUnit": 3890,
+        "src": "51:32:10",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 2828,
+              "name": "Owned",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3108,
+              "src": "192:5:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Owned_$3108",
+                "typeString": "contract Owned"
+              }
+            },
+            "id": 2829,
+            "nodeType": "InheritanceSpecifier",
+            "src": "192:5:10"
+          }
+        ],
+        "contractDependencies": [
+          3108
+        ],
+        "contractKind": "contract",
+        "documentation": "@dev Base contract for config contract as external contract usage.\r",
+        "fullyImplemented": true,
+        "id": 2856,
+        "linearizedBaseContracts": [
+          2856,
+          3108
+        ],
+        "name": "HasFees",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 2831,
+            "name": "transferFees",
+            "nodeType": "VariableDeclaration",
+            "scope": 2856,
+            "src": "203:25:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_IFees_$3889",
+              "typeString": "contract IFees"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 2830,
+              "name": "IFees",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3889,
+              "src": "203:5:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IFees_$3889",
+                "typeString": "contract IFees"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 2840,
+              "nodeType": "Block",
+              "src": "308:28:10",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 2837,
+                        "name": "_fees",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 2833,
+                        "src": "322:5:10",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 2836,
+                      "name": "setIFees",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2855,
+                      "src": "313:8:10",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address)"
+                      }
+                    },
+                    "id": 2838,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "313:15:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 2839,
+                  "nodeType": "ExpressionStatement",
+                  "src": "313:15:10"
+                }
+              ]
+            },
+            "documentation": "@dev Constructor\r",
+            "id": 2841,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2834,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2833,
+                  "name": "_fees",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2841,
+                  "src": "284:13:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2832,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "284:7:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "283:15:10"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 2835,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "308:0:10"
+            },
+            "scope": 2856,
+            "src": "272:64:10",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 2854,
+              "nodeType": "Block",
+              "src": "392:37:10",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 2852,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 2848,
+                      "name": "transferFees",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2831,
+                      "src": "397:12:10",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_IFees_$3889",
+                        "typeString": "contract IFees"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 2850,
+                          "name": "_fees",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 2843,
+                          "src": "418:5:10",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        ],
+                        "id": 2849,
+                        "name": "IFees",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3889,
+                        "src": "412:5:10",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_IFees_$3889_$",
+                          "typeString": "type(contract IFees)"
+                        }
+                      },
+                      "id": 2851,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "412:12:10",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_IFees_$3889",
+                        "typeString": "contract IFees"
+                      }
+                    },
+                    "src": "397:27:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IFees_$3889",
+                      "typeString": "contract IFees"
+                    }
+                  },
+                  "id": 2853,
+                  "nodeType": "ExpressionStatement",
+                  "src": "397:27:10"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 2855,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 2846,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 2845,
+                  "name": "onlyOwner",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 3068,
+                  "src": "382:9:10",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "382:9:10"
+              }
+            ],
+            "name": "setIFees",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2844,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2843,
+                  "name": "_fees",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2855,
+                  "src": "360:13:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2842,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "360:7:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "359:15:10"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 2847,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "392:0:10"
+            },
+            "scope": 2856,
+            "src": "342:87:10",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 2857,
+        "src": "172:260:10"
+      }
+    ],
+    "src": "0:432:10"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.5",
+  "updatedAt": "2019-11-28T22:36:38.653Z",
+  "devdoc": {
+    "methods": {
+      "acceptOwnership()": {
+        "details": "New owner pending to accept ownership executes this function to confirm his ownership.\r"
+      },
+      "transferOwnership(address)": {
+        "details": "Transfer ownership function\r",
+        "params": {
+          "_newOwner": "New owner address acquiring ownership of contract\r"
+        }
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

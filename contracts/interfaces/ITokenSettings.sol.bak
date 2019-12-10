@@ -1,0 +1,85 @@
+pragma solidity ^0.4.24;
+
+import "./IFees.sol";
+import "./IFeesLibEvents.sol";
+
+
+
+/**
+ * @dev Interface for contract fees library.
+ */
+contract ITokenSettings is IFees , IFeesLibEvents
+	, TokenSettings
+{
+	// * @dev Change minimum fee tokens/pennies/cents
+	// * @param newMinFee Minimum amount of tokens to be set as minimum
+	// * @return bool
+	// */
+	//function setMinFee(uint newMinFee) public returns (bool);
+	
+	///**
+	// * @dev Change maximum fee tokens/pennies/cents
+	// * @param newMaxFee Maximum amount of tokens to be set as maximum
+	// * @return bool
+	// */
+	//function setMaxFee(uint newMaxFee) public returns (bool);
+	
+	
+	
+	/**
+	 * @dev Check enabled/disabled fees
+	 * @return bool
+	 */
+	function feesEnabled() public view returns (bool);
+	
+	/**
+	 * @dev Enable/Disable fees
+	 * @return bool
+	 */
+	function enableFees(bool enable) public returns (bool);
+	
+	
+	
+	///**
+	// * @dev Disable fees
+	// * @return bool
+	// */
+	/*function disableFees(FeeStorage storage self) public returns (bool) {
+		if (self.feesEnabled) {
+			self.feesEnabled = false;
+			return true;
+		}
+		return false;
+	}*/
+	
+	
+	
+	///**
+	// * @dev Get fees as parts per X units
+	// * @return bool
+	// */
+	//function getFeesNumerator() public view returns (uint _parts_Fee);
+	
+	///**
+	// * @dev Get fees as parts per X units
+	// * @return bool
+	// */
+	//function getFeesDenominator() public view returns (uint _perX_Fee);
+	
+	///**
+	// * @dev Get fees as parts per X units
+	// * @return bool
+	// */
+	/*function getFees() public view returns (uint _parts_Fee, uint _perX_Fee) {
+		_parts_Fee = self.parts_Fee;
+		_perX_Fee = self.perX_Fee;
+	}*/
+	
+	/**
+	 * @dev Set fees as parts per X units
+	 * @param _parts_Fee Parts component of the fee percentage
+	 * @param _perX_Fee Per X component of the fee percentage
+	 * @return bool
+	 */
+	function setFees(uint _parts_Fee, uint _perX_Fee) public returns (bool);
+}

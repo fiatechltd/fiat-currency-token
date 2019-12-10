@@ -1,0 +1,554 @@
+{
+  "contractName": "Mortal",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "newOwner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_to",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "kill",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.24;\r\n\r\nimport \"./Owned.sol\";\r\n\r\n\r\n\r\n/**\r\n * @dev Contract used to self destruct contract.\r\n */\r\ncontract Mortal is Owned {\r\n    \r\n\t/**\r\n\t * @dev Constructor\r\n\t */\r\n    constructor () internal {\r\n    }\r\n\t\r\n\t/**\r\n\t * @dev Destroy contract eliminating it from the blockchain\r\n\t */\r\n    function kill() public onlyOwner {\r\n\t\t// transfer available funds to owner\r\n\t\tselfdestruct(owner);\r\n    }\r\n}",
+  "sourcePath": "C:\\Users\\Homeuser\\Desktop\\FiatechFiatCurrencyToken\\contracts\\Mortal.sol",
+  "ast": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/Mortal.sol",
+    "exportedSymbols": {
+      "Mortal": [
+        2977
+      ]
+    },
+    "id": 2978,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2959,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:13"
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/Owned.sol",
+        "file": "./Owned.sol",
+        "id": 2960,
+        "nodeType": "ImportDirective",
+        "scope": 2978,
+        "sourceUnit": 3109,
+        "src": "28:21:13",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 2961,
+              "name": "Owned",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3108,
+              "src": "136:5:13",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Owned_$3108",
+                "typeString": "contract Owned"
+              }
+            },
+            "id": 2962,
+            "nodeType": "InheritanceSpecifier",
+            "src": "136:5:13"
+          }
+        ],
+        "contractDependencies": [
+          3108
+        ],
+        "contractKind": "contract",
+        "documentation": "@dev Contract used to self destruct contract.\r",
+        "fullyImplemented": true,
+        "id": 2977,
+        "linearizedBaseContracts": [
+          2977,
+          3108
+        ],
+        "name": "Mortal",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 2965,
+              "nodeType": "Block",
+              "src": "213:8:13",
+              "statements": []
+            },
+            "documentation": "@dev Constructor\r",
+            "id": 2966,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2963,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "201:2:13"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 2964,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "213:0:13"
+            },
+            "scope": 2977,
+            "src": "189:32:13",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 2975,
+              "nodeType": "Block",
+              "src": "337:72:13",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 2972,
+                        "name": "owner",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3032,
+                        "src": "395:5:13",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 2971,
+                      "name": "selfdestruct",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 4581,
+                      "src": "382:12:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_selfdestruct_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address)"
+                      }
+                    },
+                    "id": 2973,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "382:19:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 2974,
+                  "nodeType": "ExpressionStatement",
+                  "src": "382:19:13"
+                }
+              ]
+            },
+            "documentation": "@dev Destroy contract eliminating it from the blockchain\r",
+            "id": 2976,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 2969,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 2968,
+                  "name": "onlyOwner",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 3068,
+                  "src": "327:9:13",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "327:9:13"
+              }
+            ],
+            "name": "kill",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2967,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "317:2:13"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 2970,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "337:0:13"
+            },
+            "scope": 2977,
+            "src": "304:105:13",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 2978,
+        "src": "117:295:13"
+      }
+    ],
+    "src": "0:412:13"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/Mortal.sol",
+    "exportedSymbols": {
+      "Mortal": [
+        2977
+      ]
+    },
+    "id": 2978,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2959,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:13"
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/Owned.sol",
+        "file": "./Owned.sol",
+        "id": 2960,
+        "nodeType": "ImportDirective",
+        "scope": 2978,
+        "sourceUnit": 3109,
+        "src": "28:21:13",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 2961,
+              "name": "Owned",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3108,
+              "src": "136:5:13",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Owned_$3108",
+                "typeString": "contract Owned"
+              }
+            },
+            "id": 2962,
+            "nodeType": "InheritanceSpecifier",
+            "src": "136:5:13"
+          }
+        ],
+        "contractDependencies": [
+          3108
+        ],
+        "contractKind": "contract",
+        "documentation": "@dev Contract used to self destruct contract.\r",
+        "fullyImplemented": true,
+        "id": 2977,
+        "linearizedBaseContracts": [
+          2977,
+          3108
+        ],
+        "name": "Mortal",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 2965,
+              "nodeType": "Block",
+              "src": "213:8:13",
+              "statements": []
+            },
+            "documentation": "@dev Constructor\r",
+            "id": 2966,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2963,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "201:2:13"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 2964,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "213:0:13"
+            },
+            "scope": 2977,
+            "src": "189:32:13",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 2975,
+              "nodeType": "Block",
+              "src": "337:72:13",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 2972,
+                        "name": "owner",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3032,
+                        "src": "395:5:13",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 2971,
+                      "name": "selfdestruct",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 4581,
+                      "src": "382:12:13",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_selfdestruct_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address)"
+                      }
+                    },
+                    "id": 2973,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "382:19:13",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 2974,
+                  "nodeType": "ExpressionStatement",
+                  "src": "382:19:13"
+                }
+              ]
+            },
+            "documentation": "@dev Destroy contract eliminating it from the blockchain\r",
+            "id": 2976,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 2969,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 2968,
+                  "name": "onlyOwner",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 3068,
+                  "src": "327:9:13",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "327:9:13"
+              }
+            ],
+            "name": "kill",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2967,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "317:2:13"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 2970,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "337:0:13"
+            },
+            "scope": 2977,
+            "src": "304:105:13",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 2978,
+        "src": "117:295:13"
+      }
+    ],
+    "src": "0:412:13"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.5",
+  "updatedAt": "2019-11-28T22:36:38.719Z",
+  "devdoc": {
+    "methods": {
+      "acceptOwnership()": {
+        "details": "New owner pending to accept ownership executes this function to confirm his ownership.\r"
+      },
+      "kill()": {
+        "details": "Destroy contract eliminating it from the blockchain\r"
+      },
+      "transferOwnership(address)": {
+        "details": "Transfer ownership function\r",
+        "params": {
+          "_newOwner": "New owner address acquiring ownership of contract\r"
+        }
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

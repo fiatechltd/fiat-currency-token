@@ -1,0 +1,1880 @@
+{
+  "contractName": "IBlockchainBridge",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "DepositAccepted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "_withdrawalTokensFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "WithdrawalRequested",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "DepositsEnabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "DepositsDisabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "WithdrawalsEnabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "WithdrawalsDisabled",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "enableDeposits",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableDeposits",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "enableWithdrawals",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "disableWithdrawals",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "depositAccept",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawRequest",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.24;\r\n\r\n\r\n\r\n/**\r\n * @dev IBlockchainBridge interface protocol used by users and system admin to Deposit and Withdrawal funds to and from blockchain.\r\n */\r\ninterface IBlockchainBridge {\r\n\t\r\n\t/**\r\n\t * @dev Event is raised after Fiatech reviewed deposit request and has got the funds from user's bank account\r\n\t * and credits his wallet with equivalent currency token.\r\n\t * @param _admin Admin address depositing funds into user wallet address.\r\n\t * @param _to User address admin deposits funds to.\r\n\t * @param _amount Deposit amount.\r\n\t */\r\n\tevent DepositAccepted(address indexed _admin, address indexed _to, uint _amount);\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when user asks for a withdrawal and request is pending for review.\r\n\t * @param _from User address asking for withdrawal.\r\n\t * @param _amount Withdrawal amount.\r\n\t * @param _withdrawalTokensFee Withdrawal fee amount of tokens collected, if any, zero when they are disabled.\r\n\t */\r\n\tevent WithdrawalRequested(address indexed _from, uint _amount, uint _withdrawalTokensFee);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin enables deposits.\r\n\t * @param _admin Admin address executing the function.\r\n\t */\r\n\tevent DepositsEnabled(address indexed _admin);\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin disables deposits.\r\n\t * @param _admin Admin address executing the function.\r\n\t */\r\n\tevent DepositsDisabled(address indexed _admin);\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin enables withdrawals.\r\n\t * @param _admin Admin address executing the function.\r\n\t */\r\n\tevent WithdrawalsEnabled(address indexed _admin);\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin disables withdrawals.\r\n\t * @param _admin Admin address executing the function.\r\n\t */\r\n\tevent WithdrawalsDisabled(address indexed _admin);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Enable deposits if they are disabled, executed only by admin.\r\n\t * Emits DepositsEnabled event.\r\n\t * @return bool.\r\n\t */\r\n\tfunction enableDeposits() external returns (bool);\r\n\t\r\n\t/**\r\n\t * @dev Disable deposits if they are enabled, executed only by admin.\r\n\t * Emits DepositsDisabled event.\r\n\t * @return bool.\r\n\t */\r\n\tfunction disableDeposits() external returns (bool);\r\n\t\r\n\t/**\r\n\t * @dev Enable withdrawals if they are disabled, executed only by admin.\r\n\t * Emits WithdrawalsEnabled event.\r\n\t * @return bool.\r\n\t */\r\n\tfunction enableWithdrawals() external returns (bool);\r\n\t\r\n\t/**\r\n\t * @dev Disable withdrawals if they are enabled, executed only by admin.\r\n\t * Emits WithdrawalsDisabled event.\r\n\t * @return bool.\r\n\t */\r\n\tfunction disableWithdrawals() external returns (bool);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Executed by admin to credit user wallet with fiat currency he deposited via bank wire or any other method.\r\n\t * @param _to User address to give deposited funds to.\r\n\t * @param _amount Deposit amount.\r\n\t * @return bool\r\n\t */\r\n\tfunction depositAccept(address _to, uint _amount) external returns (bool);\r\n\t\r\n\t/**\r\n\t * @dev Eexecuted by user asking for a withdrawal.\r\n\t * @param _amount Amount to withdraw.\r\n\t * @return bool.\r\n\t */\r\n\tfunction withdrawRequest(uint _amount) external returns (bool);\r\n}\r\n",
+  "sourcePath": "C:\\Users\\Homeuser\\Desktop\\FiatechFiatCurrencyToken\\contracts\\interfaces\\IBlockchainBridge.sol",
+  "ast": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IBlockchainBridge.sol",
+    "exportedSymbols": {
+      "IBlockchainBridge": [
+        3355
+      ]
+    },
+    "id": 3356,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3286,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:21"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": "@dev IBlockchainBridge interface protocol used by users and system admin to Deposit and Withdrawal funds to and from blockchain.\r",
+        "fullyImplemented": false,
+        "id": 3355,
+        "linearizedBaseContracts": [
+          3355
+        ],
+        "name": "IBlockchainBridge",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised after Fiatech reviewed deposit request and has got the funds from user's bank account\r\nand credits his wallet with equivalent currency token.\r\n@param _admin Admin address depositing funds into user wallet address.\r\n@param _to User address admin deposits funds to.\r\n@param _amount Deposit amount.\r",
+            "id": 3294,
+            "name": "DepositAccepted",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3293,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3288,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3294,
+                  "src": "582:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3287,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "582:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3290,
+                  "indexed": true,
+                  "name": "_to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3294,
+                  "src": "606:19:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3289,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "606:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3292,
+                  "indexed": false,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3294,
+                  "src": "627:12:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3291,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "627:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "581:59:21"
+            },
+            "src": "560:81:21"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when user asks for a withdrawal and request is pending for review.\r\n@param _from User address asking for withdrawal.\r\n@param _amount Withdrawal amount.\r\n@param _withdrawalTokensFee Withdrawal fee amount of tokens collected, if any, zero when they are disabled.\r",
+            "id": 3302,
+            "name": "WithdrawalRequested",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3301,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3296,
+                  "indexed": true,
+                  "name": "_from",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3302,
+                  "src": "984:21:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3295,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "984:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3298,
+                  "indexed": false,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3302,
+                  "src": "1007:12:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3297,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1007:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3300,
+                  "indexed": false,
+                  "name": "_withdrawalTokensFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3302,
+                  "src": "1021:25:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3299,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1021:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "983:64:21"
+            },
+            "src": "958:90:21"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin enables deposits.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3306,
+            "name": "DepositsEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3305,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3304,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3306,
+                  "src": "1206:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3303,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1206:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1205:24:21"
+            },
+            "src": "1184:46:21"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin disables deposits.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3310,
+            "name": "DepositsDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3309,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3308,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3310,
+                  "src": "1384:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3307,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1384:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1383:24:21"
+            },
+            "src": "1361:47:21"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin enables withdrawals.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3314,
+            "name": "WithdrawalsEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3313,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3312,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3314,
+                  "src": "1566:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3311,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1566:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1565:24:21"
+            },
+            "src": "1541:49:21"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin disables withdrawals.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3318,
+            "name": "WithdrawalsDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3317,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3316,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3318,
+                  "src": "1750:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3315,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1750:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1749:24:21"
+            },
+            "src": "1724:50:21"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Enable deposits if they are disabled, executed only by admin.\r\nEmits DepositsEnabled event.\r\n@return bool.\r",
+            "id": 3323,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "enableDeposits",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3319,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1946:2:21"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3322,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3321,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3323,
+                  "src": "1967:4:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3320,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1967:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1966:6:21"
+            },
+            "scope": 3355,
+            "src": "1923:50:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Disable deposits if they are enabled, executed only by admin.\r\nEmits DepositsDisabled event.\r\n@return bool.\r",
+            "id": 3328,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "disableDeposits",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3324,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2141:2:21"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3327,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3326,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3328,
+                  "src": "2162:4:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3325,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2162:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2161:6:21"
+            },
+            "scope": 3355,
+            "src": "2117:51:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Enable withdrawals if they are disabled, executed only by admin.\r\nEmits WithdrawalsEnabled event.\r\n@return bool.\r",
+            "id": 3333,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "enableWithdrawals",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3329,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2343:2:21"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3332,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3331,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3333,
+                  "src": "2364:4:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3330,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2364:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2363:6:21"
+            },
+            "scope": 3355,
+            "src": "2317:53:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Disable withdrawals if they are enabled, executed only by admin.\r\nEmits WithdrawalsDisabled event.\r\n@return bool.\r",
+            "id": 3338,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "disableWithdrawals",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3334,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2547:2:21"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3337,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3336,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3338,
+                  "src": "2568:4:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3335,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2568:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2567:6:21"
+            },
+            "scope": 3355,
+            "src": "2520:54:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Executed by admin to credit user wallet with fiat currency he deposited via bank wire or any other method.\r\n@param _to User address to give deposited funds to.\r\n@param _amount Deposit amount.\r\n@return bool\r",
+            "id": 3347,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "depositAccept",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3343,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3340,
+                  "name": "_to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3347,
+                  "src": "2849:11:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3339,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2849:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3342,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3347,
+                  "src": "2862:12:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3341,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2862:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2848:27:21"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3346,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3345,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3347,
+                  "src": "2894:4:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3344,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2894:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2893:6:21"
+            },
+            "scope": 3355,
+            "src": "2826:74:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Eexecuted by user asking for a withdrawal.\r\n@param _amount Amount to withdraw.\r\n@return bool.\r",
+            "id": 3354,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "withdrawRequest",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3350,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3349,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3354,
+                  "src": "3055:12:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3348,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3055:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3054:14:21"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3353,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3352,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3354,
+                  "src": "3087:4:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3351,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3087:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3086:6:21"
+            },
+            "scope": 3355,
+            "src": "3030:63:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3356,
+        "src": "175:2921:21"
+      }
+    ],
+    "src": "0:3098:21"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IBlockchainBridge.sol",
+    "exportedSymbols": {
+      "IBlockchainBridge": [
+        3355
+      ]
+    },
+    "id": 3356,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3286,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:21"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": "@dev IBlockchainBridge interface protocol used by users and system admin to Deposit and Withdrawal funds to and from blockchain.\r",
+        "fullyImplemented": false,
+        "id": 3355,
+        "linearizedBaseContracts": [
+          3355
+        ],
+        "name": "IBlockchainBridge",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised after Fiatech reviewed deposit request and has got the funds from user's bank account\r\nand credits his wallet with equivalent currency token.\r\n@param _admin Admin address depositing funds into user wallet address.\r\n@param _to User address admin deposits funds to.\r\n@param _amount Deposit amount.\r",
+            "id": 3294,
+            "name": "DepositAccepted",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3293,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3288,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3294,
+                  "src": "582:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3287,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "582:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3290,
+                  "indexed": true,
+                  "name": "_to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3294,
+                  "src": "606:19:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3289,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "606:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3292,
+                  "indexed": false,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3294,
+                  "src": "627:12:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3291,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "627:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "581:59:21"
+            },
+            "src": "560:81:21"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when user asks for a withdrawal and request is pending for review.\r\n@param _from User address asking for withdrawal.\r\n@param _amount Withdrawal amount.\r\n@param _withdrawalTokensFee Withdrawal fee amount of tokens collected, if any, zero when they are disabled.\r",
+            "id": 3302,
+            "name": "WithdrawalRequested",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3301,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3296,
+                  "indexed": true,
+                  "name": "_from",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3302,
+                  "src": "984:21:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3295,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "984:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3298,
+                  "indexed": false,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3302,
+                  "src": "1007:12:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3297,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1007:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3300,
+                  "indexed": false,
+                  "name": "_withdrawalTokensFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3302,
+                  "src": "1021:25:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3299,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1021:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "983:64:21"
+            },
+            "src": "958:90:21"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin enables deposits.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3306,
+            "name": "DepositsEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3305,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3304,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3306,
+                  "src": "1206:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3303,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1206:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1205:24:21"
+            },
+            "src": "1184:46:21"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin disables deposits.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3310,
+            "name": "DepositsDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3309,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3308,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3310,
+                  "src": "1384:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3307,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1384:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1383:24:21"
+            },
+            "src": "1361:47:21"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin enables withdrawals.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3314,
+            "name": "WithdrawalsEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3313,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3312,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3314,
+                  "src": "1566:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3311,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1566:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1565:24:21"
+            },
+            "src": "1541:49:21"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin disables withdrawals.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3318,
+            "name": "WithdrawalsDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3317,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3316,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3318,
+                  "src": "1750:22:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3315,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1750:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1749:24:21"
+            },
+            "src": "1724:50:21"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Enable deposits if they are disabled, executed only by admin.\r\nEmits DepositsEnabled event.\r\n@return bool.\r",
+            "id": 3323,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "enableDeposits",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3319,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1946:2:21"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3322,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3321,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3323,
+                  "src": "1967:4:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3320,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1967:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1966:6:21"
+            },
+            "scope": 3355,
+            "src": "1923:50:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Disable deposits if they are enabled, executed only by admin.\r\nEmits DepositsDisabled event.\r\n@return bool.\r",
+            "id": 3328,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "disableDeposits",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3324,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2141:2:21"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3327,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3326,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3328,
+                  "src": "2162:4:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3325,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2162:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2161:6:21"
+            },
+            "scope": 3355,
+            "src": "2117:51:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Enable withdrawals if they are disabled, executed only by admin.\r\nEmits WithdrawalsEnabled event.\r\n@return bool.\r",
+            "id": 3333,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "enableWithdrawals",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3329,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2343:2:21"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3332,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3331,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3333,
+                  "src": "2364:4:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3330,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2364:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2363:6:21"
+            },
+            "scope": 3355,
+            "src": "2317:53:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Disable withdrawals if they are enabled, executed only by admin.\r\nEmits WithdrawalsDisabled event.\r\n@return bool.\r",
+            "id": 3338,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "disableWithdrawals",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3334,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2547:2:21"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3337,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3336,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3338,
+                  "src": "2568:4:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3335,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2568:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2567:6:21"
+            },
+            "scope": 3355,
+            "src": "2520:54:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Executed by admin to credit user wallet with fiat currency he deposited via bank wire or any other method.\r\n@param _to User address to give deposited funds to.\r\n@param _amount Deposit amount.\r\n@return bool\r",
+            "id": 3347,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "depositAccept",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3343,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3340,
+                  "name": "_to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3347,
+                  "src": "2849:11:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3339,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2849:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3342,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3347,
+                  "src": "2862:12:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3341,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2862:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2848:27:21"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3346,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3345,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3347,
+                  "src": "2894:4:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3344,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2894:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2893:6:21"
+            },
+            "scope": 3355,
+            "src": "2826:74:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Eexecuted by user asking for a withdrawal.\r\n@param _amount Amount to withdraw.\r\n@return bool.\r",
+            "id": 3354,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "withdrawRequest",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3350,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3349,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3354,
+                  "src": "3055:12:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3348,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3055:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3054:14:21"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3353,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3352,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3354,
+                  "src": "3087:4:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3351,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3087:4:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3086:6:21"
+            },
+            "scope": 3355,
+            "src": "3030:63:21",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3356,
+        "src": "175:2921:21"
+      }
+    ],
+    "src": "0:3098:21"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.5",
+  "updatedAt": "2019-11-28T22:36:38.733Z",
+  "devdoc": {
+    "methods": {
+      "depositAccept(address,uint256)": {
+        "details": "Executed by admin to credit user wallet with fiat currency he deposited via bank wire or any other method.\r",
+        "params": {
+          "_amount": "Deposit amount.\r",
+          "_to": "User address to give deposited funds to.\r"
+        },
+        "return": "bool\r"
+      },
+      "disableDeposits()": {
+        "details": "Disable deposits if they are enabled, executed only by admin.\r Emits DepositsDisabled event.\r",
+        "return": "bool.\r"
+      },
+      "disableWithdrawals()": {
+        "details": "Disable withdrawals if they are enabled, executed only by admin.\r Emits WithdrawalsDisabled event.\r",
+        "return": "bool.\r"
+      },
+      "enableDeposits()": {
+        "details": "Enable deposits if they are disabled, executed only by admin.\r Emits DepositsEnabled event.\r",
+        "return": "bool.\r"
+      },
+      "enableWithdrawals()": {
+        "details": "Enable withdrawals if they are disabled, executed only by admin.\r Emits WithdrawalsEnabled event.\r",
+        "return": "bool.\r"
+      },
+      "withdrawRequest(uint256)": {
+        "details": "Eexecuted by user asking for a withdrawal.\r",
+        "params": {
+          "_amount": "Amount to withdraw.\r"
+        },
+        "return": "bool.\r"
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

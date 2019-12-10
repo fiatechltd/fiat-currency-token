@@ -1,0 +1,58 @@
+pragma solidity ^0.4.24;
+
+// ----------------------------------------------------------------------------
+// based on:
+// https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/access/roles/PauserRole.sol
+// ----------------------------------------------------------------------------
+
+import "../Roles.sol";
+import "../../Owned.sol";
+
+contract Admin is Owned {
+
+    using Roles for Roles.Role;
+
+    //event AdminAdded(address indexed admin, address indexed account);
+    //event AdminRemoved(address indexed admin, address indexed account);
+	//event AdminRenounced(address indexed account);
+
+    Roles.Role private _admins;
+	
+	
+    constructor() internal {
+        _addAdmin(msg.sender);
+    }
+
+    modifier onlyAdmin() {
+        require(isAdmin(msg.sender), "Caller is not Admin");
+        _;
+    }
+
+    function isAdmin(address account) public view returns (bool) {
+        return _admins.has(account);
+    }
+
+    function addAdmin(address account) public onlyAdmin {
+        _addAdmin(account);
+    }
+	
+	//---
+	// custom function added
+	function removeAdmin(address account) public onlyOwner {
+		require(account != owner, "Owner can not remove his admin role");
+        _admins.remove(account);
+        //emit AdminRemoved(msg.sender, account);
+    }
+	//---
+	
+    function renounceAdmin() public {
+		require(msg.sender != owner, "Owner can not renounce to his admin role");
+        _admins.remove(msg.sender);
+		//emit AdminRenounced(msg.sender);
+    }
+	
+	function _addAdmin(address account) internal {
+        _admins.add(account);
+		//emit AdminAdded(msg.sender, account);
+    }
+}

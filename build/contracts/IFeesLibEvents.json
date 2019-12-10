@@ -1,0 +1,822 @@
+{
+  "contractName": "IFeesLibEvents",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "admin",
+          "type": "address"
+        }
+      ],
+      "name": "FeesEnabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "admin",
+          "type": "address"
+        }
+      ],
+      "name": "FeesDisabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "admin",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "parts_Fee",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "perX_Fee",
+          "type": "uint256"
+        }
+      ],
+      "name": "FeesChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "admin",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "minFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "MinFeesChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "admin",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "maxFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "MaxFeesChanged",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a723058201808ae6acf3ce7267ce85d8e535a9d6a60b22478fcfb89ffcc32f92fd31ed5800029",
+  "deployedBytecode": "0x6080604052600080fd00a165627a7a723058201808ae6acf3ce7267ce85d8e535a9d6a60b22478fcfb89ffcc32f92fd31ed5800029",
+  "sourceMap": "87:643:28:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;87:643:28;;;;;;;",
+  "deployedSourceMap": "87:643:28:-;;;;;",
+  "source": "pragma solidity ^0.4.24;\r\n\r\n/**\r\n * @dev Interface for fees library with events.\r\n */\r\ninterface IFeesLibEvents {\r\n\t\r\n\t/**\r\n\t * @dev Event raised when fees are enabled.\r\n\t */\r\n\tevent FeesEnabled(address indexed admin);\r\n\t\r\n\t/**\r\n\t * @dev Event raised when fees are disabled.\r\n\t */\r\n\tevent FeesDisabled(address indexed admin);\r\n\t\r\n\t/**\r\n\t * @dev Event raised when percent fees are changed.\r\n\t */\r\n\tevent FeesChanged(address indexed admin, uint parts_Fee, uint perX_Fee);\r\n\t\r\n\t/**\r\n\t * @dev Event raised when minimum fees are changed.\r\n\t */\r\n\tevent MinFeesChanged(address indexed admin, uint minFee);\r\n\t\r\n\t/**\r\n\t * @dev Event raised when maximum fees are changed.\r\n\t */\r\n\tevent MaxFeesChanged(address indexed admin, uint maxFee);\r\n}",
+  "sourcePath": "C:\\Users\\Homeuser\\Desktop\\FiatechFiatCurrencyToken\\contracts\\interfaces\\IFeesLibEvents.sol",
+  "ast": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IFeesLibEvents.sol",
+    "exportedSymbols": {
+      "IFeesLibEvents": [
+        3920
+      ]
+    },
+    "id": 3921,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3891,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:28"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": "@dev Interface for fees library with events.\r",
+        "fullyImplemented": true,
+        "id": 3920,
+        "linearizedBaseContracts": [
+          3920
+        ],
+        "name": "IFeesLibEvents",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when fees are enabled.\r",
+            "id": 3895,
+            "name": "FeesEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3894,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3893,
+                  "indexed": true,
+                  "name": "admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3895,
+                  "src": "195:21:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3892,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "195:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "194:23:28"
+            },
+            "src": "177:41:28"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when fees are disabled.\r",
+            "id": 3899,
+            "name": "FeesDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3898,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3897,
+                  "indexed": true,
+                  "name": "admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3899,
+                  "src": "302:21:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3896,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "302:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "301:23:28"
+            },
+            "src": "283:42:28"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when percent fees are changed.\r",
+            "id": 3907,
+            "name": "FeesChanged",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3906,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3901,
+                  "indexed": true,
+                  "name": "admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3907,
+                  "src": "415:21:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3900,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "415:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3903,
+                  "indexed": false,
+                  "name": "parts_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3907,
+                  "src": "438:14:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3902,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "438:4:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3905,
+                  "indexed": false,
+                  "name": "perX_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3907,
+                  "src": "454:13:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3904,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "454:4:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "414:54:28"
+            },
+            "src": "397:72:28"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when minimum fees are changed.\r",
+            "id": 3913,
+            "name": "MinFeesChanged",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3912,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3909,
+                  "indexed": true,
+                  "name": "admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3913,
+                  "src": "562:21:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3908,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "562:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3911,
+                  "indexed": false,
+                  "name": "minFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3913,
+                  "src": "585:11:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3910,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "585:4:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "561:36:28"
+            },
+            "src": "541:57:28"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when maximum fees are changed.\r",
+            "id": 3919,
+            "name": "MaxFeesChanged",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3918,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3915,
+                  "indexed": true,
+                  "name": "admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3919,
+                  "src": "691:21:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3914,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "691:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3917,
+                  "indexed": false,
+                  "name": "maxFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3919,
+                  "src": "714:11:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3916,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "714:4:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "690:36:28"
+            },
+            "src": "670:57:28"
+          }
+        ],
+        "scope": 3921,
+        "src": "87:643:28"
+      }
+    ],
+    "src": "0:730:28"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IFeesLibEvents.sol",
+    "exportedSymbols": {
+      "IFeesLibEvents": [
+        3920
+      ]
+    },
+    "id": 3921,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3891,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:28"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": "@dev Interface for fees library with events.\r",
+        "fullyImplemented": true,
+        "id": 3920,
+        "linearizedBaseContracts": [
+          3920
+        ],
+        "name": "IFeesLibEvents",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when fees are enabled.\r",
+            "id": 3895,
+            "name": "FeesEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3894,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3893,
+                  "indexed": true,
+                  "name": "admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3895,
+                  "src": "195:21:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3892,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "195:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "194:23:28"
+            },
+            "src": "177:41:28"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when fees are disabled.\r",
+            "id": 3899,
+            "name": "FeesDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3898,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3897,
+                  "indexed": true,
+                  "name": "admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3899,
+                  "src": "302:21:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3896,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "302:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "301:23:28"
+            },
+            "src": "283:42:28"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when percent fees are changed.\r",
+            "id": 3907,
+            "name": "FeesChanged",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3906,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3901,
+                  "indexed": true,
+                  "name": "admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3907,
+                  "src": "415:21:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3900,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "415:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3903,
+                  "indexed": false,
+                  "name": "parts_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3907,
+                  "src": "438:14:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3902,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "438:4:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3905,
+                  "indexed": false,
+                  "name": "perX_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3907,
+                  "src": "454:13:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3904,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "454:4:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "414:54:28"
+            },
+            "src": "397:72:28"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when minimum fees are changed.\r",
+            "id": 3913,
+            "name": "MinFeesChanged",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3912,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3909,
+                  "indexed": true,
+                  "name": "admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3913,
+                  "src": "562:21:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3908,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "562:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3911,
+                  "indexed": false,
+                  "name": "minFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3913,
+                  "src": "585:11:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3910,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "585:4:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "561:36:28"
+            },
+            "src": "541:57:28"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when maximum fees are changed.\r",
+            "id": 3919,
+            "name": "MaxFeesChanged",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3918,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3915,
+                  "indexed": true,
+                  "name": "admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3919,
+                  "src": "691:21:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3914,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "691:7:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3917,
+                  "indexed": false,
+                  "name": "maxFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3919,
+                  "src": "714:11:28",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3916,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "714:4:28",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "690:36:28"
+            },
+            "src": "670:57:28"
+          }
+        ],
+        "scope": 3921,
+        "src": "87:643:28"
+      }
+    ],
+    "src": "0:730:28"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.5",
+  "updatedAt": "2019-11-28T22:36:38.795Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

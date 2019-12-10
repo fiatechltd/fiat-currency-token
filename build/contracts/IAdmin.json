@@ -1,0 +1,610 @@
+{
+  "contractName": "IAdmin",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_account",
+          "type": "address"
+        }
+      ],
+      "name": "isAdmin",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_account",
+          "type": "address"
+        }
+      ],
+      "name": "addAdmin",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_account",
+          "type": "address"
+        }
+      ],
+      "name": "removeAdmin",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "renounceAdmin",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.24;\r\n\r\n/**\r\n * @dev Interface for System Config admin.\r\n */\r\ncontract IAdmin\r\n{\r\n\tfunction isAdmin(address _account) public view returns (bool);\r\n\t\r\n\tfunction addAdmin(address _account) public;\r\n\t\r\n\tfunction removeAdmin(address _account) public;\r\n\t\r\n    function renounceAdmin() public;\r\n}",
+  "sourcePath": "C:\\Users\\Homeuser\\Desktop\\FiatechFiatCurrencyToken\\contracts\\interfaces\\IAdmin.sol",
+  "ast": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IAdmin.sol",
+    "exportedSymbols": {
+      "IAdmin": [
+        3284
+      ]
+    },
+    "id": 3285,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3263,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:20"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@dev Interface for System Config admin.\r",
+        "fullyImplemented": false,
+        "id": 3284,
+        "linearizedBaseContracts": [
+          3284
+        ],
+        "name": "IAdmin",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3270,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "isAdmin",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3266,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3265,
+                  "name": "_account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3270,
+                  "src": "120:16:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3264,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "120:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "119:18:20"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3269,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3268,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3270,
+                  "src": "159:4:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3267,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "159:4:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "158:6:20"
+            },
+            "scope": 3284,
+            "src": "103:62:20",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3275,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "addAdmin",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3273,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3272,
+                  "name": "_account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3275,
+                  "src": "189:16:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3271,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "189:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "188:18:20"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3274,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "213:0:20"
+            },
+            "scope": 3284,
+            "src": "171:43:20",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3280,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "removeAdmin",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3278,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3277,
+                  "name": "_account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3280,
+                  "src": "241:16:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3276,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "241:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "240:18:20"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3279,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "265:0:20"
+            },
+            "scope": 3284,
+            "src": "220:46:20",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3283,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "renounceAdmin",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3281,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "297:2:20"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3282,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "306:0:20"
+            },
+            "scope": 3284,
+            "src": "275:32:20",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3285,
+        "src": "82:228:20"
+      }
+    ],
+    "src": "0:310:20"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IAdmin.sol",
+    "exportedSymbols": {
+      "IAdmin": [
+        3284
+      ]
+    },
+    "id": 3285,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3263,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:20"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@dev Interface for System Config admin.\r",
+        "fullyImplemented": false,
+        "id": 3284,
+        "linearizedBaseContracts": [
+          3284
+        ],
+        "name": "IAdmin",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3270,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "isAdmin",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3266,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3265,
+                  "name": "_account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3270,
+                  "src": "120:16:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3264,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "120:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "119:18:20"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3269,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3268,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3270,
+                  "src": "159:4:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3267,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "159:4:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "158:6:20"
+            },
+            "scope": 3284,
+            "src": "103:62:20",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3275,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "addAdmin",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3273,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3272,
+                  "name": "_account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3275,
+                  "src": "189:16:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3271,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "189:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "188:18:20"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3274,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "213:0:20"
+            },
+            "scope": 3284,
+            "src": "171:43:20",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3280,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "removeAdmin",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3278,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3277,
+                  "name": "_account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3280,
+                  "src": "241:16:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3276,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "241:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "240:18:20"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3279,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "265:0:20"
+            },
+            "scope": 3284,
+            "src": "220:46:20",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 3283,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "renounceAdmin",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3281,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "297:2:20"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3282,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "306:0:20"
+            },
+            "scope": 3284,
+            "src": "275:32:20",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3285,
+        "src": "82:228:20"
+      }
+    ],
+    "src": "0:310:20"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.5",
+  "updatedAt": "2019-11-28T22:36:38.731Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

@@ -1,0 +1,82 @@
+pragma solidity ^0.4.24;
+
+import "../access/roles/Admin.sol";
+
+
+
+/**
+ * @dev Know Your Costumer contract controller to control and grant access to 
+ * transfers and operations on smart contract only for approved users.
+ */
+contract KYC is Admin {
+	
+    using Roles for Roles.Role;
+	
+	/**
+	 * @dev Event emitted when a user address was KYC approved.
+	 * @param _admin Admin address performing the operation
+	 * @param _userAddress User address that was KYC approved
+	 */
+    event KYCAddressApproved(address indexed _admin, address indexed _userAddress);
+	
+	/**
+	 * @dev Event emitted when a user address was KYC disapproved.
+	 * @param _admin Admin address performing the operation
+	 * @param _userAddress User address that was KYC disapproved
+	 */
+    event KYCAddressDisapproved(address indexed _admin, address indexed _userAddress);
+	
+    Roles.Role private _users;
+	
+	
+	
+	constructor() internal {
+		_approveKYCUserAddress(msg.sender);
+    }
+	
+	/**
+	 * @dev Check if user address is KYC approved.
+	 * @param _account User address
+	 * @return bool
+	 */
+	function isKYCApproved(address _account) public view returns (bool) {
+        return _users.has(_account);
+    }
+	
+	/**
+	 * @dev Approve KYC user address, only admin can do it.
+	 * @param _account User address
+	 */
+	function approveKYCUserAddress(address _account) public onlyAdmin {
+        _approveKYCUserAddress(_account);
+    }
+	
+	/**
+	 * @dev Disapprove KYC user address, only admin can do it.
+	 * @param _account User address
+	 */
+	function disapproveKYCUserAddress(address _account) public onlyAdmin {
+		require(_account != owner, "KYC: Owner can not remove his KYC approved status");
+        _disapproveKYCUserAddress(_account);
+    }
+	
+	/**
+	 * @dev Approve KYC user address
+	 * @param _account User address
+	 */
+    function _approveKYCUserAddress(address _account) internal {
+		require(!_users.has(_account), "KYC: User address already approved");
+        _users.add(_account);
+        emit KYCAddressApproved(msg.sender, _account);
+    }
+	
+	/**
+	 * @dev Disapprove KYC user address
+	 * @param _account User address
+	 */
+    function _disapproveKYCUserAddress(address _account) internal {
+		require(_users.has(_account), "KYC: User address already disapproved");
+        _users.remove(_account);
+        emit KYCAddressDisapproved(msg.sender, _account);
+    }
+}

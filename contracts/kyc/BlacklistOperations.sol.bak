@@ -1,0 +1,24 @@
+pragma solidity ^0.4.24;
+
+
+
+/**
+ * @dev Know Your Costumer Blacklist contract interface defining blacklisted address operations.
+ */
+interface BlacklistOperations {
+	
+    /**
+	 * @dev Event emitted when a user address balance was wiped out.
+	 * Address must be blacklisted first in order for this operation to be performed.
+	 * @param _admin Admin address performing the operation
+	 * @param _userAddress User address that was blacklisted
+	 * @param _amount Address tokens amount available before the wipe out
+	 */
+    event BlacklistedAddressWipedout(address indexed _admin, address indexed _userAddress, uint _amount);
+	
+	/**
+	 * @dev Wipeout balance of blacklisted user address, only admin can do it.
+	 * @param _account User address
+	 */
+	function wipeoutAddressBalance(address _account) external returns (bool success);
+}

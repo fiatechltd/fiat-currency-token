@@ -1,0 +1,20 @@
+pragma solidity ^0.4.24;
+
+import "./ERC20Token.sol";
+
+/**
+ * @dev Burnable token contract.
+ */
+contract BurnableToken is ERC20Token
+{
+	event Burn(address indexed _admin, address indexed _from, uint _value);
+	
+	function burn(address _from, uint _value) internal returns (bool success) {
+		token.balances[_from] = token.balances[_from].sub(_value);
+		// substract amount from total supply
+		token.totalSupply = token.totalSupply.sub(_value);
+		emit Transfer(_from, address(0), _value);
+		emit Burn(msg.sender, _from, _value);
+		return true;
+	}
+}

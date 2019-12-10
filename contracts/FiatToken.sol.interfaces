@@ -1,0 +1,582 @@
+pragma solidity ^0.4.24;
+
+import "./libs/SafeMathLib.sol";
+//import "./interfaces/IERC20.sol";
+import "./interfaces/IBlockchainBridge.sol";
+import "./interfaces/ITokensRecovery.sol";
+import "./interfaces/IEtherReclaimer.sol";
+import "./Owned.sol";
+//import "./Mortal.sol";
+//import "./lifecycle/Pausable.sol";
+//import "./access/roles/Admin.sol";
+///import "./BlockchainBridge.sol";
+//import "./kyc/BlacklistController.sol";
+import "./kyc/BlacklistOperations.sol";
+import "./libs/IERC20.sol";
+import "./libs/IConfig.sol";
+import "./libs/IFees.sol";
+
+
+
+
+
+/**
+ * @dev ERC20 Token, with symbol, name, standard and decimals among others.
+ * Token units in this contract mean cents or pennies of the fiat currency it represents.
+ */
+contract FiatToken is //IERC20
+		Owned
+		, Mortal
+		//, Pausable
+		///, BlockchainBridge
+		//, TransfersController
+		///, FeesController
+		//, NoFeeAddress //special privileges wallets for exchange wallets and admins
+		//, KYCController //Know Your Costumer controller
+		//, BlacklistController
+		, BlacklistOperations
+		, ITokensRecovery
+		, IEtherReclaimer
+{
+    using SafeMathLib for uint;
+	
+	//using ERC20Lib for ERC20Lib.TokenStorage;
+	//ERC20Lib.TokenStorage token;
+	IERC20 token;
+	
+	//using AttributesLib for AttributesLib.AttributesStorage;
+	//AttributesLib.AttributesStorage attrs;
+	IConfig config;
+	
+	//using FeesLib for FeesLib.Fee;
+	//FeesLib.Fee transferFees;
+	IFees transferFees;
+    
+	
+	
+	//event TransferFeesEnabled(address indexed admin);
+	//event TransferFeesDisabled(address indexed admin);
+	
+	//event TransferFeesInit(address indexed admin, uint parts_Fee, uint perX_Fee, uint minFeeTokens, uint maxFeeTokens, bool feesEnabled);
+	//event TransferFeesChanged(address indexed admin, uint parts_Fee, uint perX_Fee);
+	//event MinTransferFeesChanged(address indexed admin, uint minTransferFee);
+	//event MaxTransferFeesChanged(address indexed admin, uint maxTransferFee);
+	
+	event TransferFeesCollected(address indexed from, address indexed to, uint transferTokens, address indexed feesCollector, uint transferTokensFee);
+	
+	
+	
+	
+	
+	
+	
+    /**
+	 * @dev Constructor
+	 */
+    constructor()
+		Owned()
+		//Admin()
+		//Pausable()
+		//NoFeeAddress()
+		//KYCController()
+		//BlacklistController()
+		public
+	{
+		// initial supply is zero
+		token.init(0);
+		//config.init(true); //KYC enabled
+		
+		//--- transfer fees are disabled
+		//--- withdrawal fees are disabled
+		
+		//uint parts_transferFee = 1; // 1 per 1000 as 0.1%
+		//uint perX_transferFee = 1000; // 1 per 1000 as 0.1%
+		//uint min_transferFee_tokens = 10; //10 cent(s) as fixed minimum fee
+		//uint max_transferFee_tokens = 0; //0 means disabled fixed maximum fee
+		//bool transferFee_Enabled = false;
+		// init transfer fees: 1 per 1000 (0.1%), 10 cents minimum fee, transfer fee disabled
+		//transferFees.init(parts_transferFee, perX_transferFee, min_transferFee_tokens, max_transferFee_tokens, transferFee_Enabled);
+		
+		//--- transfers are initialized as disabled
+		
+		//config.feesCollectorWallet = msg.sender;
+		//config.transferToYourselfIsWidrawal = true;
+    }
+	
+	
+	
+	/*modifier onlyAdmin {
+		require(config.isAdmin(msg.sender), "Admin required");
+		_;
+	}
+	
+	modifier whenKYCDisabledOrApprovedAddress {
+		require(config.isKYCDisabledOrApprovedAddress(msg.sender), "<sender> KYC is not approved!");
+		_;
+	}
+	
+	modifier whenNOTBlacklistedAddress {
+		require(config.isNOTBlacklistedAddress(msg.sender), "<sender> is blacklisted!");
+		_;
+	}
+	
+	modifier whenTransfersEnabled {
+		require(config.transfersEnabled(), "transfers are disabled!");
+		_;
+	}
+	
+	modifier whenNotPaused {
+		require(!config.isPaused(), "paused!");
+		_;
+	}*/
+	
+	
+	
+    /**
+	 * @dev Total supply, actually it is the circulating supply of tokens available.
+	 * @return bool
+	 */
+    function totalSupply() public view returns (uint) {
+		return token.totalSupply();
+    }
+
+
+
+    /**
+	 * @dev Get the token balance for account `tokenOwner`
+	 * @param tokenOwner User address to check his tokens balance
+	 * @return uint
+	 */
+    function balanceOf(address tokenOwner) public view returns (uint balance) {
+        return token.balanceOf(tokenOwner);
+    }
+	
+	
+	
+    /**
+	 * @dev Transfer the balance from token owner's account to `to` account
+	 * - Owner's account must have sufficient balance to transfer
+	 * - 0 value transfers are allowed
+	 * @param to Address to transfer tokens to
+	 * @param tokens Amount of tokens to tranfer
+	 * @return bool
+	 */
+    function transfer(address to, uint tokens) public
+		/*whenNotPaused
+		whenTransfersEnabled
+		whenKYCDisabledOrApprovedAddress
+		whenNOTBlacklistedAddress*/
+		returns (bool)
+	{
+		//require(to != address(0)); //transfers to zero address are forbidden
+		//require(!config.isPaused(), "paused!");
+		//require(config.transfersEnabled()); ///, "transfer: transfersEnabled required");
+		//require(config.isKYCDisabledOrApprovedAddress(msg.sender), "<sender> KYC is not approved!");
+		//require(config.isNOTBlacklistedAddress(msg.sender), "<sender> is blacklisted!");
+		//require(config.isKYCDisabledOrApprovedAddress(to)); ///, "<to> KYC is not approved!");
+		//require(config.isNOTBlacklistedAddress(to)); ///, "<to> is blacklisted!");
+		
+		if (to == address(0)) return false; //transfers to zero address are forbidden
+		//if (config.isPaused()) return false;
+		//if (!config.transfersEnabled()) return false;
+		//if (!config.isKYCDisabledOrApprovedAddress(msg.sender)) return false;
+		//if (!config.isNOTBlacklistedAddress(msg.sender)) return false;
+		//if (!config.isKYCDisabledOrApprovedAddress(to)) return false;
+		//if (!config.isNOTBlacklistedAddress(to)) return false;
+		
+		if (config.isPaused() || !config.transfersEnabled()
+			|| !config.isKYCDisabledOrApprovedAddress(msg.sender) || !config.isNOTBlacklistedAddress(msg.sender)
+			|| !config.isKYCDisabledOrApprovedAddress(to) || !config.isNOTBlacklistedAddress(to))
+			return false;
+		
+		// transfers to your own address are considered withdrawals (so they are allowed) ???
+		if (to == msg.sender && config.transferToYourselfIsWidrawal()) {
+			return withdrawRequest(tokens);
+		}
+		
+		//calculate transfer fees amount
+		//uint transfer_fee_amount = calculateTransferFee(tokens);
+		uint transfer_fee_amount = transferFees.calculateFee(tokens);
+		
+		//transfers involving admin wallets carry zero fees
+		if (config.isNoFeeAddress(to) || config.isNoFeeAddress(msg.sender))
+			transfer_fee_amount = 0;
+		
+		//require(token.balanceOf(msg.sender) >= (tokens.add(transfer_fee_amount))); ///, "Not enough tokens in sender's balance!");
+		if (token.balanceOf(msg.sender) >= (tokens.add(transfer_fee_amount))) return false;
+		
+		
+		
+        bool ok1 = token.transfer(to, tokens);
+		
+		//collect the transfer fees, if wallet is zero/invalid, contract owner gets the transfer fees
+		address feesCollector = (config.feesCollectorWallet() == address(0)) ? owner : config.feesCollectorWallet();
+		
+		bool ok2 = token.transfer(feesCollector, transfer_fee_amount);
+        //require(ok1 && ok2, "transfer failed");
+		bool ok = (ok1 && ok2);
+		if (ok) {
+			// emit event for transfer fees collected, giving sender address, receiver address, amount sent, fee amount collected and current symbol.
+			emit TransferFeesCollected(msg.sender, to, tokens, feesCollector, transfer_fee_amount);
+		}
+		
+        return ok;
+    }
+	
+	
+	
+    /**
+	 * @dev Token owner can approve for `spender` to transferFrom(...) `tokens`
+	 * from the token owner's account
+	 *
+	 * https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md
+	 * https://eips.ethereum.org/EIPS/eip-20
+	 * recommends that there are no checks for the approval double-spend attack
+	 * as this should be implemented in user interfaces
+	 * NOTE: We use a modified version of the ERC20 approve function to be a little bit safer
+	 * based on: https://github.com/Giveth/minime/blob/master/contracts/MiniMeToken.sol#L263
+	 * @param spender Spender address user approves to spend tokens on his behalf
+	 * @param tokens Amount of tokens spender is approved to spend/transfer
+	 * @return bool
+	 */
+    function approve(address spender, uint tokens) public
+		/*whenNotPaused
+		whenTransfersEnabled
+		whenKYCDisabledOrApprovedAddress
+		whenNOTBlacklistedAddress*/
+		returns (bool)
+	{
+		//require(!config.isPaused(), "paused!");
+		//require(config.transfersEnabled(), "transfersEnabled required");
+		//require(config.isKYCDisabledOrApprovedAddress(msg.sender), "<sender> KYC is not approved!");
+		//require(config.isNOTBlacklistedAddress(msg.sender), "<sender> is blacklisted!");
+		//require(config.isKYCDisabledOrApprovedAddress(spender)); ///, "<spender> KYC is not approved!");
+		//require(config.isNOTBlacklistedAddress(spender)); ///, "<spender> is blacklisted!");
+		
+		//if (config.isPaused()) return false;
+		//if (!config.transfersEnabled()) return false;
+		//if (!config.isKYCDisabledOrApprovedAddress(msg.sender)) return false;
+		//if (!config.isNOTBlacklistedAddress(msg.sender)) return false;
+		//if (!config.isKYCDisabledOrApprovedAddress(spender)) return false;
+		//if (!config.isNOTBlacklistedAddress(spender)) return false;
+		
+		if (config.isPaused() || !config.transfersEnabled()
+			|| !config.isKYCDisabledOrApprovedAddress(msg.sender) || !config.isNOTBlacklistedAddress(msg.sender)
+			|| !config.isKYCDisabledOrApprovedAddress(spender) || !config.isNOTBlacklistedAddress(spender))
+			return false;
+		
+		// To change the approve amount you first have to reduce the addresses`
+        //  allowance to zero by calling `approve(_spender,0)` if it is not
+        //  already 0 to mitigate the race condition described here:
+        //  https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+        
+		//require(token.approve(spender, tokens), "token.approve failed");
+		return token.approve(spender, tokens);
+		//return true;
+    }
+
+
+
+    /**
+	 * @dev Transfer `tokens` from the `from` account to the `to` account
+	 *
+	 * The calling account must already have sufficient tokens approve(...)-d
+	 * for spending from the `from` account and
+	 * - From account must have sufficient balance to transfer
+	 * - Spender must have sufficient allowance to transfer
+	 * - 0 value transfers are allowed
+	 * *** The user executing the function pays the transfer fees, not the funds owner
+	 * @param from Address approved spender tranfers tokens from
+	 * @param to Address approved spender tranfers to
+	 * @param tokens Amount of tokens approved to transfer
+	 * @return bool
+	 */
+    function transferFrom(address from, address to, uint tokens) public
+		/*whenNotPaused
+		whenTransfersEnabled
+		whenKYCDisabledOrApprovedAddress
+		whenNOTBlacklistedAddress*/
+		returns (bool)
+	{
+		//require(to != address(0)); //transfers to zero address using "transferFrom" function are forbidden
+		//require(!config.isPaused(), "paused!");
+		//require(config.transfersEnabled(), "transfersEnabled required");
+		//require(config.isKYCDisabledOrApprovedAddress(msg.sender), "<sender> KYC is not approved!");
+		//require(config.isNOTBlacklistedAddress(msg.sender), "<sender> is blacklisted!");
+		//require(config.isKYCDisabledOrApprovedAddress(from)); ///, "<from> KYC is not approved!");
+		//require(config.isKYCDisabledOrApprovedAddress(to)); ///, "<to> KYC is not approved!");
+		//require(config.isNOTBlacklistedAddress(from)); ///, "<from> is blacklisted!");
+		//require(config.isNOTBlacklistedAddress(to)); ///, "<to> is blacklisted!");
+		
+		if (to == address(0)) return false;
+		//if (config.isPaused()) return false;
+		//if (!config.transfersEnabled()) return false;
+		//if (!config.isKYCDisabledOrApprovedAddress(msg.sender)) return false;
+		//if (!config.isNOTBlacklistedAddress(msg.sender)) return false;
+		//if (!config.isKYCDisabledOrApprovedAddress(from)) return false;
+		//if (!config.isKYCDisabledOrApprovedAddress(to)) return false;
+		//if (!config.isNOTBlacklistedAddress(from)) return false;
+		//if (!config.isNOTBlacklistedAddress(to)) return false;
+		
+		if (config.isPaused() || !config.transfersEnabled() 
+			|| !config.isKYCDisabledOrApprovedAddress(msg.sender) || !config.isNOTBlacklistedAddress(msg.sender) 
+			|| !config.isKYCDisabledOrApprovedAddress(from) || !config.isKYCDisabledOrApprovedAddress(to)
+			|| !config.isNOTBlacklistedAddress(from) || !config.isNOTBlacklistedAddress(to))
+			return false;
+		
+		//calculate transfer fees amount
+		uint transfer_fee_amount = transferFees.calculateFee(tokens);
+		
+		//transfers involving admin wallets carry zero fees
+		if (config.isNoFeeAddress(from) || config.isNoFeeAddress(to) || config.isNoFeeAddress(msg.sender))
+			transfer_fee_amount = 0;
+		
+		//require(token.balanceOf(from) >= (tokens.add(transfer_fee_amount)), "Not enough tokens in <from> balance!");
+		//require(token.allowance(from, msg.sender) >= (tokens.add(transfer_fee_amount)), "Not enough tokens allowed by <from>!");
+		
+		//if (!(token.balanceOf(from) >= (tokens.add(transfer_fee_amount)))) return false;
+		//if (!(token.allowance(from, msg.sender) >= (tokens.add(transfer_fee_amount)))) return false;
+		
+		uint _tokensWithFee = tokens.add(transfer_fee_amount);
+		if (!(token.balanceOf(from) >= _tokensWithFee) || !(token.allowance(from, msg.sender) >= _tokensWithFee))
+			return false;
+		
+		
+		
+		bool ok1 = token.transferFrom(from, to, tokens);
+		
+		//collect the transfer fees, if wallet is zero/invalid, contract owner gets the transfer fees
+		address feesCollector = (config.feesCollectorWallet() == address(0)) ? owner : config.feesCollectorWallet();
+		
+		bool ok2 = token.transferFrom(from, feesCollector, transfer_fee_amount);
+		//require(ok1 && ok2, "transferFrom failed");
+		bool ok = (ok1 && ok2);
+		if (ok) {
+			// emit event for transfer fees collected, giving sender address, receiver address, amount sent, fee amount collected and current symbol.
+			emit TransferFeesCollected(from, to, tokens, feesCollector, transfer_fee_amount);
+		}
+		
+		return ok;
+    }
+
+
+
+    /**
+	 * @dev Returns the amount of tokens approved by the owner that can be
+	 * transferred to the spender's account
+	 * @param tokenOwner Address of token owner we check for allowance on
+	 * @param spender Address of spender that token owner approved to spend on his behalf
+	 * @return uint
+	 */
+    function allowance(address tokenOwner, address spender) public view returns (uint remaining) {
+		return token.allowance(tokenOwner, spender);
+    }
+	
+	
+	
+	///*** BlockchainBridge contract functions
+	
+	/**
+	 * @dev Function executed by admin, after funds were received by bank wire or any other accepted method, admin deposits equal tokens to user address.
+	 * @param _to User address to deposit tokens to
+	 * @param _amount Amount of tokens to deposit to user address
+	 * @return bool
+	 */
+	function depositAccept(address _to, uint _amount) public
+		/*onlyAdmin
+		whenNotPaused
+		whenDepositsEnabled*/
+		returns (bool)
+	{
+		//require(config.isAdmin(msg.sender), "Admin required!");
+		//require(!config.isPaused(), "paused!");
+		//require(config.depositsEnabled(), "depositsEnabled required");
+		//require(config.isKYCDisabledOrApprovedAddress(_to)); ///, "<to> KYC is not approved!");
+		//require(config.isNOTBlacklistedAddress(_to)); ///, "<_to> is blacklisted!");
+		
+		//if (!config.isAdmin(msg.sender)) return false;
+		//if (config.isPaused()) return false;
+		//if (!config.depositsEnabled()) return false;
+		//if (!config.isKYCDisabledOrApprovedAddress(_to)) return false;
+		//if (!config.isNOTBlacklistedAddress(_to)) return false;
+		
+		if (!config.isAdmin(msg.sender) || config.isPaused() || !config.depositsEnabled() 
+			|| !config.isKYCDisabledOrApprovedAddress(_to) || !config.isNOTBlacklistedAddress(_to))
+			return false;
+		
+		// create tokens as they were deposited as reserves
+		//require(token.mint(_to, _amount), "depositAccept.mint failed");
+		bool ok = token.mint(_to, _amount);
+		if (ok) {
+			//emit DepositAccepted event
+			///emit DepositAccepted(msg.sender, _to, _amount);
+		}
+		
+		return ok;
+    }
+	
+	
+	
+	/**
+	 * @dev Function executed by user asking for a withdrawal, withdrawal fee (if any) is substracted from withdrawal amount
+	 * e.g. if user withdraws $1000 he pays $1 from that amount as fee (for withdrawal fee = 0.1%)
+	 * @param _amount Amount of tokens to withdraw
+	 * @return bool
+	 */
+	function withdrawRequest(uint _amount) public
+		/*whenNotPaused
+		whenWithdrawalsEnabled
+		whenKYCDisabledOrApprovedAddress
+		whenNOTBlacklistedAddress*/
+		returns (bool)
+	{
+		//require(!config.isPaused(), "paused!");
+		//require(config.withdrawalsEnabled(), "transfersEnabled required");
+		//require(config.isKYCDisabledOrApprovedAddress(msg.sender), "<sender> KYC is not approved!");
+		//require(config.isNOTBlacklistedAddress(msg.sender), "<sender> is blacklisted!");
+		
+		//if (config.isPaused()) return false;
+		//if (!config.withdrawalsEnabled()) return false;
+		//if (!config.isKYCDisabledOrApprovedAddress(msg.sender)) return false;
+		//if (!config.isNOTBlacklistedAddress(msg.sender)) return false;
+		
+		if (config.isPaused() || !config.withdrawalsEnabled() || !config.isKYCDisabledOrApprovedAddress(msg.sender) || !config.isNOTBlacklistedAddress(msg.sender))
+			return false;
+		
+		// only withdraw what's available in user balance
+		//require(_amount > 0 && _amount <= token.balanceOf(msg.sender)); ///, "tokens must be valid and greater than zero");
+		//require(_amount >= config.minWithdrawalAmount()); ///, "tokens must be greater than or equal to minimum limit");
+		//require(config.maxWithdrawalAmount() == 0 || _amount <= config.maxWithdrawalAmount()); ///, "tokens must be less than or equal to maximum limit");
+		
+		//if (!(_amount > 0 && _amount <= token.balanceOf(msg.sender))) return false;
+		//if (!(_amount >= config.minWithdrawalAmount())) return false;
+		//if (!(config.maxWithdrawalAmount() == 0 || _amount <= config.maxWithdrawalAmount())) return false;
+		
+		if (!(_amount > 0 && _amount <= token.balanceOf(msg.sender)) || !(_amount >= config.minWithdrawalAmount()) 
+			|| !(config.maxWithdrawalAmount() == 0 || _amount <= config.maxWithdrawalAmount()))
+			return false;
+		
+		// destroy tokens as they were withdrawn
+		//require(token.burn(msg.sender, _amount), "burn failed");
+		bool ok = token.burn(msg.sender, _amount);
+		if (ok) {
+			// emit event for withdrawal.
+			///emit WithdrawalRequested(msg.sender, _amount, 0 /*zero withdrawal fee*/);
+		}
+		
+		return ok;
+	}
+	
+	///*** BlockchainBridge contract functions
+	
+	
+	
+	///*** BlacklistOperations contract functions
+	
+	function wipeoutAddressBalance(address _account) public
+		//onlyAdmin
+		//whenNotPaused
+		returns (bool)
+	{
+		//require(config.isAdmin(msg.sender), "Admin required!");
+		//require(!config.isPaused(), "paused!");
+		//require(_account != owner); ///, "Owner address balance can not be wiped out!");
+		//require(config.isBlacklisted(_account)); ///, "Address must be blacklisted first!");
+		//require(token.balanceOf(_account) > 0); ///, "Balance must be greater than zero!");
+		
+		//if (!config.isAdmin(msg.sender)) return false;
+		//if (config.isPaused()) return false;
+		////if (_account == owner) return false;
+		//if (!config.isBlacklisted(_account)) return false;
+		////if (!(token.balanceOf(_account) > 0)) return false;
+		
+		if (!config.isAdmin(msg.sender) || config.isPaused() || !config.isBlacklisted(_account)) return false;
+		
+		uint _amount = token.balanceOf(_account);
+		token.setBalance(_account, 0);
+		// substract amount from total supply
+		token.totalSupply = token.totalSupply.sub(_value);
+		emit Transfer(_account, address(0), _amount);
+		emit BlacklistedAddressWipedout(msg.sender, _account, _amount);
+		return true;
+	}
+	
+	/*function wipeoutAddressBalance(address _account) public onlyAdmin returns (bool) {
+		if (!config.isAdmin(msg.sender) || config.isPaused() || !config.isBlacklisted(_account)) return false;
+		uint _amount = token.balanceOf(_account);
+		token.setBalance(_account, 0);
+		token.totalSupply = token.totalSupply.sub(_amount);
+		emit Transfer(_account, address(0), _amount);
+		emit BlacklistedAddressWipedout(msg.sender, _account, _amount);
+		return true;
+	}*/
+	
+	///*** BlacklistOperations contract functions
+	
+	
+	
+	///*** FeesLib contract functions
+	//function calculateTransferFee(uint tokens) public view returns (uint fee) {
+	//	return (transferFees.calculateFee(tokens));
+	//}
+	
+	/*function setTransferMinMaxFee(uint newMinFee, uint newMaxFee) public onlyAdmin returns (bool) {
+		return (transferFees.setMinMaxFee(newMinFee, newMaxFee));
+	}*/
+	
+	/*function setTransferMaxFee(uint newMaxFee) public onlyAdmin returns (bool) {
+		return (transferFees.setMaxFee(newMaxFee));
+	}*/
+	
+	//function enableTransferFees(bool enable) public onlyAdmin returns (bool) {
+	//	return (transferFees.enableFees(enable));
+	//}
+	
+	/*function disableTransferFees() public onlyAdmin returns (bool) {
+		return (transferFees.disableFees());
+	}*/
+	
+	/*function getFees() public view returns (uint _parts_Fee, uint _perX_Fee) {
+		_parts_Fee = transferFees.parts_Fee;
+		_perX_Fee = transferFees.perX_Fee;
+	}*/
+	
+	//function setTransferFees(uint _parts_Fee, uint _perX_Fee) public onlyAdmin returns (bool) {
+	//	return (transferFees.setFees(_parts_Fee, _perX_Fee));
+	//}
+	///*** FeesLib contract functions
+	
+	
+	
+    /**
+	 * Accept ETH donations
+	 */
+    function () external payable {
+    }
+	
+	
+	
+	/**
+	 * @dev Send all eth balance in the contract to another address
+	 * @param _to Address to send contract ether balance to
+	 * @return bool
+	 */
+    function reclaimEther(address _to) external onlyOwner returns (bool) {
+        _to.transfer(address(this).balance);
+		return true;
+    }
+	
+	
+	
+    /**
+	 * @dev Owner can transfer out any accidentally sent ERC20 tokens
+	 * @param tokenAddress Token contract address we want to recover lost tokens from.
+	 * @param tokens Amount of tokens to be recovered, usually the same as the balance of this contract.
+	 * @return bool
+	 */
+    function recoverAnyERC20Token(address tokenAddress, uint tokens) external onlyOwner returns (bool ok) {
+		ok = IERC20(tokenAddress).transfer(owner, tokens);
+		//emit ERC20TokenRecovered(tokenAddress, address(this), owner, tokens);
+    }
+
+}

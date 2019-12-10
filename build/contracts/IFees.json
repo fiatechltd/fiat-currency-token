@@ -1,0 +1,2337 @@
+{
+  "contractName": "IFees",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "admin",
+          "type": "address"
+        }
+      ],
+      "name": "FeesEnabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "admin",
+          "type": "address"
+        }
+      ],
+      "name": "FeesDisabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "admin",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "parts_Fee",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "perX_Fee",
+          "type": "uint256"
+        }
+      ],
+      "name": "FeesChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "admin",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "minFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "MinFeesChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "admin",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "maxFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "MaxFeesChanged",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "parts_Fee",
+          "type": "uint256"
+        },
+        {
+          "name": "perX_Fee",
+          "type": "uint256"
+        },
+        {
+          "name": "min_Fee_tokens",
+          "type": "uint256"
+        },
+        {
+          "name": "max_Fee_tokens",
+          "type": "uint256"
+        },
+        {
+          "name": "fee_Enabled",
+          "type": "bool"
+        }
+      ],
+      "name": "init",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "tokens",
+          "type": "uint256"
+        }
+      ],
+      "name": "calculateFee",
+      "outputs": [
+        {
+          "name": "fee",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getMinFee",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getMaxFee",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newMinFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMinFee",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newMaxFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMaxFee",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "feesEnabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "enable",
+          "type": "bool"
+        }
+      ],
+      "name": "enableFees",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getFeesNumerator",
+      "outputs": [
+        {
+          "name": "_parts_Fee",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getFeesDenominator",
+      "outputs": [
+        {
+          "name": "_perX_Fee",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_parts_Fee",
+          "type": "uint256"
+        },
+        {
+          "name": "_perX_Fee",
+          "type": "uint256"
+        }
+      ],
+      "name": "setFees",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.24;\r\n\r\nimport \"./IFeesLibEvents.sol\";\r\n\r\n\r\n\r\n/**\r\n * @dev Interface for contract fees library.\r\n */\r\ncontract IFees is IFeesLibEvents\r\n{\r\n\t/**\r\n\t * @dev Init fees\r\n\t * @param parts_Fee Numerator part of the percentage fee.\r\n\t * @param perX_Fee Denominator part of the percentage fee.\r\n\t * @param min_Fee_tokens Minimum fee limit.\r\n\t * @param max_Fee_tokens Maximum fee limit.\r\n\t * @param fee_Enabled Enable/disable fees toggle.\r\n\t * @return bool\r\n\t */\r\n\tfunction init(uint parts_Fee, uint perX_Fee, uint min_Fee_tokens, uint max_Fee_tokens, bool fee_Enabled) public returns (bool);\r\n\t\r\n\t/**\r\n\t * @dev calculateFee, given token amount, calculate transfer fee in units/tokens that are cents or pennies\r\n\t * @param tokens Tokens amount to calculate fees for\r\n\t * @return uint\r\n\t */\r\n\tfunction calculateFee(uint tokens) public view returns (uint fee);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Get minimum fee tokens/pennies/cents\r\n\t * @return uint\r\n\t */\r\n\tfunction getMinFee() public view returns (uint);\r\n\t\r\n\t/**\r\n\t * @dev Get maximum fee tokens/pennies/cents\r\n\t * @return uint\r\n\t */\r\n\tfunction getMaxFee() public view returns (uint);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Change minimum fee tokens/pennies/cents\r\n\t * @param newMinFee Minimum amount of tokens to be set as minimum\r\n\t * @return bool\r\n\t */\r\n\tfunction setMinFee(uint newMinFee) public returns (bool);\r\n\t\r\n\t/**\r\n\t * @dev Change maximum fee tokens/pennies/cents\r\n\t * @param newMaxFee Maximum amount of tokens to be set as maximum\r\n\t * @return bool\r\n\t */\r\n\tfunction setMaxFee(uint newMaxFee) public returns (bool);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Check enabled/disabled fees\r\n\t * @return bool\r\n\t */\r\n\tfunction feesEnabled() public view returns (bool);\r\n\t\r\n\t/**\r\n\t * @dev Enable/Disable fees\r\n\t * @return bool\r\n\t */\r\n\tfunction enableFees(bool enable) public returns (bool);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Get fees as parts per X units\r\n\t * @return bool\r\n\t */\r\n\tfunction getFeesNumerator() public view returns (uint _parts_Fee);\r\n\t\r\n\t/**\r\n\t * @dev Get fees as parts per X units\r\n\t * @return bool\r\n\t */\r\n\tfunction getFeesDenominator() public view returns (uint _perX_Fee);\r\n\t\r\n\t/**\r\n\t * @dev Set fees as parts per X units\r\n\t * @param _parts_Fee Parts component of the fee percentage\r\n\t * @param _perX_Fee Per X component of the fee percentage\r\n\t * @return bool\r\n\t */\r\n\tfunction setFees(uint _parts_Fee, uint _perX_Fee) public returns (bool);\r\n}",
+  "sourcePath": "C:\\Users\\Homeuser\\Desktop\\FiatechFiatCurrencyToken\\contracts\\interfaces\\IFees.sol",
+  "ast": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IFees.sol",
+    "exportedSymbols": {
+      "IFees": [
+        3889
+      ]
+    },
+    "id": 3890,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3808,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:27"
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IFeesLibEvents.sol",
+        "file": "./IFeesLibEvents.sol",
+        "id": 3809,
+        "nodeType": "ImportDirective",
+        "scope": 3890,
+        "sourceUnit": 3921,
+        "src": "28:30:27",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 3810,
+              "name": "IFeesLibEvents",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3920,
+              "src": "140:14:27",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IFeesLibEvents_$3920",
+                "typeString": "contract IFeesLibEvents"
+              }
+            },
+            "id": 3811,
+            "nodeType": "InheritanceSpecifier",
+            "src": "140:14:27"
+          }
+        ],
+        "contractDependencies": [
+          3920
+        ],
+        "contractKind": "contract",
+        "documentation": "@dev Interface for contract fees library.\r",
+        "fullyImplemented": false,
+        "id": 3889,
+        "linearizedBaseContracts": [
+          3889,
+          3920
+        ],
+        "name": "IFees",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": "@dev Init fees\r\n@param parts_Fee Numerator part of the percentage fee.\r\n@param perX_Fee Denominator part of the percentage fee.\r\n@param min_Fee_tokens Minimum fee limit.\r\n@param max_Fee_tokens Maximum fee limit.\r\n@param fee_Enabled Enable/disable fees toggle.\r\n@return bool\r",
+            "id": 3826,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "init",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3822,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3813,
+                  "name": "parts_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3826,
+                  "src": "489:14:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3812,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "489:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3815,
+                  "name": "perX_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3826,
+                  "src": "505:13:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3814,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "505:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3817,
+                  "name": "min_Fee_tokens",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3826,
+                  "src": "520:19:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3816,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "520:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3819,
+                  "name": "max_Fee_tokens",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3826,
+                  "src": "541:19:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3818,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "541:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3821,
+                  "name": "fee_Enabled",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3826,
+                  "src": "562:16:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3820,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "562:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "488:91:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3825,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3824,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3826,
+                  "src": "596:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3823,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "596:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "595:6:27"
+            },
+            "scope": 3889,
+            "src": "475:127:27",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev calculateFee, given token amount, calculate transfer fee in units/tokens that are cents or pennies\r\n@param tokens Tokens amount to calculate fees for\r\n@return uint\r",
+            "id": 3833,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "calculateFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3829,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3828,
+                  "name": "tokens",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3833,
+                  "src": "824:11:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3827,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "824:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "823:13:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3832,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3831,
+                  "name": "fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3833,
+                  "src": "858:8:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3830,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "858:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "857:10:27"
+            },
+            "scope": 3889,
+            "src": "802:66:27",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Get minimum fee tokens/pennies/cents\r\n@return uint\r",
+            "id": 3838,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getMinFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3834,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "975:2:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3837,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3836,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3838,
+                  "src": "999:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3835,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "999:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "998:6:27"
+            },
+            "scope": 3889,
+            "src": "957:48:27",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Get maximum fee tokens/pennies/cents\r\n@return uint\r",
+            "id": 3843,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getMaxFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3839,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1106:2:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3842,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3841,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3843,
+                  "src": "1130:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3840,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1130:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1129:6:27"
+            },
+            "scope": 3889,
+            "src": "1088:48:27",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Change minimum fee tokens/pennies/cents\r\n@param newMinFee Minimum amount of tokens to be set as minimum\r\n@return bool\r",
+            "id": 3850,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setMinFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3846,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3845,
+                  "name": "newMinFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3850,
+                  "src": "1315:14:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3844,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1315:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1314:16:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3849,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3848,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3850,
+                  "src": "1347:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3847,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1347:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1346:6:27"
+            },
+            "scope": 3889,
+            "src": "1296:57:27",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Change maximum fee tokens/pennies/cents\r\n@param newMaxFee Maximum amount of tokens to be set as maximum\r\n@return bool\r",
+            "id": 3857,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setMaxFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3853,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3852,
+                  "name": "newMaxFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3857,
+                  "src": "1526:14:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3851,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1526:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1525:16:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3856,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3855,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3857,
+                  "src": "1558:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3854,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1558:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1557:6:27"
+            },
+            "scope": 3889,
+            "src": "1507:57:27",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Check enabled/disabled fees\r\n@return bool\r",
+            "id": 3862,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "feesEnabled",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3858,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1664:2:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3861,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3860,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3862,
+                  "src": "1688:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3859,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1688:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1687:6:27"
+            },
+            "scope": 3889,
+            "src": "1644:50:27",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Enable/Disable fees\r\n@return bool\r",
+            "id": 3869,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "enableFees",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3865,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3864,
+                  "name": "enable",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3869,
+                  "src": "1780:11:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3863,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1780:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1779:13:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3868,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3867,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3869,
+                  "src": "1809:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3866,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1809:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1808:6:27"
+            },
+            "scope": 3889,
+            "src": "1760:55:27",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Get fees as parts per X units\r\n@return bool\r",
+            "id": 3874,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getFeesNumerator",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3870,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1922:2:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3873,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3872,
+                  "name": "_parts_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3874,
+                  "src": "1946:15:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3871,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1946:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1945:17:27"
+            },
+            "scope": 3889,
+            "src": "1897:66:27",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Get fees as parts per X units\r\n@return bool\r",
+            "id": 3879,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getFeesDenominator",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3875,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2066:2:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3878,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3877,
+                  "name": "_perX_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3879,
+                  "src": "2090:14:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3876,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2090:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2089:16:27"
+            },
+            "scope": 3889,
+            "src": "2039:67:27",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Set fees as parts per X units\r\n@param _parts_Fee Parts component of the fee percentage\r\n@param _perX_Fee Per X component of the fee percentage\r\n@return bool\r",
+            "id": 3888,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setFees",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3884,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3881,
+                  "name": "_parts_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3888,
+                  "src": "2320:15:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3880,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2320:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3883,
+                  "name": "_perX_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3888,
+                  "src": "2337:14:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3882,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2337:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2319:33:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3887,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3886,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3888,
+                  "src": "2369:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3885,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2369:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2368:6:27"
+            },
+            "scope": 3889,
+            "src": "2303:72:27",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3890,
+        "src": "122:2256:27"
+      }
+    ],
+    "src": "0:2378:27"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IFees.sol",
+    "exportedSymbols": {
+      "IFees": [
+        3889
+      ]
+    },
+    "id": 3890,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3808,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:27"
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IFeesLibEvents.sol",
+        "file": "./IFeesLibEvents.sol",
+        "id": 3809,
+        "nodeType": "ImportDirective",
+        "scope": 3890,
+        "sourceUnit": 3921,
+        "src": "28:30:27",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 3810,
+              "name": "IFeesLibEvents",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3920,
+              "src": "140:14:27",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IFeesLibEvents_$3920",
+                "typeString": "contract IFeesLibEvents"
+              }
+            },
+            "id": 3811,
+            "nodeType": "InheritanceSpecifier",
+            "src": "140:14:27"
+          }
+        ],
+        "contractDependencies": [
+          3920
+        ],
+        "contractKind": "contract",
+        "documentation": "@dev Interface for contract fees library.\r",
+        "fullyImplemented": false,
+        "id": 3889,
+        "linearizedBaseContracts": [
+          3889,
+          3920
+        ],
+        "name": "IFees",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": "@dev Init fees\r\n@param parts_Fee Numerator part of the percentage fee.\r\n@param perX_Fee Denominator part of the percentage fee.\r\n@param min_Fee_tokens Minimum fee limit.\r\n@param max_Fee_tokens Maximum fee limit.\r\n@param fee_Enabled Enable/disable fees toggle.\r\n@return bool\r",
+            "id": 3826,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "init",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3822,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3813,
+                  "name": "parts_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3826,
+                  "src": "489:14:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3812,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "489:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3815,
+                  "name": "perX_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3826,
+                  "src": "505:13:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3814,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "505:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3817,
+                  "name": "min_Fee_tokens",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3826,
+                  "src": "520:19:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3816,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "520:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3819,
+                  "name": "max_Fee_tokens",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3826,
+                  "src": "541:19:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3818,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "541:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3821,
+                  "name": "fee_Enabled",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3826,
+                  "src": "562:16:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3820,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "562:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "488:91:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3825,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3824,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3826,
+                  "src": "596:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3823,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "596:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "595:6:27"
+            },
+            "scope": 3889,
+            "src": "475:127:27",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev calculateFee, given token amount, calculate transfer fee in units/tokens that are cents or pennies\r\n@param tokens Tokens amount to calculate fees for\r\n@return uint\r",
+            "id": 3833,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "calculateFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3829,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3828,
+                  "name": "tokens",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3833,
+                  "src": "824:11:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3827,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "824:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "823:13:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3832,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3831,
+                  "name": "fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3833,
+                  "src": "858:8:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3830,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "858:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "857:10:27"
+            },
+            "scope": 3889,
+            "src": "802:66:27",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Get minimum fee tokens/pennies/cents\r\n@return uint\r",
+            "id": 3838,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getMinFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3834,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "975:2:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3837,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3836,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3838,
+                  "src": "999:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3835,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "999:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "998:6:27"
+            },
+            "scope": 3889,
+            "src": "957:48:27",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Get maximum fee tokens/pennies/cents\r\n@return uint\r",
+            "id": 3843,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getMaxFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3839,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1106:2:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3842,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3841,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3843,
+                  "src": "1130:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3840,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1130:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1129:6:27"
+            },
+            "scope": 3889,
+            "src": "1088:48:27",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Change minimum fee tokens/pennies/cents\r\n@param newMinFee Minimum amount of tokens to be set as minimum\r\n@return bool\r",
+            "id": 3850,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setMinFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3846,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3845,
+                  "name": "newMinFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3850,
+                  "src": "1315:14:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3844,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1315:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1314:16:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3849,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3848,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3850,
+                  "src": "1347:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3847,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1347:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1346:6:27"
+            },
+            "scope": 3889,
+            "src": "1296:57:27",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Change maximum fee tokens/pennies/cents\r\n@param newMaxFee Maximum amount of tokens to be set as maximum\r\n@return bool\r",
+            "id": 3857,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setMaxFee",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3853,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3852,
+                  "name": "newMaxFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3857,
+                  "src": "1526:14:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3851,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1526:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1525:16:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3856,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3855,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3857,
+                  "src": "1558:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3854,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1558:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1557:6:27"
+            },
+            "scope": 3889,
+            "src": "1507:57:27",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Check enabled/disabled fees\r\n@return bool\r",
+            "id": 3862,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "feesEnabled",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3858,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1664:2:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3861,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3860,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3862,
+                  "src": "1688:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3859,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1688:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1687:6:27"
+            },
+            "scope": 3889,
+            "src": "1644:50:27",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Enable/Disable fees\r\n@return bool\r",
+            "id": 3869,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "enableFees",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3865,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3864,
+                  "name": "enable",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3869,
+                  "src": "1780:11:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3863,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1780:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1779:13:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3868,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3867,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3869,
+                  "src": "1809:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3866,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1809:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1808:6:27"
+            },
+            "scope": 3889,
+            "src": "1760:55:27",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Get fees as parts per X units\r\n@return bool\r",
+            "id": 3874,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getFeesNumerator",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3870,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1922:2:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3873,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3872,
+                  "name": "_parts_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3874,
+                  "src": "1946:15:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3871,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1946:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1945:17:27"
+            },
+            "scope": 3889,
+            "src": "1897:66:27",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Get fees as parts per X units\r\n@return bool\r",
+            "id": 3879,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getFeesDenominator",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3875,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2066:2:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3878,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3877,
+                  "name": "_perX_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3879,
+                  "src": "2090:14:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3876,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2090:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2089:16:27"
+            },
+            "scope": 3889,
+            "src": "2039:67:27",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Set fees as parts per X units\r\n@param _parts_Fee Parts component of the fee percentage\r\n@param _perX_Fee Per X component of the fee percentage\r\n@return bool\r",
+            "id": 3888,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setFees",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3884,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3881,
+                  "name": "_parts_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3888,
+                  "src": "2320:15:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3880,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2320:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3883,
+                  "name": "_perX_Fee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3888,
+                  "src": "2337:14:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3882,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2337:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2319:33:27"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3887,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3886,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3888,
+                  "src": "2369:4:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3885,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2369:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2368:6:27"
+            },
+            "scope": 3889,
+            "src": "2303:72:27",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3890,
+        "src": "122:2256:27"
+      }
+    ],
+    "src": "0:2378:27"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.5",
+  "updatedAt": "2019-11-28T22:36:38.793Z",
+  "devdoc": {
+    "methods": {
+      "calculateFee(uint256)": {
+        "details": "calculateFee, given token amount, calculate transfer fee in units/tokens that are cents or pennies\r",
+        "params": {
+          "tokens": "Tokens amount to calculate fees for\r"
+        },
+        "return": "uint\r"
+      },
+      "enableFees(bool)": {
+        "details": "Enable/Disable fees\r",
+        "return": "bool\r"
+      },
+      "feesEnabled()": {
+        "details": "Check enabled/disabled fees\r",
+        "return": "bool\r"
+      },
+      "getFeesDenominator()": {
+        "details": "Get fees as parts per X units\r",
+        "return": "bool\r"
+      },
+      "getFeesNumerator()": {
+        "details": "Get fees as parts per X units\r",
+        "return": "bool\r"
+      },
+      "getMaxFee()": {
+        "details": "Get maximum fee tokens/pennies/cents\r",
+        "return": "uint\r"
+      },
+      "getMinFee()": {
+        "details": "Get minimum fee tokens/pennies/cents\r",
+        "return": "uint\r"
+      },
+      "init(uint256,uint256,uint256,uint256,bool)": {
+        "details": "Init fees\r",
+        "params": {
+          "fee_Enabled": "Enable/disable fees toggle.\r",
+          "max_Fee_tokens": "Maximum fee limit.\r",
+          "min_Fee_tokens": "Minimum fee limit.\r",
+          "parts_Fee": "Numerator part of the percentage fee.\r",
+          "perX_Fee": "Denominator part of the percentage fee.\r"
+        },
+        "return": "bool\r"
+      },
+      "setFees(uint256,uint256)": {
+        "details": "Set fees as parts per X units\r",
+        "params": {
+          "_parts_Fee": "Parts component of the fee percentage\r",
+          "_perX_Fee": "Per X component of the fee percentage\r"
+        },
+        "return": "bool\r"
+      },
+      "setMaxFee(uint256)": {
+        "details": "Change maximum fee tokens/pennies/cents\r",
+        "params": {
+          "newMaxFee": "Maximum amount of tokens to be set as maximum\r"
+        },
+        "return": "bool\r"
+      },
+      "setMinFee(uint256)": {
+        "details": "Change minimum fee tokens/pennies/cents\r",
+        "params": {
+          "newMinFee": "Minimum amount of tokens to be set as minimum\r"
+        },
+        "return": "bool\r"
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

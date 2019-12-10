@@ -1,0 +1,11 @@
+pragma solidity ^0.5.0;
+
+
+
+/**
+ * @dev Symbol holding symbol string as identifier for fiat tokens.
+ */
+contract Symbol {
+    // usually is a currency symbol
+	string public symbol;
+}

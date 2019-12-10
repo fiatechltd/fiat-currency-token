@@ -1,0 +1,1651 @@
+{
+  "contractName": "TransfersController",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "transfersEnabled",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "TransfersEnabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "TransfersDisabled",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "enable",
+          "type": "bool"
+        }
+      ],
+      "name": "enableTransfers",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.24;\r\n\r\n/**\r\n * @dev TransfersController abstract contract used to control transfers workflow.\r\n */\r\ncontract TransfersController {\r\n\t\r\n\t// toggle to control transfers\r\n\tbool public transfersEnabled;\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin enables transfers.\r\n\t * @param _admin Admin address performing the operation.\r\n\t */\r\n\tevent TransfersEnabled(address indexed _admin);\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin disables transfers.\r\n\t * @param _admin Admin address performing the operation.\r\n\t */\r\n\tevent TransfersDisabled(address indexed _admin);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Constructor\r\n\t */\r\n\tconstructor() internal {\r\n        transfersEnabled = true;\r\n    }\r\n\t\r\n\tmodifier whenTransfersEnabled {\r\n\t\trequire(transfersEnabled == true, \"Transfers must be enabled!\");\r\n\t\t_;\r\n\t}\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Enable/Disable transfers.\r\n\t * @param enable Toggle for enable/disable.\r\n\t * @return bool.\r\n\t */\r\n\tfunction enableTransfers(bool enable) public returns (bool) {\r\n\t\tif (transfersEnabled != enable) {\r\n\t\t\ttransfersEnabled = enable;\r\n\t\t\tif (enable)\r\n\t\t\t\temit TransfersEnabled(msg.sender);\r\n\t\t\telse emit TransfersDisabled(msg.sender);\r\n\t\t\treturn true;\r\n\t\t}\r\n\t\treturn false;\r\n\t}\r\n\t\r\n\t/**\r\n\t * @dev Disable transfers if they are enabled.\r\n\t * @return bool.\r\n\t */\r\n\t/*function disableTransfers() public returns (bool) {\r\n\t\tif (transfersEnabled) {\r\n\t\t\ttransfersEnabled = false;\r\n\t\t\temit TransfersDisabled(msg.sender);\r\n\t\t\treturn true;\r\n\t\t}\r\n\t\treturn false;\r\n\t}*/\r\n\t\r\n}\r\n",
+  "sourcePath": "C:/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/TransfersController.sol",
+  "ast": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/TransfersController.sol",
+    "exportedSymbols": {
+      "TransfersController": [
+        3173
+      ]
+    },
+    "id": 3174,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3110,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:16"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@dev TransfersController abstract contract used to control transfers workflow.\r",
+        "fullyImplemented": true,
+        "id": 3173,
+        "linearizedBaseContracts": [
+          3173
+        ],
+        "name": "TransfersController",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 3112,
+            "name": "transfersEnabled",
+            "nodeType": "VariableDeclaration",
+            "scope": 3173,
+            "src": "190:28:16",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 3111,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "190:4:16",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin enables transfers.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3116,
+            "name": "TransfersEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3115,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3114,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3116,
+                  "src": "375:22:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3113,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "375:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "374:24:16"
+            },
+            "src": "352:47:16"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin disables transfers.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3120,
+            "name": "TransfersDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3119,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3118,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3120,
+                  "src": "557:22:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3117,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "557:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "556:24:16"
+            },
+            "src": "533:48:16"
+          },
+          {
+            "body": {
+              "id": 3127,
+              "nodeType": "Block",
+              "src": "650:42:16",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 3125,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 3123,
+                      "name": "transfersEnabled",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3112,
+                      "src": "661:16:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 3124,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "680:4:16",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "661:23:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 3126,
+                  "nodeType": "ExpressionStatement",
+                  "src": "661:23:16"
+                }
+              ]
+            },
+            "documentation": "@dev Constructor\r",
+            "id": 3128,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3121,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "638:2:16"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3122,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "650:0:16"
+            },
+            "scope": 3173,
+            "src": "627:65:16",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 3138,
+              "nodeType": "Block",
+              "src": "728:79:16",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        "id": 3133,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 3131,
+                          "name": "transfersEnabled",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 3112,
+                          "src": "741:16:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "hexValue": "74727565",
+                          "id": 3132,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "bool",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "761:4:16",
+                          "subdenomination": null,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "value": "true"
+                        },
+                        "src": "741:24:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "5472616e7366657273206d75737420626520656e61626c656421",
+                        "id": 3134,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "767:28:16",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_a20cda17ccbda3d8febc58daa889493300ed8b724bd1dc4a56695fdbd80f78b3",
+                          "typeString": "literal_string \"Transfers must be enabled!\""
+                        },
+                        "value": "Transfers must be enabled!"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_a20cda17ccbda3d8febc58daa889493300ed8b724bd1dc4a56695fdbd80f78b3",
+                          "typeString": "literal_string \"Transfers must be enabled!\""
+                        }
+                      ],
+                      "id": 3130,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4576,
+                        4577
+                      ],
+                      "referencedDeclaration": 4577,
+                      "src": "733:7:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 3135,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "733:63:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 3136,
+                  "nodeType": "ExpressionStatement",
+                  "src": "733:63:16"
+                },
+                {
+                  "id": 3137,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "801:1:16"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 3139,
+            "name": "whenTransfersEnabled",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 3129,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "728:0:16"
+            },
+            "src": "698:109:16",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 3171,
+              "nodeType": "Block",
+              "src": "992:213:16",
+              "statements": [
+                {
+                  "condition": {
+                    "argumentTypes": null,
+                    "commonType": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "id": 3148,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "argumentTypes": null,
+                      "id": 3146,
+                      "name": "transfersEnabled",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3112,
+                      "src": "1001:16:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "!=",
+                    "rightExpression": {
+                      "argumentTypes": null,
+                      "id": 3147,
+                      "name": "enable",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3141,
+                      "src": "1021:6:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "src": "1001:26:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "falseBody": null,
+                  "id": 3168,
+                  "nodeType": "IfStatement",
+                  "src": "997:187:16",
+                  "trueBody": {
+                    "id": 3167,
+                    "nodeType": "Block",
+                    "src": "1029:155:16",
+                    "statements": [
+                      {
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 3151,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "argumentTypes": null,
+                            "id": 3149,
+                            "name": "transfersEnabled",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 3112,
+                            "src": "1035:16:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bool",
+                              "typeString": "bool"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "argumentTypes": null,
+                            "id": 3150,
+                            "name": "enable",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 3141,
+                            "src": "1054:6:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bool",
+                              "typeString": "bool"
+                            }
+                          },
+                          "src": "1035:25:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "id": 3152,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1035:25:16"
+                      },
+                      {
+                        "condition": {
+                          "argumentTypes": null,
+                          "id": 3153,
+                          "name": "enable",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 3141,
+                          "src": "1070:6:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "falseBody": {
+                          "eventCall": {
+                            "argumentTypes": null,
+                            "arguments": [
+                              {
+                                "argumentTypes": null,
+                                "expression": {
+                                  "argumentTypes": null,
+                                  "id": 3160,
+                                  "name": "msg",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 4573,
+                                  "src": "1150:3:16",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_magic_message",
+                                    "typeString": "msg"
+                                  }
+                                },
+                                "id": 3161,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "sender",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": null,
+                                "src": "1150:10:16",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              ],
+                              "id": 3159,
+                              "name": "TransfersDisabled",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 3120,
+                              "src": "1132:17:16",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
+                                "typeString": "function (address)"
+                              }
+                            },
+                            "id": 3162,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "1132:29:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_tuple$__$",
+                              "typeString": "tuple()"
+                            }
+                          },
+                          "id": 3163,
+                          "nodeType": "EmitStatement",
+                          "src": "1127:34:16"
+                        },
+                        "id": 3164,
+                        "nodeType": "IfStatement",
+                        "src": "1066:95:16",
+                        "trueBody": {
+                          "eventCall": {
+                            "argumentTypes": null,
+                            "arguments": [
+                              {
+                                "argumentTypes": null,
+                                "expression": {
+                                  "argumentTypes": null,
+                                  "id": 3155,
+                                  "name": "msg",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 4573,
+                                  "src": "1105:3:16",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_magic_message",
+                                    "typeString": "msg"
+                                  }
+                                },
+                                "id": 3156,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "sender",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": null,
+                                "src": "1105:10:16",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              ],
+                              "id": 3154,
+                              "name": "TransfersEnabled",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 3116,
+                              "src": "1088:16:16",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
+                                "typeString": "function (address)"
+                              }
+                            },
+                            "id": 3157,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "1088:28:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_tuple$__$",
+                              "typeString": "tuple()"
+                            }
+                          },
+                          "id": 3158,
+                          "nodeType": "EmitStatement",
+                          "src": "1083:33:16"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "argumentTypes": null,
+                          "hexValue": "74727565",
+                          "id": 3165,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "bool",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "1174:4:16",
+                          "subdenomination": null,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "value": "true"
+                        },
+                        "functionReturnParameters": 3145,
+                        "id": 3166,
+                        "nodeType": "Return",
+                        "src": "1167:11:16"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "66616c7365",
+                    "id": 3169,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "bool",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "1195:5:16",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "value": "false"
+                  },
+                  "functionReturnParameters": 3145,
+                  "id": 3170,
+                  "nodeType": "Return",
+                  "src": "1188:12:16"
+                }
+              ]
+            },
+            "documentation": "@dev Enable/Disable transfers.\r\n@param enable Toggle for enable/disable.\r\n@return bool.\r",
+            "id": 3172,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "enableTransfers",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3142,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3141,
+                  "name": "enable",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3172,
+                  "src": "957:11:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3140,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "957:4:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "956:13:16"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3145,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3144,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3172,
+                  "src": "986:4:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3143,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "986:4:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "985:6:16"
+            },
+            "scope": 3173,
+            "src": "932:273:16",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3174,
+        "src": "121:1371:16"
+      }
+    ],
+    "src": "0:1494:16"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/TransfersController.sol",
+    "exportedSymbols": {
+      "TransfersController": [
+        3173
+      ]
+    },
+    "id": 3174,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3110,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:16"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "@dev TransfersController abstract contract used to control transfers workflow.\r",
+        "fullyImplemented": true,
+        "id": 3173,
+        "linearizedBaseContracts": [
+          3173
+        ],
+        "name": "TransfersController",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 3112,
+            "name": "transfersEnabled",
+            "nodeType": "VariableDeclaration",
+            "scope": 3173,
+            "src": "190:28:16",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 3111,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "190:4:16",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin enables transfers.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3116,
+            "name": "TransfersEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3115,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3114,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3116,
+                  "src": "375:22:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3113,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "375:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "374:24:16"
+            },
+            "src": "352:47:16"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin disables transfers.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3120,
+            "name": "TransfersDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3119,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3118,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3120,
+                  "src": "557:22:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3117,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "557:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "556:24:16"
+            },
+            "src": "533:48:16"
+          },
+          {
+            "body": {
+              "id": 3127,
+              "nodeType": "Block",
+              "src": "650:42:16",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 3125,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 3123,
+                      "name": "transfersEnabled",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3112,
+                      "src": "661:16:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 3124,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "680:4:16",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "661:23:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 3126,
+                  "nodeType": "ExpressionStatement",
+                  "src": "661:23:16"
+                }
+              ]
+            },
+            "documentation": "@dev Constructor\r",
+            "id": 3128,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3121,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "638:2:16"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3122,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "650:0:16"
+            },
+            "scope": 3173,
+            "src": "627:65:16",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 3138,
+              "nodeType": "Block",
+              "src": "728:79:16",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        "id": 3133,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 3131,
+                          "name": "transfersEnabled",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 3112,
+                          "src": "741:16:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "hexValue": "74727565",
+                          "id": 3132,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "bool",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "761:4:16",
+                          "subdenomination": null,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "value": "true"
+                        },
+                        "src": "741:24:16",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "5472616e7366657273206d75737420626520656e61626c656421",
+                        "id": 3134,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "767:28:16",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_a20cda17ccbda3d8febc58daa889493300ed8b724bd1dc4a56695fdbd80f78b3",
+                          "typeString": "literal_string \"Transfers must be enabled!\""
+                        },
+                        "value": "Transfers must be enabled!"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_a20cda17ccbda3d8febc58daa889493300ed8b724bd1dc4a56695fdbd80f78b3",
+                          "typeString": "literal_string \"Transfers must be enabled!\""
+                        }
+                      ],
+                      "id": 3130,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        4576,
+                        4577
+                      ],
+                      "referencedDeclaration": 4577,
+                      "src": "733:7:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 3135,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "733:63:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 3136,
+                  "nodeType": "ExpressionStatement",
+                  "src": "733:63:16"
+                },
+                {
+                  "id": 3137,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "801:1:16"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 3139,
+            "name": "whenTransfersEnabled",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 3129,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "728:0:16"
+            },
+            "src": "698:109:16",
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 3171,
+              "nodeType": "Block",
+              "src": "992:213:16",
+              "statements": [
+                {
+                  "condition": {
+                    "argumentTypes": null,
+                    "commonType": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "id": 3148,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "argumentTypes": null,
+                      "id": 3146,
+                      "name": "transfersEnabled",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3112,
+                      "src": "1001:16:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "!=",
+                    "rightExpression": {
+                      "argumentTypes": null,
+                      "id": 3147,
+                      "name": "enable",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 3141,
+                      "src": "1021:6:16",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "src": "1001:26:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "falseBody": null,
+                  "id": 3168,
+                  "nodeType": "IfStatement",
+                  "src": "997:187:16",
+                  "trueBody": {
+                    "id": 3167,
+                    "nodeType": "Block",
+                    "src": "1029:155:16",
+                    "statements": [
+                      {
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 3151,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "leftHandSide": {
+                            "argumentTypes": null,
+                            "id": 3149,
+                            "name": "transfersEnabled",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 3112,
+                            "src": "1035:16:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bool",
+                              "typeString": "bool"
+                            }
+                          },
+                          "nodeType": "Assignment",
+                          "operator": "=",
+                          "rightHandSide": {
+                            "argumentTypes": null,
+                            "id": 3150,
+                            "name": "enable",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 3141,
+                            "src": "1054:6:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bool",
+                              "typeString": "bool"
+                            }
+                          },
+                          "src": "1035:25:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "id": 3152,
+                        "nodeType": "ExpressionStatement",
+                        "src": "1035:25:16"
+                      },
+                      {
+                        "condition": {
+                          "argumentTypes": null,
+                          "id": 3153,
+                          "name": "enable",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 3141,
+                          "src": "1070:6:16",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "falseBody": {
+                          "eventCall": {
+                            "argumentTypes": null,
+                            "arguments": [
+                              {
+                                "argumentTypes": null,
+                                "expression": {
+                                  "argumentTypes": null,
+                                  "id": 3160,
+                                  "name": "msg",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 4573,
+                                  "src": "1150:3:16",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_magic_message",
+                                    "typeString": "msg"
+                                  }
+                                },
+                                "id": 3161,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "sender",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": null,
+                                "src": "1150:10:16",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              ],
+                              "id": 3159,
+                              "name": "TransfersDisabled",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 3120,
+                              "src": "1132:17:16",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
+                                "typeString": "function (address)"
+                              }
+                            },
+                            "id": 3162,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "1132:29:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_tuple$__$",
+                              "typeString": "tuple()"
+                            }
+                          },
+                          "id": 3163,
+                          "nodeType": "EmitStatement",
+                          "src": "1127:34:16"
+                        },
+                        "id": 3164,
+                        "nodeType": "IfStatement",
+                        "src": "1066:95:16",
+                        "trueBody": {
+                          "eventCall": {
+                            "argumentTypes": null,
+                            "arguments": [
+                              {
+                                "argumentTypes": null,
+                                "expression": {
+                                  "argumentTypes": null,
+                                  "id": 3155,
+                                  "name": "msg",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 4573,
+                                  "src": "1105:3:16",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_magic_message",
+                                    "typeString": "msg"
+                                  }
+                                },
+                                "id": 3156,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "memberName": "sender",
+                                "nodeType": "MemberAccess",
+                                "referencedDeclaration": null,
+                                "src": "1105:10:16",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              ],
+                              "id": 3154,
+                              "name": "TransfersEnabled",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 3116,
+                              "src": "1088:16:16",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
+                                "typeString": "function (address)"
+                              }
+                            },
+                            "id": 3157,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "1088:28:16",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_tuple$__$",
+                              "typeString": "tuple()"
+                            }
+                          },
+                          "id": 3158,
+                          "nodeType": "EmitStatement",
+                          "src": "1083:33:16"
+                        }
+                      },
+                      {
+                        "expression": {
+                          "argumentTypes": null,
+                          "hexValue": "74727565",
+                          "id": 3165,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "bool",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "1174:4:16",
+                          "subdenomination": null,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          },
+                          "value": "true"
+                        },
+                        "functionReturnParameters": 3145,
+                        "id": 3166,
+                        "nodeType": "Return",
+                        "src": "1167:11:16"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "66616c7365",
+                    "id": 3169,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "bool",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "1195:5:16",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "value": "false"
+                  },
+                  "functionReturnParameters": 3145,
+                  "id": 3170,
+                  "nodeType": "Return",
+                  "src": "1188:12:16"
+                }
+              ]
+            },
+            "documentation": "@dev Enable/Disable transfers.\r\n@param enable Toggle for enable/disable.\r\n@return bool.\r",
+            "id": 3172,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "enableTransfers",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3142,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3141,
+                  "name": "enable",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3172,
+                  "src": "957:11:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3140,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "957:4:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "956:13:16"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3145,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3144,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3172,
+                  "src": "986:4:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3143,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "986:4:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "985:6:16"
+            },
+            "scope": 3173,
+            "src": "932:273:16",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3174,
+        "src": "121:1371:16"
+      }
+    ],
+    "src": "0:1494:16"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.5",
+  "updatedAt": "2019-11-28T22:27:47.107Z",
+  "devdoc": {
+    "methods": {
+      "enableTransfers(bool)": {
+        "details": "Enable/Disable transfers.\r",
+        "params": {
+          "enable": "Toggle for enable/disable.\r"
+        },
+        "return": "bool.\r"
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

@@ -1,0 +1,135 @@
+pragma solidity ^0.5.0;
+
+//---
+// BlockchainBridge used by users and system admin to Deposit and Withdrawal funds to and from blockchain
+//---
+contract BlockchainBridge {
+	
+	// register pending deposit requests
+	mapping(address => uint) depositRequests;
+	
+	// register pending withdrawal requests
+	mapping(address => uint) withdrawalRequests;
+	
+	// deposits registered each time Fiatech credits user account with fiat backed tokens
+	// e.g. user asks for deposit, sends bank wire of $1000, fiatech gets the funds and credits user wallet with USDf 1000
+	// registering the deposit in this mapping
+	mapping(address => uint) deposits;
+	
+	// withdrawals registered each time Fiatech is approved to withdraw from user account fiat backed tokens
+	// e.g. user asks for withdrawal, approves Fiatech to take 1000 USDf fiat backed tokens,
+	// Fiatech gets the funds and sends user 1000 of equivalent fiat currency (can be simple credit to user account or bank wire withdrawal or any other method),
+	// registering the withdrawal in this mapping
+	mapping(address => uint) withdrawals;
+	
+	
+	
+	//---
+	// event is raised when user requests a deposit, waiting for admin to review and check user funds deposited via bank account or any other method.
+	//---
+	event DepositRequested(address indexed _to, _amount);
+	
+	//---
+	// event is raised after Fiatech reviewed deposit request and has got the funds from user's bank account
+	// and credits his wallet with equivalent currency token.
+	//---
+	event DepositAccepted(address indexed _admin, address indexed _to, uint _amount);
+	
+	//---
+	// event is raised when user asks for a withdrawal and request is pending for review.
+	//---
+	event WithdrawalRequested(address indexed _from, uint _amount);
+	
+	//---
+	// event is raised when Fiatech reviewed withdrawal request and sent funds back to user bank account or any other withdrawal method.
+	//---
+	event WithdrawalAccepted(address indexed _admin, address indexed _from, uint _amount);
+	
+	
+	
+    constructor() internal {
+        owner = msg.sender;
+    }
+	
+    modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
+    }
+	
+	
+	
+	//---
+	// function executed by user requesting a deposit, admin credits his wallet with fiat currency once user deposited via bank wire of any other method.
+	//---
+	function depositRequest(uint _amount) public returns (bool success) {
+		// ??? is this really required ???
+		   depositRequests[msg.sender] = depositRequests[msg.sender].add(_amount);
+		//emit DepositRequested event
+		emit DepositRequested(msg.sender, _amount);
+		
+		return true;
+    }
+	
+	// https://ethereum.stackexchange.com/questions/20874/payable-function-in-solidity
+	// But you may have more than one payable annotated functions that are used to perform different tasks, like registering a deposit to your contract:
+	//---
+	// function executed by admin to credit user wallet with fiat currency he deposited via bank wire of any other method.
+	//---
+	function depositAccept(address indexed _to, uint _amount) public onlyOwner returns (bool success) {
+		// only deposit what was requested by user
+		// ??? is this really required ???
+		   require(_amount > 0 && _amount <= depositRequests[_to]);
+		
+		depositRequests[_to] = depositRequests[_to].sub(_amount);
+		
+		balances[_to] = balances[_to].add(_amount);
+		
+		// deposits[_to] = deposits[_to].add(_amount);
+		// no need for add safe check because with time an overflow is likely to happen as this is only a reference for user's total deposits
+		deposits[_to] = deposits[_to] + _amount;
+		
+		//emit DepositAccepted event
+		emit DepositAccepted(msg.sender, _to, _amount);
+		
+		return true;
+    }
+	
+	
+	
+	//---
+	// function executed by user asking for a withdrawal
+	//---
+	function withdrawRequest(uint _amount) public returns (bool success) {
+		// only withdraw what's available in user balance
+		require(_amount > 0 && _amount <= balanceOf[msg.sender]);
+		// user approves admin to withdraw tokens
+		require(approve(owner, _amount) == true);
+		
+		withdrawalRequests[msg.sender] = withdrawalRequests[msg.sender].add(_amount);
+		
+		emit WithdrawalRequested(msg.sender, _amount);
+		return true;
+	}
+	
+	//---
+	// function executed by admin approving the withdrawal for a given user wallet
+	//---
+	function withdrawAccept(address indexed _from, uint _amount) public onlyOwner returns (bool success) {
+		// only withdraw what's available in user balance
+		require(_amount > 0 && _amount <= balanceOf[_from]);
+		require(_amount > 0 && _amount <= withdrawalRequests[_from]);
+		// allowance check
+		require(_amount > 0 && _amount <= allowance(_from, msg.sender));
+		
+		// destroy tokens as they were withdrawn
+		balances[_from] = balances[_from].sub(_amount);
+		
+        withdrawalRequests[_from] = withdrawalRequests[_from].sub(_amount);
+		
+		// no need for add safe check because with time an overflow is likely to happen as this is only a reference for user's total withdrawals
+		withdrawals[_from] = withdrawals[_from] + _amount;
+		
+		emit WithdrawalAccepted(msg.sender, _to, _amount);
+		return true;
+    }
+}

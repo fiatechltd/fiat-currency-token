@@ -1,0 +1,167 @@
+pragma solidity ^0.5.0;
+
+import "../access/roles/PauserRole.sol";
+import "./FeesLib.sol";
+
+/**
+ * @dev Deposit fees controller
+ */
+contract DepositFees is PauserRole {
+	
+    using FeesLib for FeesLib.Fee;
+	
+	// symbol like "USD" or "GBP" or any other asset or currency
+	string public symbol;
+	
+	// persistent data
+    FeesLib.Fee private _depositFee;
+	
+	event DepositFeesEnabled(address indexed admin, string symbol);
+	event DepositFeesDisabled(address indexed admin, string symbol);
+	event DepositFeesChanged(address indexed admin, string symbol, uint parts_Fee, uint perX_Fee);
+	event MinimumDepositFeeTokensChanged(address indexed admin, string symbol, uint newDepositFeeTokens);
+	event DepositFeesCollected(address indexed from, uint depositTokens, uint depositTokensFee, string symbol);
+	
+	
+	
+	/**
+	 * @dev Constructor
+	 * @param _symbol Token symbol
+	 */
+    constructor (string memory _symbol)
+		//PauserRole()
+		internal
+	{
+		symbol = _symbol;
+		_depositFee = FeesLib.Fee({parts_Fee: 0, perX_Fee: 1, min_Fee_tokens: 0, feesEnabled: false});
+    }
+	
+	
+	
+	/**
+	 * @dev initDepositFees, given all required parameters in the same order as they are declared in the Fee struct.
+	 * @param _parts_Fee Parts component of the fee percentage
+	 * @param _perX_Fee Per X component of the fee percentage
+	 * @param _min_Fee_tokens Mininmum amount of tokens for the fee
+	 * @param _feesEnabled Are fees enables?
+	 * @return bool
+	 */
+	function initDepositFees(uint _parts_Fee, uint _perX_Fee, uint _min_Fee_tokens, bool _feesEnabled) public returns (bool success)
+	{
+		//_depositFee.parts_Fee = _parts_Fee;
+		//_depositFee.perX_Fee = _perX_Fee;
+		//_depositFee.min_Fee_tokens = _min_Fee_tokens;
+		//_depositFee.feesEnabled = _feesEnabled;
+		
+		setDepositFees(_parts_Fee, _perX_Fee);
+		setMinimumDepositFeeTokens(_min_Fee_tokens);
+		if (_feesEnabled)
+			enableDepositFees();
+		else disableDepositFees();
+		
+		return true;
+	}
+	
+	
+	
+	/**
+	 * @dev calculateDepositFeeTokens, given token amount, calculate deposit fee in units/tokens that are cents or pennies
+	 * @param tokens Tokens amount to calculate fees for
+	 * @return uint
+	 */
+	function calculateDepositFeeTokens(uint tokens) public view returns (uint depositFeeTokens) {
+		
+		return _depositFee._calculateFeeTokens(tokens);
+	}
+	
+	
+	
+	/**
+	 * @dev Get minimum deposit fee tokens/pennies/cents
+	 * @return uint
+	 */
+	function getMinimumDepositFeeTokens() public view returns (uint minDepositFeeTokens) {
+		
+		return _depositFee._getMinimumFeeTokens();
+	}
+	
+	
+	
+	/**
+	 * @dev Set/change minimum deposit fee tokens/pennies/cents, only admin can do it
+	 * @param newMinDepositFeeTokens Minimum amount of tokens
+	 * @return bool
+	 */
+	function setMinimumDepositFeeTokens(uint newMinDepositFeeTokens) public onlyPauser returns (bool success) {
+		bool ok = _depositFee._setMinimumFeeTokens(newMinDepositFeeTokens);
+		if (ok) {
+			emit MinimumDepositFeeTokensChanged(msg.sender, symbol, newMinDepositFeeTokens);
+		}
+		return ok;
+	}
+	
+	
+	
+	/**
+	 * @dev Check deposit fees enabled/disabled fees
+	 * @return bool
+	 */
+	function checkDepositFeesEnabled() public view returns (bool enabledFees) {
+		
+		return _depositFee._checkEnabledFees();
+	}
+	
+	
+	
+	/**
+	 * @dev Enable deposit fees, only admin can do it
+	 * @return bool
+	 */
+	function enableDepositFees() public onlyPauser returns (bool success) {
+		bool ok = _depositFee._enableFees();
+		if (ok) {
+			emit DepositFeesEnabled(msg.sender, symbol);
+		}
+		return ok;
+	}
+	
+	
+	
+	/**
+	 * @dev Disable deposit fees, only admin can do it
+	 * @return bool
+	 */
+	function disableDepositFees() public onlyPauser returns (bool success) {
+		bool ok = _depositFee._disableFees();
+		if (ok) {
+			emit DepositFeesDisabled(msg.sender, symbol);
+		}
+		return ok;
+	}
+	
+	
+	
+	/**
+	 * @dev Get deposit fees as parts per X units
+	 * @return (uint, uint)
+	 */
+	function getDepositFees() public view returns (uint _parts_Fee, uint _perX_Fee) {
+		return _depositFee._getFees();
+	}
+	
+	
+	
+	/**
+	 * @dev Set deposit fees as parts per X units, only admin can do it
+	 * @param _parts_Fee Parts component of the fee percentage
+	 * @param _perX_Fee Per X component of the fee percentage
+	 * @return bool
+	 */
+	function setDepositFees(uint _parts_Fee, uint _perX_Fee) public onlyPauser returns (bool success) {
+		bool ok = _depositFee._setFees(_parts_Fee, _perX_Fee);
+		if (ok) {
+			emit DepositFeesChanged(msg.sender, symbol, _parts_Fee, _perX_Fee);
+		}
+		return ok;
+	}
+}

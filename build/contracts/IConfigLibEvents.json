@@ -1,0 +1,2520 @@
+{
+  "contractName": "IConfigLibEvents",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "TransfersEnabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "TransfersDisabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "Paused",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "Unpaused",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_minWithdrawalAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "_newMinWithdrawalAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "MinWithdrawalAmountChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_maxWithdrawalAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "_newMaxWithdrawalAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "MaxWithdrawalAmountChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "DepositsEnabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "DepositsDisabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "WithdrawalsEnabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "WithdrawalsDisabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "admin",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "NoFeeAddressAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "admin",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "NoFeeAddressRemoved",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "NoFeeAddressRenounced",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "KYCEnabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "name": "KYCDisabled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "KYCAddressApproved",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "KYCAddressDisapproved",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "BlacklistedAddress",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "AllowedBlacklistedAddress",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a723058205f219022bfe0faece83bb9b9af4bfd36c604650ecc62ee6a2c7a797a78029ae90029",
+  "deployedBytecode": "0x6080604052600080fd00a165627a7a723058205f219022bfe0faece83bb9b9af4bfd36c604650ecc62ee6a2c7a797a78029ae90029",
+  "sourceMap": "91:4623:23:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;91:4623:23;;;;;;;",
+  "deployedSourceMap": "91:4623:23:-;;;;;",
+  "source": "pragma solidity ^0.4.24;\r\n\r\n\r\n\r\n/**\r\n * @dev System Config library events interface.\r\n */\r\ninterface IConfigLibEvents\r\n{\r\n\t/**\r\n\t * @dev Event is raised when admin enables transfers.\r\n\t * @param _admin Admin address performing the operation.\r\n\t */\r\n\tevent TransfersEnabled(address indexed _admin);\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin disables transfers.\r\n\t * @param _admin Admin address performing the operation.\r\n\t */\r\n\tevent TransfersDisabled(address indexed _admin);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin pauses contract operations.\r\n\t * @param _admin Admin address performing the operation.\r\n\t */\r\n\tevent Paused(address indexed _admin);\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin resumes contract operations.\r\n\t * @param _admin Admin address performing the operation.\r\n\t */\r\n\tevent Unpaused(address indexed _admin);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin changes minimum withdrawal tokens.\r\n\t * @param _admin Admin address performing the operation.\r\n\t * @param _minWithdrawalAmount Current minimum withdrawal amount.\r\n\t * @param _newMinWithdrawalAmount New minimum withdrawal amount.\r\n\t */\r\n\tevent MinWithdrawalAmountChanged(address indexed _admin, uint _minWithdrawalAmount, uint _newMinWithdrawalAmount);\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin changes maximum withdrawal tokens.\r\n\t * @param _admin Admin address performing the operation.\r\n\t * @param _maxWithdrawalAmount Current maximum withdrawal amount.\r\n\t * @param _newMaxWithdrawalAmount New maximum withdrawal amount.\r\n\t */\r\n\tevent MaxWithdrawalAmountChanged(address indexed _admin, uint _maxWithdrawalAmount, uint _newMaxWithdrawalAmount);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin enables deposits.\r\n\t * @param _admin Admin address executing the function.\r\n\t */\r\n\tevent DepositsEnabled(address indexed _admin);\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin disables deposits.\r\n\t * @param _admin Admin address executing the function.\r\n\t */\r\n\tevent DepositsDisabled(address indexed _admin);\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin enables withdrawals.\r\n\t * @param _admin Admin address executing the function.\r\n\t */\r\n\tevent WithdrawalsEnabled(address indexed _admin);\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin disables withdrawals.\r\n\t * @param _admin Admin address executing the function.\r\n\t */\r\n\tevent WithdrawalsDisabled(address indexed _admin);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when a new no fee address was added.\r\n\t * @param admin Admin address performing the operation.\r\n\t * @param account New no fee address added.\r\n\t */\r\n\tevent NoFeeAddressAdded(address indexed admin, address indexed account);\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when a no fee address was removed.\r\n\t * @param admin Admin address performing the operation.\r\n\t * @param account No fee address being removed.\r\n\t */\r\n    event NoFeeAddressRemoved(address indexed admin, address indexed account);\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when no fee address renounces to his role.\r\n\t * @param account No fee address renouncing to his role.\r\n\t */\r\n\tevent NoFeeAddressRenounced(address indexed account);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin enables KYC filters.\r\n\t * @param _admin Admin address performing the operation.\r\n\t */\r\n\tevent KYCEnabled(address indexed _admin);\r\n\t\r\n\t/**\r\n\t * @dev Event is raised when admin disables KYC filters.\r\n\t * @param _admin Admin address performing the operation.\r\n\t */\r\n\tevent KYCDisabled(address indexed _admin);\r\n\t\r\n\t/**\r\n\t * @dev Event emitted when a user address was KYC approved.\r\n\t * @param _admin Admin address performing the operation\r\n\t * @param _userAddress User address that was KYC approved\r\n\t */\r\n    event KYCAddressApproved(address indexed _admin, address indexed _userAddress);\r\n\t\r\n\t/**\r\n\t * @dev Event emitted when a user address was KYC disapproved.\r\n\t * @param _admin Admin address performing the operation\r\n\t * @param _userAddress User address that was KYC disapproved\r\n\t */\r\n    event KYCAddressDisapproved(address indexed _admin, address indexed _userAddress);\r\n\t\r\n\t/**\r\n\t * @dev Event emitted when a user address was blacklisted due to suspicious operations.\r\n\t * @param _admin Admin address performing the operation\r\n\t * @param _userAddress User address that was blacklisted\r\n\t */\r\n    event BlacklistedAddress(address indexed _admin, address indexed _userAddress);\r\n\t\r\n\t/**\r\n\t * @dev Event emitted when a user address was allowed to continue normal operations after being blacklisted due to suspicious operations.\r\n\t * @param _admin Admin address performing the operation\r\n\t * @param _userAddress User address that was allowed back to normal\r\n\t */\r\n    event AllowedBlacklistedAddress(address indexed _admin, address indexed _userAddress);\r\n}",
+  "sourcePath": "C:\\Users\\Homeuser\\Desktop\\FiatechFiatCurrencyToken\\contracts\\interfaces\\IConfigLibEvents.sol",
+  "ast": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IConfigLibEvents.sol",
+    "exportedSymbols": {
+      "IConfigLibEvents": [
+        3721
+      ]
+    },
+    "id": 3722,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3624,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:23"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": "@dev System Config library events interface.\r",
+        "fullyImplemented": true,
+        "id": 3721,
+        "linearizedBaseContracts": [
+          3721
+        ],
+        "name": "IConfigLibEvents",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin enables transfers.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3628,
+            "name": "TransfersEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3627,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3626,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3628,
+                  "src": "273:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3625,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "273:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "272:24:23"
+            },
+            "src": "250:47:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin disables transfers.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3632,
+            "name": "TransfersDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3631,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3630,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3632,
+                  "src": "455:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3629,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "455:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "454:24:23"
+            },
+            "src": "431:48:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin pauses contract operations.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3636,
+            "name": "Paused",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3635,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3634,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3636,
+                  "src": "640:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3633,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "640:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "639:24:23"
+            },
+            "src": "627:37:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin resumes contract operations.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3640,
+            "name": "Unpaused",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3639,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3638,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3640,
+                  "src": "822:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3637,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "822:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "821:24:23"
+            },
+            "src": "807:39:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin changes minimum withdrawal tokens.\r\n@param _admin Admin address performing the operation.\r\n@param _minWithdrawalAmount Current minimum withdrawal amount.\r\n@param _newMinWithdrawalAmount New minimum withdrawal amount.\r",
+            "id": 3648,
+            "name": "MinWithdrawalAmountChanged",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3647,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3642,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3648,
+                  "src": "1169:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3641,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1169:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3644,
+                  "indexed": false,
+                  "name": "_minWithdrawalAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3648,
+                  "src": "1193:25:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3643,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1193:4:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3646,
+                  "indexed": false,
+                  "name": "_newMinWithdrawalAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3648,
+                  "src": "1220:28:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3645,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1220:4:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1168:81:23"
+            },
+            "src": "1136:114:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin changes maximum withdrawal tokens.\r\n@param _admin Admin address performing the operation.\r\n@param _maxWithdrawalAmount Current maximum withdrawal amount.\r\n@param _newMaxWithdrawalAmount New maximum withdrawal amount.\r",
+            "id": 3656,
+            "name": "MaxWithdrawalAmountChanged",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3655,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3650,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3656,
+                  "src": "1567:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3649,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1567:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3652,
+                  "indexed": false,
+                  "name": "_maxWithdrawalAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3656,
+                  "src": "1591:25:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3651,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1591:4:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3654,
+                  "indexed": false,
+                  "name": "_newMaxWithdrawalAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3656,
+                  "src": "1618:28:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3653,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1618:4:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1566:81:23"
+            },
+            "src": "1534:114:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin enables deposits.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3660,
+            "name": "DepositsEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3659,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3658,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3660,
+                  "src": "1806:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3657,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1806:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1805:24:23"
+            },
+            "src": "1784:46:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin disables deposits.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3664,
+            "name": "DepositsDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3663,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3662,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3664,
+                  "src": "1984:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3661,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1984:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1983:24:23"
+            },
+            "src": "1961:47:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin enables withdrawals.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3668,
+            "name": "WithdrawalsEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3667,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3666,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3668,
+                  "src": "2166:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3665,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2166:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2165:24:23"
+            },
+            "src": "2141:49:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin disables withdrawals.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3672,
+            "name": "WithdrawalsDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3671,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3670,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3672,
+                  "src": "2350:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3669,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2350:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2349:24:23"
+            },
+            "src": "2324:50:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when a new no fee address was added.\r\n@param admin Admin address performing the operation.\r\n@param account New no fee address added.\r",
+            "id": 3678,
+            "name": "NoFeeAddressAdded",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3677,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3674,
+                  "indexed": true,
+                  "name": "admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3678,
+                  "src": "2589:21:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3673,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2589:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3676,
+                  "indexed": true,
+                  "name": "account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3678,
+                  "src": "2612:23:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3675,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2612:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2588:48:23"
+            },
+            "src": "2565:72:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when a no fee address was removed.\r\n@param admin Admin address performing the operation.\r\n@param account No fee address being removed.\r",
+            "id": 3684,
+            "name": "NoFeeAddressRemoved",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3683,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3680,
+                  "indexed": true,
+                  "name": "admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3684,
+                  "src": "2853:21:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3679,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2853:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3682,
+                  "indexed": true,
+                  "name": "account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3684,
+                  "src": "2876:23:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3681,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2876:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2852:48:23"
+            },
+            "src": "2827:74:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when no fee address renounces to his role.\r\n@param account No fee address renouncing to his role.\r",
+            "id": 3688,
+            "name": "NoFeeAddressRenounced",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3687,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3686,
+                  "indexed": true,
+                  "name": "account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3688,
+                  "src": "3075:23:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3685,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3075:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3074:25:23"
+            },
+            "src": "3047:53:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin enables KYC filters.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3692,
+            "name": "KYCEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3691,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3690,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3692,
+                  "src": "3258:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3689,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3258:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3257:24:23"
+            },
+            "src": "3241:41:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin disables KYC filters.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3696,
+            "name": "KYCDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3695,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3694,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3696,
+                  "src": "3436:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3693,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3436:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3435:24:23"
+            },
+            "src": "3418:42:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event emitted when a user address was KYC approved.\r\n@param _admin Admin address performing the operation\r\n@param _userAddress User address that was KYC approved\r",
+            "id": 3702,
+            "name": "KYCAddressApproved",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3701,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3698,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3702,
+                  "src": "3686:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3697,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3686:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3700,
+                  "indexed": true,
+                  "name": "_userAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3702,
+                  "src": "3710:28:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3699,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3710:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3685:54:23"
+            },
+            "src": "3661:79:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event emitted when a user address was KYC disapproved.\r\n@param _admin Admin address performing the operation\r\n@param _userAddress User address that was KYC disapproved\r",
+            "id": 3708,
+            "name": "KYCAddressDisapproved",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3707,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3704,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3708,
+                  "src": "3975:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3703,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3975:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3706,
+                  "indexed": true,
+                  "name": "_userAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3708,
+                  "src": "3999:28:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3705,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3999:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3974:54:23"
+            },
+            "src": "3947:82:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event emitted when a user address was blacklisted due to suspicious operations.\r\n@param _admin Admin address performing the operation\r\n@param _userAddress User address that was blacklisted\r",
+            "id": 3714,
+            "name": "BlacklistedAddress",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3713,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3710,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3714,
+                  "src": "4282:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3709,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4282:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3712,
+                  "indexed": true,
+                  "name": "_userAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3714,
+                  "src": "4306:28:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3711,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4306:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4281:54:23"
+            },
+            "src": "4257:79:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event emitted when a user address was allowed to continue normal operations after being blacklisted due to suspicious operations.\r\n@param _admin Admin address performing the operation\r\n@param _userAddress User address that was allowed back to normal\r",
+            "id": 3720,
+            "name": "AllowedBlacklistedAddress",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3719,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3716,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3720,
+                  "src": "4657:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3715,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4657:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3718,
+                  "indexed": true,
+                  "name": "_userAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3720,
+                  "src": "4681:28:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3717,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4681:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4656:54:23"
+            },
+            "src": "4625:86:23"
+          }
+        ],
+        "scope": 3722,
+        "src": "91:4623:23"
+      }
+    ],
+    "src": "0:4714:23"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IConfigLibEvents.sol",
+    "exportedSymbols": {
+      "IConfigLibEvents": [
+        3721
+      ]
+    },
+    "id": 3722,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3624,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:23"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": "@dev System Config library events interface.\r",
+        "fullyImplemented": true,
+        "id": 3721,
+        "linearizedBaseContracts": [
+          3721
+        ],
+        "name": "IConfigLibEvents",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin enables transfers.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3628,
+            "name": "TransfersEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3627,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3626,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3628,
+                  "src": "273:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3625,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "273:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "272:24:23"
+            },
+            "src": "250:47:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin disables transfers.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3632,
+            "name": "TransfersDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3631,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3630,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3632,
+                  "src": "455:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3629,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "455:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "454:24:23"
+            },
+            "src": "431:48:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin pauses contract operations.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3636,
+            "name": "Paused",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3635,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3634,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3636,
+                  "src": "640:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3633,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "640:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "639:24:23"
+            },
+            "src": "627:37:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin resumes contract operations.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3640,
+            "name": "Unpaused",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3639,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3638,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3640,
+                  "src": "822:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3637,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "822:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "821:24:23"
+            },
+            "src": "807:39:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin changes minimum withdrawal tokens.\r\n@param _admin Admin address performing the operation.\r\n@param _minWithdrawalAmount Current minimum withdrawal amount.\r\n@param _newMinWithdrawalAmount New minimum withdrawal amount.\r",
+            "id": 3648,
+            "name": "MinWithdrawalAmountChanged",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3647,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3642,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3648,
+                  "src": "1169:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3641,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1169:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3644,
+                  "indexed": false,
+                  "name": "_minWithdrawalAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3648,
+                  "src": "1193:25:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3643,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1193:4:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3646,
+                  "indexed": false,
+                  "name": "_newMinWithdrawalAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3648,
+                  "src": "1220:28:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3645,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1220:4:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1168:81:23"
+            },
+            "src": "1136:114:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin changes maximum withdrawal tokens.\r\n@param _admin Admin address performing the operation.\r\n@param _maxWithdrawalAmount Current maximum withdrawal amount.\r\n@param _newMaxWithdrawalAmount New maximum withdrawal amount.\r",
+            "id": 3656,
+            "name": "MaxWithdrawalAmountChanged",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3655,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3650,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3656,
+                  "src": "1567:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3649,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1567:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3652,
+                  "indexed": false,
+                  "name": "_maxWithdrawalAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3656,
+                  "src": "1591:25:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3651,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1591:4:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3654,
+                  "indexed": false,
+                  "name": "_newMaxWithdrawalAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3656,
+                  "src": "1618:28:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3653,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1618:4:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1566:81:23"
+            },
+            "src": "1534:114:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin enables deposits.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3660,
+            "name": "DepositsEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3659,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3658,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3660,
+                  "src": "1806:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3657,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1806:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1805:24:23"
+            },
+            "src": "1784:46:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin disables deposits.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3664,
+            "name": "DepositsDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3663,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3662,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3664,
+                  "src": "1984:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3661,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1984:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1983:24:23"
+            },
+            "src": "1961:47:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin enables withdrawals.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3668,
+            "name": "WithdrawalsEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3667,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3666,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3668,
+                  "src": "2166:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3665,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2166:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2165:24:23"
+            },
+            "src": "2141:49:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin disables withdrawals.\r\n@param _admin Admin address executing the function.\r",
+            "id": 3672,
+            "name": "WithdrawalsDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3671,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3670,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3672,
+                  "src": "2350:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3669,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2350:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2349:24:23"
+            },
+            "src": "2324:50:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when a new no fee address was added.\r\n@param admin Admin address performing the operation.\r\n@param account New no fee address added.\r",
+            "id": 3678,
+            "name": "NoFeeAddressAdded",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3677,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3674,
+                  "indexed": true,
+                  "name": "admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3678,
+                  "src": "2589:21:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3673,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2589:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3676,
+                  "indexed": true,
+                  "name": "account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3678,
+                  "src": "2612:23:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3675,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2612:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2588:48:23"
+            },
+            "src": "2565:72:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when a no fee address was removed.\r\n@param admin Admin address performing the operation.\r\n@param account No fee address being removed.\r",
+            "id": 3684,
+            "name": "NoFeeAddressRemoved",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3683,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3680,
+                  "indexed": true,
+                  "name": "admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3684,
+                  "src": "2853:21:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3679,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2853:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3682,
+                  "indexed": true,
+                  "name": "account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3684,
+                  "src": "2876:23:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3681,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2876:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2852:48:23"
+            },
+            "src": "2827:74:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when no fee address renounces to his role.\r\n@param account No fee address renouncing to his role.\r",
+            "id": 3688,
+            "name": "NoFeeAddressRenounced",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3687,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3686,
+                  "indexed": true,
+                  "name": "account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3688,
+                  "src": "3075:23:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3685,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3075:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3074:25:23"
+            },
+            "src": "3047:53:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin enables KYC filters.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3692,
+            "name": "KYCEnabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3691,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3690,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3692,
+                  "src": "3258:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3689,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3258:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3257:24:23"
+            },
+            "src": "3241:41:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event is raised when admin disables KYC filters.\r\n@param _admin Admin address performing the operation.\r",
+            "id": 3696,
+            "name": "KYCDisabled",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3695,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3694,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3696,
+                  "src": "3436:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3693,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3436:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3435:24:23"
+            },
+            "src": "3418:42:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event emitted when a user address was KYC approved.\r\n@param _admin Admin address performing the operation\r\n@param _userAddress User address that was KYC approved\r",
+            "id": 3702,
+            "name": "KYCAddressApproved",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3701,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3698,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3702,
+                  "src": "3686:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3697,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3686:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3700,
+                  "indexed": true,
+                  "name": "_userAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3702,
+                  "src": "3710:28:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3699,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3710:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3685:54:23"
+            },
+            "src": "3661:79:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event emitted when a user address was KYC disapproved.\r\n@param _admin Admin address performing the operation\r\n@param _userAddress User address that was KYC disapproved\r",
+            "id": 3708,
+            "name": "KYCAddressDisapproved",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3707,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3704,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3708,
+                  "src": "3975:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3703,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3975:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3706,
+                  "indexed": true,
+                  "name": "_userAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3708,
+                  "src": "3999:28:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3705,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3999:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3974:54:23"
+            },
+            "src": "3947:82:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event emitted when a user address was blacklisted due to suspicious operations.\r\n@param _admin Admin address performing the operation\r\n@param _userAddress User address that was blacklisted\r",
+            "id": 3714,
+            "name": "BlacklistedAddress",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3713,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3710,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3714,
+                  "src": "4282:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3709,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4282:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3712,
+                  "indexed": true,
+                  "name": "_userAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3714,
+                  "src": "4306:28:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3711,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4306:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4281:54:23"
+            },
+            "src": "4257:79:23"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event emitted when a user address was allowed to continue normal operations after being blacklisted due to suspicious operations.\r\n@param _admin Admin address performing the operation\r\n@param _userAddress User address that was allowed back to normal\r",
+            "id": 3720,
+            "name": "AllowedBlacklistedAddress",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3719,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3716,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3720,
+                  "src": "4657:22:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3715,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4657:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3718,
+                  "indexed": true,
+                  "name": "_userAddress",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3720,
+                  "src": "4681:28:23",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3717,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4681:7:23",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4656:54:23"
+            },
+            "src": "4625:86:23"
+          }
+        ],
+        "scope": 3722,
+        "src": "91:4623:23"
+      }
+    ],
+    "src": "0:4714:23"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.5",
+  "updatedAt": "2019-11-28T22:36:38.783Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

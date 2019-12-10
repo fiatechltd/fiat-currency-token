@@ -1,0 +1,97 @@
+pragma solidity ^0.4.24;
+
+import "../access/roles/Admin.sol";
+import "./BlacklistOperations.sol";
+
+
+
+/**
+ * @dev Know Your Costumer Blacklist contract controller to blacklist specific address
+ * and forbid transfers and operations on smart contract for that address.
+ */
+contract BlacklistController is Admin, BlacklistOperations {
+	
+    using Roles for Roles.Role;
+	
+	/**
+	 * @dev Event emitted when a user address was blacklisted due to suspicious operations.
+	 * @param _admin Admin address performing the operation
+	 * @param _userAddress User address that was blacklisted
+	 */
+    event BlacklistedAddress(address indexed _admin, address indexed _userAddress);
+	
+	/**
+	 * @dev Event emitted when a user address was allowed to continue normal operations after being blacklisted due to suspicious operations.
+	 * @param _admin Admin address performing the operation
+	 * @param _userAddress User address that was allowed back to normal
+	 */
+    event AllowedBlacklistedAddress(address indexed _admin, address indexed _userAddress);
+	
+    Roles.Role private _blacklist;
+	
+	
+	
+	constructor()
+		internal
+	{
+    }
+	
+	modifier whenNOTBlacklistedAddress {
+		// only allowed to continue if address is not blacklisted
+		require(!isBlacklisted(msg.sender), "Sender address must not be blacklisted!");
+		_;
+	}
+	
+	function whenNOTBlacklistedAddressTo (address _address) public view returns (bool success) {
+		// only allowed to continue if 'to' address is not blacklisted
+		return (!isBlacklisted(_address));
+	}
+	
+	
+	
+	/**
+	 * @dev Check if user address is blacklisted.
+	 * @param _account User address
+	 * @return bool
+	 */
+	function isBlacklisted(address _account) public view returns (bool) {
+        return _blacklist.has(_account);
+    }
+	
+	/**
+	 * @dev Blacklist user address, only admin can do it.
+	 * @param _account User address
+	 */
+	function blacklistUserAddress(address _account) public onlyAdmin {
+		require(_account != owner, "Owner can not be blacklisted");
+        _blacklistUserAddress(_account);
+    }
+	
+	/**
+	 * @dev Allow user address back to normal, only admin can do it.
+	 * @param _account User address
+	 */
+	function allowBlacklistedUserAddress(address _account) public onlyAdmin {
+		_allowBlacklistedUserAddress(_account);
+    }
+	
+	/**
+	 * @dev Blacklist user address
+	 * @param _account User address
+	 */
+    function _blacklistUserAddress(address _account) internal {
+		require(!_blacklist.has(_account), "User address already blacklisted");
+        _blacklist.add(_account);
+        emit BlacklistedAddress(msg.sender, _account);
+    }
+	
+	/**
+	 * @dev Allow blacklisted user address back to normal operations
+	 * @param _account User address
+	 */
+    function _allowBlacklistedUserAddress(address _account) internal {
+		require(_blacklist.has(_account), "User address already allowed");
+        _blacklist.remove(_account);
+        emit AllowedBlacklistedAddress(msg.sender, _account);
+    }
+}

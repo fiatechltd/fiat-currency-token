@@ -1,0 +1,54 @@
+pragma solidity ^0.5.0;
+
+/**
+ * @dev IRecoverableFunds interface allows user to grant access to an admin to "reset" his wallet balance to zero
+ * should he loose access to it later in the future.
+ * An internal map should be used in the contract implementing this interface registering user addresses with admin right to reset,
+ * working similar to "approve" mechanism from ERC20Interface, allowing contract admin/owner to set user balance to zero and be able to
+ * just credit his account balance on a new wallet address at user's choice.
+ */
+interface IRecoverableFunds {
+	
+	/**
+	 * @dev User grants admin/owner with wallet/address balance reset rights in case he looses access to it later in the future.
+	 * Raises WalletRecoverable event.
+	 * @param _recoverable True if wallet address is set recoverable, false to remove recoverable feature.
+	 * @return bool.
+	 */
+	function makeWalletRecoverable(bool _recoverable) external returns (bool success);
+	
+	/**
+	 * ***Execution should be restricted only for admin/owner of the contract.
+	 * Admin/owner of the contract executes this function after user claimed to have lost access to his wallet address.
+	 * Once admin runs this function, he can credit user account on a new wallet address provided by user.
+	 * Raises WalletBalanceReset event.
+	 * @param _wallet User wallet address about to be reset.
+	 * @return bool.
+	 */
+	function resetWalletBalance(address _wallet) external returns (bool success);
+	
+	/**
+	 * @dev Check if given address was given reset rights to admin.
+	 * @param _wallet User wallet address to check
+	 * @return bool.
+	 */
+	function isWalletRecoverable(address _wallet) external view returns (bool success);
+	
+	
+	
+	/**
+	 * @dev Event is raised when admin resets wallet balance of a given user address.
+	 * MUST trigger on any successful call to "function resetWalletBalance(address _user) public returns (bool success);"
+	 * @param _admin Admin address resetting user wallet lost access balance.
+	 * @param _resetWallet User wallet address just reset by admin.
+	 */
+	event WalletBalanceReset(address indexed _admin, address indexed _resetWallet);
+	
+	/**
+	 * @dev Event is raised when admin disables transfers.
+	 * MUST trigger on any successful call to "function makeWalletRecoverable() public returns (bool success);"
+	 * @param _user User wallet address that triggered the event, usually the user making changes to his wallet address.
+	 * @param _resetRightsGranted True if reset rights were givn or false if they were removed.
+	 */
+	event WalletRecoverable(address indexed _user, bool _resetRightsGranted);
+}

@@ -1,0 +1,170 @@
+pragma solidity ^0.5.0;
+
+import "../access/roles/PauserRole.sol";
+import "./FeesLib.sol";
+
+// ----------------------------------------------------------------------------
+// Withdrawal fees controller
+// ----------------------------------------------------------------------------
+contract WithdrawalFees is PauserRole {
+	
+    using FeesLib for FeesLib.Fee;
+	
+	// symbol like "USD" or "GBP" or any other asset or currency
+	string public symbol;
+	
+	// persistent data
+    FeesLib.Fee private _withdrawalFee;
+	
+	event WithdrawalFeesEnabled(address indexed admin, string symbol);
+	event WithdrawalFeesDisabled(address indexed admin, string symbol);
+	event WithdrawalFeesInit(address indexed admin, string symbol, uint parts_Fee, uint perX_Fee, uint minFeeTokens, bool feesEnabled);
+	event WithdrawalFeesChanged(address indexed admin, string symbol, uint parts_Fee, uint perX_Fee);
+	event MinimumWithdrawalFeeTokensChanged(address indexed admin, string symbol, uint newWithdrawalFeeTokens);
+	event WithdrawalFeesCollected(address indexed from, uint withdrawalTokens, uint withdrawalTokensFee, string symbol);
+	
+	
+	
+	/**
+	 * @dev Constructor
+	 * @param _symbol Token symbol
+	 */
+    constructor (string memory _symbol)
+		//PauserRole()
+		internal
+	{
+		symbol = _symbol;
+		_withdrawalFee = FeesLib.Fee({parts_Fee: 0, perX_Fee: 1, min_Fee_tokens: 0, feesEnabled: false});
+    }
+	
+	
+	
+	/**
+	 * @dev initWithdrawalFees, given all required parameters in the same order as they are declared in the Fee struct.
+	 * @param _parts_Fee Parts component of the fee percentage
+	 * @param _perX_Fee Per X component of the fee percentage
+	 * @param _min_Fee_tokens Mininmum amount of tokens for the fee
+	 * @param _feesEnabled Are fees enables?
+	 * @return bool
+	 */
+	function initWithdrawalFees(uint _parts_Fee, uint _perX_Fee, uint _min_Fee_tokens, bool _feesEnabled) public onlyPauser returns (bool success)
+	{
+		_withdrawalFee.parts_Fee = _parts_Fee;
+		_withdrawalFee.perX_Fee = _perX_Fee;
+		_withdrawalFee.min_Fee_tokens = _min_Fee_tokens;
+		_withdrawalFee.feesEnabled = _feesEnabled;
+		
+		emit WithdrawalFeesInit(msg.sender, symbol, _parts_Fee, _perX_Fee, _min_Fee_tokens, _feesEnabled);
+		
+		//setWithdrawalFees(_parts_Fee, _perX_Fee);
+		//setMinimumWithdrawalFeeTokens(_min_Fee_tokens);
+		//if (_feesEnabled)
+		//	enableWithdrawalFees();
+		//else disableWithdrawalFees();
+		
+		return true;
+	}
+	
+	
+	
+	/**
+	 * @dev calculateWithdrawalFeeTokens, given token amount, calculate withdrawal fee in units/tokens that are cents or pennies
+	 * @param tokens Tokens amount to calculate fees for
+	 * @return uint
+	 */
+	function calculateWithdrawalFeeTokens(uint tokens) public view returns (uint withdrawalFeeTokens) {
+		
+		return _withdrawalFee._calculateFeeTokens(tokens);
+	}
+	
+	
+	
+	/**
+	 * @dev Get minimum withdrawal fee tokens/pennies/cents
+	 * @return uint
+	 */
+	function getMinimumWithdrawalFeeTokens() public view returns (uint minWithdrawalFeeTokens) {
+		
+		return _withdrawalFee._getMinimumFeeTokens();
+	}
+	
+	
+	
+	/**
+	 * @dev Set/change minimum withdrawal fee tokens/pennies/cents, only admin can do it
+	 * @param newMinWithdrawalFeeTokens Minimum amount of tokens
+	 * @return bool
+	 */
+	function setMinimumWithdrawalFeeTokens(uint newMinWithdrawalFeeTokens) public onlyPauser returns (bool success) {
+		bool ok = _withdrawalFee._setMinimumFeeTokens(newMinWithdrawalFeeTokens);
+		if (ok) {
+			emit MinimumWithdrawalFeeTokensChanged(msg.sender, symbol, newMinWithdrawalFeeTokens);
+		}
+		return ok;
+	}
+	
+	
+	
+	/**
+	 * @dev Check withdrawal fees enabled/disabled fees
+	 * @return bool
+	 */
+	function checkWithdrawalFeesEnabled() public view returns (bool enabledFees) {
+		
+		return _withdrawalFee._checkEnabledFees();
+	}
+	
+	
+	
+	/**
+	 * @dev Enable withdrawal fees, only admin can do it
+	 * @return bool
+	 */
+	function enableWithdrawalFees() public onlyPauser returns (bool success) {
+		bool ok = _withdrawalFee._enableFees();
+		if (ok) {
+			emit WithdrawalFeesEnabled(msg.sender, symbol);
+		}
+		return ok;
+	}
+	
+	
+	
+	/**
+	 * @dev Disable withdrawal fees, only admin can do it
+	 * @return bool
+	 */
+	function disableWithdrawalFees() public onlyPauser returns (bool success) {
+		bool ok = _withdrawalFee._disableFees();
+		if (ok) {
+			emit WithdrawalFeesDisabled(msg.sender, symbol);
+		}
+		return ok;
+	}
+	
+	
+	
+	/**
+	 * @dev Get withdrawal fees as parts per X units
+	 * @return (uint, uint)
+	 */
+	function getWithdrawalFees() public view returns (uint _parts_Fee, uint _perX_Fee) {
+		return _withdrawalFee._getFees();
+	}
+	
+	
+	
+	/**
+	 * @dev Set withdrawal fees as parts per X units, only admin can do it
+	 * @param _parts_Fee Parts component of the fee percentage
+	 * @param _perX_Fee Per X component of the fee percentage
+	 * @return bool
+	 */
+	function setWithdrawalFees(uint _parts_Fee, uint _perX_Fee) public onlyPauser returns (bool success) {
+		bool ok = _withdrawalFee._setFees(_parts_Fee, _perX_Fee);
+		if (ok) {
+			emit WithdrawalFeesChanged(msg.sender, symbol, _parts_Fee, _perX_Fee);
+		}
+		return ok;
+	}
+}

@@ -1,0 +1,21 @@
+pragma solidity ^0.4.24;
+
+import "../access/roles/Admin.sol";
+//import "../libs/FeesLib.sol";
+import "./TransferFees.sol";
+
+/**
+ * @dev Fees controller
+ */
+contract FeesController is Admin
+	, TransferFees
+{	
+    
+	/**
+	 * @dev Constructor
+	 */
+    constructor()
+		internal
+	{
+    }
+}

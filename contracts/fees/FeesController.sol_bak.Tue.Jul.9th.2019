@@ -1,0 +1,183 @@
+pragma solidity ^0.5.0;
+
+import "../access/roles/PauserRole.sol";
+import "./FeesLib.sol";
+import "./TransferFees.sol";
+import "./WithdrawalFees.sol";
+//import "./DepositFees.sol";
+
+/**
+ * @dev Fees controller
+ */
+contract FeesController is PauserRole
+	//, TransferFees
+	//, WithdrawalFees
+	//, DepositFees
+{	
+    using FeesLib for FeesLib.Fee;
+	
+	// symbol like "USD" or "GBP" or any other asset or currency
+	string public symbol;
+	
+	TransferFees private _transferFees;
+	WithdrawalFees private _withdrawalFees;
+	
+    
+	
+	/**
+	 * @dev Constructor
+	 * @param _symbol Token symbol
+	 */
+    constructor (string memory _symbol)
+		// PauserRole()
+		//TransferFees(_symbol)
+		//WithdrawalFees(_symbol)
+		internal
+	{
+		symbol = _symbol;
+		
+		_transferFees = new TransferFees(_symbol);
+		_withdrawalFees = new WithdrawalFees(_symbol);
+    }
+	
+	
+	
+	function initTransferFees(uint _parts_Fee, uint _perX_Fee, uint _min_Fee_tokens, bool _feesEnabled) public onlyPauser returns (bool success) {
+		return _transferFees.initTransferFees(_parts_Fee, _perX_Fee, _min_Fee_tokens, _feesEnabled);
+	}
+	
+	function calculateTransferFeeTokens(uint tokens) public view returns (uint transferFeeTokens) {
+		return _transferFees.calculateTransferFeeTokens(tokens);
+	}
+	
+	function getMinimumTransferFeeTokens() public view returns (uint minTransferFeeTokens) {
+		return _transferFees.getMinimumTransferFeeTokens();
+	}
+	
+	/**
+	 * @dev Set/change minimum transfer fee tokens/pennies/cents, only admin can do it
+	 * @param newMinTransferFeeTokens Minimum amount of tokens
+	 * @return bool
+	 */
+	function setMinimumTransferFeeTokens(uint newMinTransferFeeTokens) public onlyPauser returns (bool success) {
+		return _transferFees.setMinimumTransferFeeTokens(newMinTransferFeeTokens);
+	}
+	
+	/**
+	 * @dev Check transfer fees enabled/disabled fees
+	 * @return bool
+	 */
+	function checkTransferFeesEnabled() public view returns (bool enabledFees) {
+		return _transferFees.checkTransferFeesEnabled();
+	}
+	
+	/**
+	 * @dev Enable transfer fees, only admin can do it
+	 * @return bool
+	 */
+	function enableTransferFees() public onlyPauser returns (bool success) {
+		return _transferFees.enableTransferFees();
+	}
+	
+	/**
+	 * @dev Disable transfer fees, only admin can do it
+	 * @return bool
+	 */
+	function disableTransferFees() public onlyPauser returns (bool success) {
+		return _transferFees.disableTransferFees();
+	}
+	
+	/**
+	 * @dev Get transfer fees as parts per X units
+	 * @return (uint, uint)
+	 */
+	function getTransferFees() public view returns (uint _parts_Fee, uint _perX_Fee) {
+		return _transferFees.getTransferFees();
+	}
+	
+	/**
+	 * @dev Set transfer fees as parts per X units, only admin can do it
+	 * @param _parts_Fee Parts component of the fee percentage
+	 * @param _perX_Fee Per X component of the fee percentage
+	 * @return bool
+	 */
+	function setTransferFees(uint _parts_Fee, uint _perX_Fee) public onlyPauser returns (bool success) {
+		return _transferFees.setTransferFees(_parts_Fee, _perX_Fee);
+	}
+	
+	
+	
+	function initwithdrawalFees(uint _parts_Fee, uint _perX_Fee, uint _min_Fee_tokens, bool _feesEnabled) public onlyPauser returns (bool success) {
+		return _withdrawalFees.initWithdrawalFees(_parts_Fee, _perX_Fee, _min_Fee_tokens, _feesEnabled);
+	}
+	
+	/**
+	 * @dev calculateWithdrawalFeeTokens, given token amount, calculate withdrawal fee in units/tokens that are cents or pennies
+	 * @param tokens Tokens amount to calculate fees for
+	 * @return uint
+	 */
+	function calculateWithdrawalFeeTokens(uint tokens) public view returns (uint withdrawalFeeTokens) {
+		return _withdrawalFees.calculateWithdrawalFeeTokens(tokens);
+	}
+	
+	/**
+	 * @dev Get minimum withdrawal fee tokens/pennies/cents
+	 * @return uint
+	 */
+	function getMinimumWithdrawalFeeTokens() public view returns (uint minWithdrawalFeeTokens) {
+		return _withdrawalFees.getMinimumWithdrawalFeeTokens();
+	}
+	
+	
+	
+	/**
+	 * @dev Set/change minimum withdrawal fee tokens/pennies/cents, only admin can do it
+	 * @param newMinWithdrawalFeeTokens Minimum amount of tokens
+	 * @return bool
+	 */
+	function setMinimumWithdrawalFeeTokens(uint newMinWithdrawalFeeTokens) public onlyPauser returns (bool success) {
+		return _withdrawalFees.setMinimumWithdrawalFeeTokens(newMinWithdrawalFeeTokens);
+	}
+	
+	/**
+	 * @dev Check withdrawal fees enabled/disabled fees
+	 * @return bool
+	 */
+	function checkWithdrawalFeesEnabled() public view returns (bool enabledFees) {
+		return _withdrawalFees.checkWithdrawalFeesEnabled();
+	}
+	
+	/**
+	 * @dev Enable withdrawal fees, only admin can do it
+	 * @return bool
+	 */
+	function enableWithdrawalFees() public onlyPauser returns (bool success) {
+		return _withdrawalFees.enableWithdrawalFees();
+	}
+	
+	/**
+	 * @dev Disable withdrawal fees, only admin can do it
+	 * @return bool
+	 */
+	function disableWithdrawalFees() public onlyPauser returns (bool success) {
+		return _withdrawalFees.disableWithdrawalFees();
+	}
+	
+	/**
+	 * @dev Get withdrawal fees as parts per X units
+	 * @return (uint, uint)
+	 */
+	function getWithdrawalFees() public view returns (uint _parts_Fee, uint _perX_Fee) {
+		return _withdrawalFees.getWithdrawalFees();
+	}
+	
+	/**
+	 * @dev Set withdrawal fees as parts per X units, only admin can do it
+	 * @param _parts_Fee Parts component of the fee percentage
+	 * @param _perX_Fee Per X component of the fee percentage
+	 * @return bool
+	 */
+	function setWithdrawalFees(uint _parts_Fee, uint _perX_Fee) public onlyPauser returns (bool success) {
+		return _withdrawalFees.setWithdrawalFees(_parts_Fee, _perX_Fee);
+	}
+}

@@ -1,0 +1,1061 @@
+{
+  "contractName": "EtherReclaimer",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "newOwner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "fallback"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_to",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_to",
+          "type": "address"
+        }
+      ],
+      "name": "reclaimEther",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x608060405234801561001057600080fd5b5060008054600160a060020a0319163317808255604051600160a060020a039190911691907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a3610400806100696000396000f30060806040526004361061006c5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166379ba5097811461006e5780638da5cb5b146100835780639a6a30a4146100b4578063d4ee1d90146100e9578063f2fde38b146100fe575b005b34801561007a57600080fd5b5061006c61011f565b34801561008f57600080fd5b50610098610255565b60408051600160a060020a039092168252519081900360200190f35b3480156100c057600080fd5b506100d5600160a060020a0360043516610264565b604080519115158252519081900360200190f35b3480156100f557600080fd5b5061009861031d565b34801561010a57600080fd5b5061006c600160a060020a036004351661032c565b600154600160a060020a031633146101e457604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152604860248201527f4f776e65643a204f6e6c79207573657220776974682070656e64696e67206f7760448201527f6e65727368697020616363657074616e63652063616e20616363657074206f7760648201527f6e65727368697021000000000000000000000000000000000000000000000000608482015290519081900360a40190fd5b60015460008054604051600160a060020a0393841693909116917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600180546000805473ffffffffffffffffffffffffffffffffffffffff19908116600160a060020a03841617909155169055565b600054600160a060020a031681565b60008054600160a060020a031633146102de57604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152600e60248201527f4f776e6572207265717569726564000000000000000000000000000000000000604482015290519081900360640190fd5b604051600160a060020a03831690303180156108fc02916000818181858888f19350505050158015610314573d6000803e3d6000fd5b50600192915050565b600154600160a060020a031681565b600054600160a060020a031633146103a557604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152600e60248201527f4f776e6572207265717569726564000000000000000000000000000000000000604482015290519081900360640190fd5b6001805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a03929092169190911790555600a165627a7a723058206ddc3b951be66459450c713b24489da16b10defbe970260cdedd02bca1f790190029",
+  "deployedBytecode": "0x60806040526004361061006c5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166379ba5097811461006e5780638da5cb5b146100835780639a6a30a4146100b4578063d4ee1d90146100e9578063f2fde38b146100fe575b005b34801561007a57600080fd5b5061006c61011f565b34801561008f57600080fd5b50610098610255565b60408051600160a060020a039092168252519081900360200190f35b3480156100c057600080fd5b506100d5600160a060020a0360043516610264565b604080519115158252519081900360200190f35b3480156100f557600080fd5b5061009861031d565b34801561010a57600080fd5b5061006c600160a060020a036004351661032c565b600154600160a060020a031633146101e457604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152604860248201527f4f776e65643a204f6e6c79207573657220776974682070656e64696e67206f7760448201527f6e65727368697020616363657074616e63652063616e20616363657074206f7760648201527f6e65727368697021000000000000000000000000000000000000000000000000608482015290519081900360a40190fd5b60015460008054604051600160a060020a0393841693909116917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600180546000805473ffffffffffffffffffffffffffffffffffffffff19908116600160a060020a03841617909155169055565b600054600160a060020a031681565b60008054600160a060020a031633146102de57604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152600e60248201527f4f776e6572207265717569726564000000000000000000000000000000000000604482015290519081900360640190fd5b604051600160a060020a03831690303180156108fc02916000818181858888f19350505050158015610314573d6000803e3d6000fd5b50600192915050565b600154600160a060020a031681565b600054600160a060020a031633146103a557604080517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152600e60248201527f4f776e6572207265717569726564000000000000000000000000000000000000604482015290519081900360640190fd5b6001805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a03929092169190911790555600a165627a7a723058206ddc3b951be66459450c713b24489da16b10defbe970260cdedd02bca1f790190029",
+  "sourceMap": "313:529:5:-;;;412:45;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;701:5:15;:18;;-1:-1:-1;;;;;;701:18:15;709:10;701:18;;;;729:39;;-1:-1:-1;;;;;762:5:15;;;;;701;729:39;;701:5;;729:39;313:529:5;;;;;;",
+  "deployedSourceMap": "313:529:5:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1232:280:15;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1232:280:15;;;;268:20;;8:9:-1;5:2;;;30:1;27;20:12;5:2;268:20:15;;;;;;;;-1:-1:-1;;;;;268:20:15;;;;;;;;;;;;;;700:139:5;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;700:139:5;-1:-1:-1;;;;;700:139:5;;;;;;;;;;;;;;;;;;;;;;;295:23:15;;8:9:-1;5:2;;;30:1;27;20:12;5:2;295:23:15;;;;1012:102;;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;1012:102:15;-1:-1:-1;;;;;1012:102:15;;;;;1232:280;1299:8;;-1:-1:-1;;;;;1299:8:15;1285:10;:22;1277:107;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1432:8;;;1425:5;;1404:37;;-1:-1:-1;;;;;1432:8:15;;;;1425:5;;;;1404:37;;;1464:8;;;;1456:16;;-1:-1:-1;;1456:16:15;;;-1:-1:-1;;;;;1464:8:15;;1456:16;;;;1483:21;;;1232:280::o;268:20::-;;;-1:-1:-1;;;;;268:20:15;;:::o;700:139:5:-;763:4;837:5:15;;-1:-1:-1;;;;;837:5:15;823:10;:19;815:46;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;780:35:5;;-1:-1:-1;;;;;780:12:5;;;801:4;793:21;780:35;;;;;;;;;793:21;780:12;:35;;;;;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;-1:-1;827:4:5;;700:139;-1:-1:-1;;700:139:5:o;295:23:15:-;;;-1:-1:-1;;;;;295:23:15;;:::o;1012:102::-;837:5;;-1:-1:-1;;;;;837:5:15;823:10;:19;815:46;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1086:8;:20;;-1:-1:-1;;1086:20:15;-1:-1:-1;;;;;1086:20:15;;;;;;;;;;1012:102::o",
+  "source": "pragma solidity ^0.4.24;\r\n\r\nimport \"./libs/SafeMathLib.sol\";\r\nimport \"./interfaces/IEtherReclaimer.sol\";\r\nimport \"./Owned.sol\";\r\n\r\n\r\n\r\n/**\r\n * @dev ERC20 Token, with symbol, name, standard and decimals among others.\r\n * Token units in this contract mean cents or pennies of the fiat currency it represents.\r\n */\r\ncontract EtherReclaimer is Owned\r\n\t\t, IEtherReclaimer\r\n{\r\n    /**\r\n\t * @dev Constructor\r\n\t */\r\n    constructor()\r\n\t\tOwned()\r\n\t\tpublic\r\n\t{\r\n    }\r\n\t\r\n\t/**\r\n\t * Accept ETH\r\n\t */\r\n    function () external payable {\r\n    }\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Send all eth balance in the contract to another address\r\n\t * @param _to Address to send contract ether balance to\r\n\t * @return bool\r\n\t */\r\n    function reclaimEther(address _to) external onlyOwner returns (bool) {\r\n        _to.transfer(address(this).balance);\r\n\t\treturn true;\r\n    }\r\n}",
+  "sourcePath": "C:\\Users\\Homeuser\\Desktop\\FiatechFiatCurrencyToken\\contracts\\EtherReclaimer.sol",
+  "ast": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/EtherReclaimer.sol",
+    "exportedSymbols": {
+      "EtherReclaimer": [
+        1878
+      ]
+    },
+    "id": 1879,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1839,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:5"
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/libs/SafeMathLib.sol",
+        "file": "./libs/SafeMathLib.sol",
+        "id": 1840,
+        "nodeType": "ImportDirective",
+        "scope": 1879,
+        "sourceUnit": 4474,
+        "src": "28:32:5",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IEtherReclaimer.sol",
+        "file": "./interfaces/IEtherReclaimer.sol",
+        "id": 1841,
+        "nodeType": "ImportDirective",
+        "scope": 1879,
+        "sourceUnit": 3807,
+        "src": "62:42:5",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/Owned.sol",
+        "file": "./Owned.sol",
+        "id": 1842,
+        "nodeType": "ImportDirective",
+        "scope": 1879,
+        "sourceUnit": 3109,
+        "src": "106:21:5",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 1843,
+              "name": "Owned",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3108,
+              "src": "340:5:5",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Owned_$3108",
+                "typeString": "contract Owned"
+              }
+            },
+            "id": 1844,
+            "nodeType": "InheritanceSpecifier",
+            "src": "340:5:5"
+          },
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 1845,
+              "name": "IEtherReclaimer",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3806,
+              "src": "351:15:5",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IEtherReclaimer_$3806",
+                "typeString": "contract IEtherReclaimer"
+              }
+            },
+            "id": 1846,
+            "nodeType": "InheritanceSpecifier",
+            "src": "351:15:5"
+          }
+        ],
+        "contractDependencies": [
+          3108,
+          3806
+        ],
+        "contractKind": "contract",
+        "documentation": "@dev ERC20 Token, with symbol, name, standard and decimals among others.\r\nToken units in this contract mean cents or pennies of the fiat currency it represents.\r",
+        "fullyImplemented": true,
+        "id": 1878,
+        "linearizedBaseContracts": [
+          1878,
+          3806,
+          3108
+        ],
+        "name": "EtherReclaimer",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 1851,
+              "nodeType": "Block",
+              "src": "449:8:5",
+              "statements": []
+            },
+            "documentation": "@dev Constructor\r",
+            "id": 1852,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": [],
+                "id": 1849,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 1848,
+                  "name": "Owned",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 3108,
+                  "src": "429:5:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_type$_t_contract$_Owned_$3108_$",
+                    "typeString": "type(contract Owned)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "429:7:5"
+              }
+            ],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1847,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "423:2:5"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1850,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "449:0:5"
+            },
+            "scope": 1878,
+            "src": "412:45:5",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1855,
+              "nodeType": "Block",
+              "src": "523:8:5",
+              "statements": []
+            },
+            "documentation": "Accept ETH\r",
+            "id": 1856,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1853,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "503:2:5"
+            },
+            "payable": true,
+            "returnParameters": {
+              "id": 1854,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "523:0:5"
+            },
+            "scope": 1878,
+            "src": "494:37:5",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 1876,
+              "nodeType": "Block",
+              "src": "769:70:5",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "id": 1869,
+                              "name": "this",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 4618,
+                              "src": "801:4:5",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_EtherReclaimer_$1878",
+                                "typeString": "contract EtherReclaimer"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_contract$_EtherReclaimer_$1878",
+                                "typeString": "contract EtherReclaimer"
+                              }
+                            ],
+                            "id": 1868,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "793:7:5",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 1870,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "793:13:5",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "id": 1871,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "balance",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": null,
+                        "src": "793:21:5",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 1865,
+                        "name": "_to",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1858,
+                        "src": "780:3:5",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "id": 1867,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "transfer",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "780:12:5",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_transfer_nonpayable$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256)"
+                      }
+                    },
+                    "id": 1872,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "780:35:5",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 1873,
+                  "nodeType": "ExpressionStatement",
+                  "src": "780:35:5"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "74727565",
+                    "id": 1874,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "bool",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "827:4:5",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "value": "true"
+                  },
+                  "functionReturnParameters": 1864,
+                  "id": 1875,
+                  "nodeType": "Return",
+                  "src": "820:11:5"
+                }
+              ]
+            },
+            "documentation": "@dev Send all eth balance in the contract to another address\r\n@param _to Address to send contract ether balance to\r\n@return bool\r",
+            "id": 1877,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 1861,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 1860,
+                  "name": "onlyOwner",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 3068,
+                  "src": "744:9:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "744:9:5"
+              }
+            ],
+            "name": "reclaimEther",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1859,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1858,
+                  "name": "_to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1877,
+                  "src": "722:11:5",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1857,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "722:7:5",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "721:13:5"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1864,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1863,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1877,
+                  "src": "763:4:5",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 1862,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "763:4:5",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "762:6:5"
+            },
+            "scope": 1878,
+            "src": "700:139:5",
+            "stateMutability": "nonpayable",
+            "superFunction": 3805,
+            "visibility": "external"
+          }
+        ],
+        "scope": 1879,
+        "src": "313:529:5"
+      }
+    ],
+    "src": "0:842:5"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/EtherReclaimer.sol",
+    "exportedSymbols": {
+      "EtherReclaimer": [
+        1878
+      ]
+    },
+    "id": 1879,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1839,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:5"
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/libs/SafeMathLib.sol",
+        "file": "./libs/SafeMathLib.sol",
+        "id": 1840,
+        "nodeType": "ImportDirective",
+        "scope": 1879,
+        "sourceUnit": 4474,
+        "src": "28:32:5",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IEtherReclaimer.sol",
+        "file": "./interfaces/IEtherReclaimer.sol",
+        "id": 1841,
+        "nodeType": "ImportDirective",
+        "scope": 1879,
+        "sourceUnit": 3807,
+        "src": "62:42:5",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/Owned.sol",
+        "file": "./Owned.sol",
+        "id": 1842,
+        "nodeType": "ImportDirective",
+        "scope": 1879,
+        "sourceUnit": 3109,
+        "src": "106:21:5",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 1843,
+              "name": "Owned",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3108,
+              "src": "340:5:5",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Owned_$3108",
+                "typeString": "contract Owned"
+              }
+            },
+            "id": 1844,
+            "nodeType": "InheritanceSpecifier",
+            "src": "340:5:5"
+          },
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 1845,
+              "name": "IEtherReclaimer",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3806,
+              "src": "351:15:5",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IEtherReclaimer_$3806",
+                "typeString": "contract IEtherReclaimer"
+              }
+            },
+            "id": 1846,
+            "nodeType": "InheritanceSpecifier",
+            "src": "351:15:5"
+          }
+        ],
+        "contractDependencies": [
+          3108,
+          3806
+        ],
+        "contractKind": "contract",
+        "documentation": "@dev ERC20 Token, with symbol, name, standard and decimals among others.\r\nToken units in this contract mean cents or pennies of the fiat currency it represents.\r",
+        "fullyImplemented": true,
+        "id": 1878,
+        "linearizedBaseContracts": [
+          1878,
+          3806,
+          3108
+        ],
+        "name": "EtherReclaimer",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 1851,
+              "nodeType": "Block",
+              "src": "449:8:5",
+              "statements": []
+            },
+            "documentation": "@dev Constructor\r",
+            "id": 1852,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": [],
+                "id": 1849,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 1848,
+                  "name": "Owned",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 3108,
+                  "src": "429:5:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_type$_t_contract$_Owned_$3108_$",
+                    "typeString": "type(contract Owned)"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "429:7:5"
+              }
+            ],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1847,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "423:2:5"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1850,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "449:0:5"
+            },
+            "scope": 1878,
+            "src": "412:45:5",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1855,
+              "nodeType": "Block",
+              "src": "523:8:5",
+              "statements": []
+            },
+            "documentation": "Accept ETH\r",
+            "id": 1856,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1853,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "503:2:5"
+            },
+            "payable": true,
+            "returnParameters": {
+              "id": 1854,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "523:0:5"
+            },
+            "scope": 1878,
+            "src": "494:37:5",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 1876,
+              "nodeType": "Block",
+              "src": "769:70:5",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "id": 1869,
+                              "name": "this",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 4618,
+                              "src": "801:4:5",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_contract$_EtherReclaimer_$1878",
+                                "typeString": "contract EtherReclaimer"
+                              }
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_contract$_EtherReclaimer_$1878",
+                                "typeString": "contract EtherReclaimer"
+                              }
+                            ],
+                            "id": 1868,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "793:7:5",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 1870,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "793:13:5",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "id": 1871,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "balance",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": null,
+                        "src": "793:21:5",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 1865,
+                        "name": "_to",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 1858,
+                        "src": "780:3:5",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "id": 1867,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "transfer",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "780:12:5",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_transfer_nonpayable$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256)"
+                      }
+                    },
+                    "id": 1872,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "780:35:5",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 1873,
+                  "nodeType": "ExpressionStatement",
+                  "src": "780:35:5"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "74727565",
+                    "id": 1874,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "bool",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "827:4:5",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "value": "true"
+                  },
+                  "functionReturnParameters": 1864,
+                  "id": 1875,
+                  "nodeType": "Return",
+                  "src": "820:11:5"
+                }
+              ]
+            },
+            "documentation": "@dev Send all eth balance in the contract to another address\r\n@param _to Address to send contract ether balance to\r\n@return bool\r",
+            "id": 1877,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 1861,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 1860,
+                  "name": "onlyOwner",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 3068,
+                  "src": "744:9:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "744:9:5"
+              }
+            ],
+            "name": "reclaimEther",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1859,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1858,
+                  "name": "_to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1877,
+                  "src": "722:11:5",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1857,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "722:7:5",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "721:13:5"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 1864,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1863,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1877,
+                  "src": "763:4:5",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 1862,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "763:4:5",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "762:6:5"
+            },
+            "scope": 1878,
+            "src": "700:139:5",
+            "stateMutability": "nonpayable",
+            "superFunction": 3805,
+            "visibility": "external"
+          }
+        ],
+        "scope": 1879,
+        "src": "313:529:5"
+      }
+    ],
+    "src": "0:842:5"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.5",
+  "updatedAt": "2019-11-28T22:36:38.613Z",
+  "devdoc": {
+    "methods": {
+      "acceptOwnership()": {
+        "details": "New owner pending to accept ownership executes this function to confirm his ownership.\r"
+      },
+      "reclaimEther(address)": {
+        "details": "Send all eth balance in the contract to another address\r",
+        "params": {
+          "_to": "Address to send contract ether balance to\r"
+        },
+        "return": "bool\r"
+      },
+      "transferOwnership(address)": {
+        "details": "Transfer ownership function\r",
+        "params": {
+          "_newOwner": "New owner address acquiring ownership of contract\r"
+        }
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

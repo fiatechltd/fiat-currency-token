@@ -1,0 +1,68 @@
+pragma solidity ^0.4.24;
+
+import "./libs/SafeMathLib.sol";
+import "./libs/ERC20Lib.sol";
+import "./libs/IERC20.sol";
+import "./libs/IERC20LibEvents.sol";
+//import "./access/roles/Admin.sol";
+import "./Owned.sol";
+import "./Mortal.sol";
+
+
+
+/**
+ * @dev ERC20 token contract encapsulating generic token functionality.
+ */
+contract ERC20Token is IERC20LibEvents
+	, IERC20
+	, Owned
+	, Mortal
+{
+	using SafeMathLib for uint;
+	
+	mapping (address => uint) internal balances;
+	mapping (address => mapping (address => uint)) internal allowed;
+	uint internal _totalSupply;
+	
+	
+	
+	constructor(uint _initial_supply) internal {
+		_totalSupply = _initial_supply;
+		balances[msg.sender] = _initial_supply;
+	}
+	
+	function totalSupply() public view returns (uint) {
+		return _totalSupply;
+	}
+	
+	function transfer(address _to, uint _value) public returns (bool success) {
+		balances[msg.sender] = balances[msg.sender].sub(_value);
+		balances[_to] = balances[_to].add(_value);
+		emit Transfer(msg.sender, _to, _value);
+		return true;
+	}
+	
+	function transferFrom(address _from, address _to, uint _value) public returns (bool success) {
+		uint _allowance = allowed[_from][msg.sender];
+		
+		balances[_to] = balances[_to].add(_value);
+		balances[_from] = balances[_from].sub(_value);
+		allowed[_from][msg.sender] = _allowance.sub(_value);
+		emit Transfer(_from, _to, _value);
+		return true;
+	}
+	
+	function balanceOf(address _owner) public view returns (uint balance) {
+		return balances[_owner];
+	}
+	
+	function approve(address _spender, uint _value) public returns (bool success) {
+		allowed[msg.sender][_spender] = _value;
+		emit Approval(msg.sender, _spender, _value);
+		return true;
+	}
+	
+	function allowance(address _owner, address _spender) public view returns (uint remaining) {
+		return allowed[_owner][_spender];
+	}
+}

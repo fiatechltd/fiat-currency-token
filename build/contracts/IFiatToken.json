@@ -1,0 +1,1957 @@
+{
+  "contractName": "IFiatToken",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_spender",
+          "type": "address"
+        },
+        {
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "approve",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferFrom",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_owner",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "name": "balance",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "transfer",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "name": "_spender",
+          "type": "address"
+        }
+      ],
+      "name": "allowance",
+      "outputs": [
+        {
+          "name": "remaining",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "transferTokens",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "name": "feesCollector",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "transferTokensFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "TransferFeesCollected",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "DepositAccepted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "_withdrawalTokensFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "WithdrawalRequested",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_admin",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_account",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "WipeoutBlacklistedAddress",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "tokens",
+          "type": "uint256"
+        }
+      ],
+      "name": "Transfer",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "spender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "tokens",
+          "type": "uint256"
+        }
+      ],
+      "name": "Approval",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "depositAccept",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawRequest",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_account",
+          "type": "address"
+        }
+      ],
+      "name": "wipeoutAddressBalance",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.24;\r\n\r\nimport \"./IERC20.sol\";\r\n\r\n\r\n\r\n/**\r\n * @dev Fiat Token contract interface.\r\n */\r\ncontract IFiatToken is IERC20\r\n{\r\n\t/**\r\n\t * @dev Event raised when transfer fee was collected.\r\n\t * @param from User address the transfer amount was taken from.\r\n\t * @param to User address the transfer amount was sent to.\r\n\t * @param transferTokens Transfer tokens amount.\r\n\t * @param feesCollector Address that collected fee goes to.\r\n\t * @param transferTokensFee Transfer tokens fee amount in tokens.\r\n\t */\r\n\tevent TransferFeesCollected(address indexed from, address indexed to, uint transferTokens, address indexed feesCollector, uint transferTokensFee);\r\n\t\r\n\t/**\r\n\t * @dev Event raised when user address has been deposited tokens.\r\n\t * @param _admin Admin address performing the operation.\r\n\t * @param _to User address to deposit tokens to.\r\n\t * @param _amount Deposit tokens amount.\r\n\t */\r\n\tevent DepositAccepted(address indexed _admin, address indexed _to, uint _amount);\r\n\t\r\n\t/**\r\n\t * @dev Event raised when user asked for withdrawal.\r\n\t * @param _from User address asking for withdrawal.\r\n\t * @param _amount Withdrawal tokens amount.\r\n\t * @param _withdrawalTokensFee Withdrawal fee in tokens if any.\r\n\t */\r\n\tevent WithdrawalRequested(address indexed _from, uint _amount, uint _withdrawalTokensFee);\r\n\t\r\n\t/**\r\n\t * @dev Event raised when admin wiped out user address balance.\r\n\t * @param _admin Admin address performing the operation.\r\n\t * @param _account User address wiped out.\r\n\t * @param _value User address latest balance available just before the wipe out.\r\n\t */\r\n\tevent WipeoutBlacklistedAddress(address indexed _admin, address indexed _account, uint _value);\r\n\t\r\n\t\r\n\t\r\n\t/**\r\n\t * @dev Credit user balance with given tokens amount, only admin can do it.\r\n\t * @param _to User address to deposit tokens to.\r\n\t * @param _amount Tokens to deposit.\r\n\t * @return bool If success returns true, false otherwise.\r\n\t */\r\n\tfunction depositAccept(address _to, uint _amount) public returns (bool success);\r\n\t\r\n\t/**\r\n\t * @dev User withdraws tokens.\r\n\t * @param _amount Tokens to withdraw.\r\n\t * @return bool If success returns true, false otherwise.\r\n\t */\r\n\tfunction withdrawRequest(uint _amount) public returns (bool success);\r\n\t\r\n\t/**\r\n\t * @dev Wipe out blacklisted user address, only admin can do it.\r\n\t * @param _account User address.\r\n\t * @return bool If success returns true, false otherwise.\r\n\t */\r\n\tfunction wipeoutAddressBalance(address _account) public returns (bool success);\r\n}",
+  "sourcePath": "C:\\Users\\Homeuser\\Desktop\\FiatechFiatCurrencyToken\\contracts\\interfaces\\IFiatToken.sol",
+  "ast": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IFiatToken.sol",
+    "exportedSymbols": {
+      "IFiatToken": [
+        3985
+      ]
+    },
+    "id": 3986,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3922,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:29"
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IERC20.sol",
+        "file": "./IERC20.sol",
+        "id": 3923,
+        "nodeType": "ImportDirective",
+        "scope": 3986,
+        "sourceUnit": 3778,
+        "src": "28:22:29",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 3924,
+              "name": "IERC20",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3777,
+              "src": "131:6:29",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IERC20_$3777",
+                "typeString": "contract IERC20"
+              }
+            },
+            "id": 3925,
+            "nodeType": "InheritanceSpecifier",
+            "src": "131:6:29"
+          }
+        ],
+        "contractDependencies": [
+          3777,
+          3796
+        ],
+        "contractKind": "contract",
+        "documentation": "@dev Fiat Token contract interface.\r",
+        "fullyImplemented": false,
+        "id": 3985,
+        "linearizedBaseContracts": [
+          3985,
+          3777,
+          3796
+        ],
+        "name": "IFiatToken",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when transfer fee was collected.\r\n@param from User address the transfer amount was taken from.\r\n@param to User address the transfer amount was sent to.\r\n@param transferTokens Transfer tokens amount.\r\n@param feesCollector Address that collected fee goes to.\r\n@param transferTokensFee Transfer tokens fee amount in tokens.\r",
+            "id": 3937,
+            "name": "TransferFeesCollected",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3936,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3927,
+                  "indexed": true,
+                  "name": "from",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3937,
+                  "src": "547:20:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3926,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "547:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3929,
+                  "indexed": true,
+                  "name": "to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3937,
+                  "src": "569:18:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3928,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "569:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3931,
+                  "indexed": false,
+                  "name": "transferTokens",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3937,
+                  "src": "589:19:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3930,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "589:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3933,
+                  "indexed": true,
+                  "name": "feesCollector",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3937,
+                  "src": "610:29:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3932,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "610:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3935,
+                  "indexed": false,
+                  "name": "transferTokensFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3937,
+                  "src": "641:22:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3934,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "641:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "546:118:29"
+            },
+            "src": "519:146:29"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when user address has been deposited tokens.\r\n@param _admin Admin address performing the operation.\r\n@param _to User address to deposit tokens to.\r\n@param _amount Deposit tokens amount.\r",
+            "id": 3945,
+            "name": "DepositAccepted",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3944,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3939,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3945,
+                  "src": "926:22:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3938,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "926:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3941,
+                  "indexed": true,
+                  "name": "_to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3945,
+                  "src": "950:19:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3940,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "950:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3943,
+                  "indexed": false,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3945,
+                  "src": "971:12:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3942,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "971:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "925:59:29"
+            },
+            "src": "904:81:29"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when user asked for withdrawal.\r\n@param _from User address asking for withdrawal.\r\n@param _amount Withdrawal tokens amount.\r\n@param _withdrawalTokensFee Withdrawal fee in tokens if any.\r",
+            "id": 3953,
+            "name": "WithdrawalRequested",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3952,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3947,
+                  "indexed": true,
+                  "name": "_from",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3953,
+                  "src": "1250:21:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3946,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1250:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3949,
+                  "indexed": false,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3953,
+                  "src": "1273:12:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3948,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1273:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3951,
+                  "indexed": false,
+                  "name": "_withdrawalTokensFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3953,
+                  "src": "1287:25:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3950,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1287:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1249:64:29"
+            },
+            "src": "1224:90:29"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when admin wiped out user address balance.\r\n@param _admin Admin address performing the operation.\r\n@param _account User address wiped out.\r\n@param _value User address latest balance available just before the wipe out.\r",
+            "id": 3961,
+            "name": "WipeoutBlacklistedAddress",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3960,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3955,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3961,
+                  "src": "1617:22:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3954,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1617:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3957,
+                  "indexed": true,
+                  "name": "_account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3961,
+                  "src": "1641:24:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3956,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1641:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3959,
+                  "indexed": false,
+                  "name": "_value",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3961,
+                  "src": "1667:11:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3958,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1667:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1616:63:29"
+            },
+            "src": "1585:95:29"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Credit user balance with given tokens amount, only admin can do it.\r\n@param _to User address to deposit tokens to.\r\n@param _amount Tokens to deposit.\r\n@return bool If success returns true, false otherwise.\r",
+            "id": 3970,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "depositAccept",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3966,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3963,
+                  "name": "_to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3970,
+                  "src": "1955:11:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3962,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1955:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3965,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3970,
+                  "src": "1968:12:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3964,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1968:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1954:27:29"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3969,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3968,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3970,
+                  "src": "1998:12:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3967,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1998:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1997:14:29"
+            },
+            "scope": 3985,
+            "src": "1932:80:29",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev User withdraws tokens.\r\n@param _amount Tokens to withdraw.\r\n@return bool If success returns true, false otherwise.\r",
+            "id": 3977,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "withdrawRequest",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3973,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3972,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3977,
+                  "src": "2188:12:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3971,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2188:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2187:14:29"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3976,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3975,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3977,
+                  "src": "2218:12:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3974,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2218:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2217:14:29"
+            },
+            "scope": 3985,
+            "src": "2163:69:29",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Wipe out blacklisted user address, only admin can do it.\r\n@param _account User address.\r\n@return bool If success returns true, false otherwise.\r",
+            "id": 3984,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "wipeoutAddressBalance",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3980,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3979,
+                  "name": "_account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3984,
+                  "src": "2443:16:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3978,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2443:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2442:18:29"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3983,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3982,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3984,
+                  "src": "2477:12:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3981,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2477:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2476:14:29"
+            },
+            "scope": 3985,
+            "src": "2412:79:29",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3986,
+        "src": "108:2386:29"
+      }
+    ],
+    "src": "0:2494:29"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IFiatToken.sol",
+    "exportedSymbols": {
+      "IFiatToken": [
+        3985
+      ]
+    },
+    "id": 3986,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3922,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:29"
+      },
+      {
+        "absolutePath": "/C/Users/Homeuser/Desktop/FiatechFiatCurrencyToken/contracts/interfaces/IERC20.sol",
+        "file": "./IERC20.sol",
+        "id": 3923,
+        "nodeType": "ImportDirective",
+        "scope": 3986,
+        "sourceUnit": 3778,
+        "src": "28:22:29",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 3924,
+              "name": "IERC20",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 3777,
+              "src": "131:6:29",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IERC20_$3777",
+                "typeString": "contract IERC20"
+              }
+            },
+            "id": 3925,
+            "nodeType": "InheritanceSpecifier",
+            "src": "131:6:29"
+          }
+        ],
+        "contractDependencies": [
+          3777,
+          3796
+        ],
+        "contractKind": "contract",
+        "documentation": "@dev Fiat Token contract interface.\r",
+        "fullyImplemented": false,
+        "id": 3985,
+        "linearizedBaseContracts": [
+          3985,
+          3777,
+          3796
+        ],
+        "name": "IFiatToken",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when transfer fee was collected.\r\n@param from User address the transfer amount was taken from.\r\n@param to User address the transfer amount was sent to.\r\n@param transferTokens Transfer tokens amount.\r\n@param feesCollector Address that collected fee goes to.\r\n@param transferTokensFee Transfer tokens fee amount in tokens.\r",
+            "id": 3937,
+            "name": "TransferFeesCollected",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3936,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3927,
+                  "indexed": true,
+                  "name": "from",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3937,
+                  "src": "547:20:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3926,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "547:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3929,
+                  "indexed": true,
+                  "name": "to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3937,
+                  "src": "569:18:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3928,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "569:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3931,
+                  "indexed": false,
+                  "name": "transferTokens",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3937,
+                  "src": "589:19:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3930,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "589:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3933,
+                  "indexed": true,
+                  "name": "feesCollector",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3937,
+                  "src": "610:29:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3932,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "610:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3935,
+                  "indexed": false,
+                  "name": "transferTokensFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3937,
+                  "src": "641:22:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3934,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "641:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "546:118:29"
+            },
+            "src": "519:146:29"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when user address has been deposited tokens.\r\n@param _admin Admin address performing the operation.\r\n@param _to User address to deposit tokens to.\r\n@param _amount Deposit tokens amount.\r",
+            "id": 3945,
+            "name": "DepositAccepted",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3944,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3939,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3945,
+                  "src": "926:22:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3938,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "926:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3941,
+                  "indexed": true,
+                  "name": "_to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3945,
+                  "src": "950:19:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3940,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "950:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3943,
+                  "indexed": false,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3945,
+                  "src": "971:12:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3942,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "971:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "925:59:29"
+            },
+            "src": "904:81:29"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when user asked for withdrawal.\r\n@param _from User address asking for withdrawal.\r\n@param _amount Withdrawal tokens amount.\r\n@param _withdrawalTokensFee Withdrawal fee in tokens if any.\r",
+            "id": 3953,
+            "name": "WithdrawalRequested",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3952,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3947,
+                  "indexed": true,
+                  "name": "_from",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3953,
+                  "src": "1250:21:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3946,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1250:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3949,
+                  "indexed": false,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3953,
+                  "src": "1273:12:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3948,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1273:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3951,
+                  "indexed": false,
+                  "name": "_withdrawalTokensFee",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3953,
+                  "src": "1287:25:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3950,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1287:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1249:64:29"
+            },
+            "src": "1224:90:29"
+          },
+          {
+            "anonymous": false,
+            "documentation": "@dev Event raised when admin wiped out user address balance.\r\n@param _admin Admin address performing the operation.\r\n@param _account User address wiped out.\r\n@param _value User address latest balance available just before the wipe out.\r",
+            "id": 3961,
+            "name": "WipeoutBlacklistedAddress",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3960,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3955,
+                  "indexed": true,
+                  "name": "_admin",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3961,
+                  "src": "1617:22:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3954,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1617:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3957,
+                  "indexed": true,
+                  "name": "_account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3961,
+                  "src": "1641:24:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3956,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1641:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3959,
+                  "indexed": false,
+                  "name": "_value",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3961,
+                  "src": "1667:11:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3958,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1667:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1616:63:29"
+            },
+            "src": "1585:95:29"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Credit user balance with given tokens amount, only admin can do it.\r\n@param _to User address to deposit tokens to.\r\n@param _amount Tokens to deposit.\r\n@return bool If success returns true, false otherwise.\r",
+            "id": 3970,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "depositAccept",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3966,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3963,
+                  "name": "_to",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3970,
+                  "src": "1955:11:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3962,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1955:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3965,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3970,
+                  "src": "1968:12:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3964,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1968:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1954:27:29"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3969,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3968,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3970,
+                  "src": "1998:12:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3967,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1998:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1997:14:29"
+            },
+            "scope": 3985,
+            "src": "1932:80:29",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev User withdraws tokens.\r\n@param _amount Tokens to withdraw.\r\n@return bool If success returns true, false otherwise.\r",
+            "id": 3977,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "withdrawRequest",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3973,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3972,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3977,
+                  "src": "2188:12:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3971,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2188:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2187:14:29"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3976,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3975,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3977,
+                  "src": "2218:12:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3974,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2218:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2217:14:29"
+            },
+            "scope": 3985,
+            "src": "2163:69:29",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Wipe out blacklisted user address, only admin can do it.\r\n@param _account User address.\r\n@return bool If success returns true, false otherwise.\r",
+            "id": 3984,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "wipeoutAddressBalance",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3980,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3979,
+                  "name": "_account",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3984,
+                  "src": "2443:16:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3978,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2443:7:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2442:18:29"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 3983,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3982,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3984,
+                  "src": "2477:12:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 3981,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2477:4:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2476:14:29"
+            },
+            "scope": 3985,
+            "src": "2412:79:29",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3986,
+        "src": "108:2386:29"
+      }
+    ],
+    "src": "0:2494:29"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.5",
+  "updatedAt": "2019-11-28T22:36:38.799Z",
+  "devdoc": {
+    "methods": {
+      "depositAccept(address,uint256)": {
+        "details": "Credit user balance with given tokens amount, only admin can do it.\r",
+        "params": {
+          "_amount": "Tokens to deposit.\r",
+          "_to": "User address to deposit tokens to.\r"
+        },
+        "return": "bool If success returns true, false otherwise.\r"
+      },
+      "wipeoutAddressBalance(address)": {
+        "details": "Wipe out blacklisted user address, only admin can do it.\r",
+        "params": {
+          "_account": "User address.\r"
+        },
+        "return": "bool If success returns true, false otherwise.\r"
+      },
+      "withdrawRequest(uint256)": {
+        "details": "User withdraws tokens.\r",
+        "params": {
+          "_amount": "Tokens to withdraw.\r"
+        },
+        "return": "bool If success returns true, false otherwise.\r"
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
